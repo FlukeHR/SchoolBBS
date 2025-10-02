@@ -21,9 +21,9 @@
   <meta charset="utf-8" />
   <meta name="author" content="rogepi" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="css/universal.css" />
-  <link rel="stylesheet" href="css/about.css" />
-  <link rel="stylesheet" href="css/post.css" />
+  <link rel="stylesheet" href="css/css/universal.css" />
+  <link rel="stylesheet" href="css/css/about.css" />
+  <link rel="stylesheet" href="css/css/post.css" />
   <script src="js/post.js"></script>
   <title>校园贴吧</title>
   <link rel="icon" href="images/post.png" type="image/x-icon" />

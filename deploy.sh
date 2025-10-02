@@ -4,7 +4,7 @@ echo "🚀 开始部署校园贴吧系统..."
 
 # 1. 停止Tomcat
 echo "📦 停止Tomcat服务..."
-./stop.sh
+bash ./stop.sh
 
 # 2. 编译项目
 echo "🔨 编译项目..."
@@ -26,7 +26,7 @@ cp target/untitled2-1.0-SNAPSHOT.war /usr/local/tomcat9/webapps/untitled2.war
 
 # 5. 启动Tomcat
 echo "🌐 启动Tomcat服务..."
-./start.sh
+bash ./start.sh
 
 echo "✅ 部署完成！"
 echo ""

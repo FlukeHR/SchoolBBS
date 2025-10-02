@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="author" content="rogepi" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/css/universal.css" />
+  <link rel="stylesheet" href="css/css/about.css" />
+  <link rel="stylesheet" href="css/css/publish.css" />
+  <title>校园贴吧</title>
+  <link rel="icon" href="images/post.png" type="image/x-icon" />
+  <script src="js/jquery-3.5.1.min.js"></script>
+</head>
+
+<body>
+<div class="header">
+  <h1>校园贴吧</h1>
+</div>
+
+<div class="topnav">
+  <ul>
+    <li><a href="home.jsp">首页</a></li>
+    <li><a href="mine.jsp">我的</a></li>
+    <li><a href="publish.html">发帖</a></li>
+    <li><a href="about.jsp">个人资料</a></li>
+    <li><a href="search.jsp">搜索</a></li>
+    <li><a href="smile.html">退出登录</a></li>
+  </ul>
+</div>
+
+<div class="row">
+  <div class="card">
+    <h3>编辑</h3>
+    <br>
+    <div class="edit">
+      <form action="PostWrite" method="POST" enctype="multipart/form-data" id="postForm">
+        <br>
+        <label>贴子标题：<input type="text" name="title" required></label>
+        <br><br>
+        <label>贴子类型：
+          <div id="typeOptions">
+            <input type="radio" id="new" name="ntype" value="学习讨论">
+            <label for="new">学习讨论</label>
+            <input type="radio" id="money" name="ntype" value="校园生活">
+            <label for="money">校园生活</label>
+            <input type="radio" id="intnl" name="ntype" value="表白墙">
+            <label for="intnl">表白墙</label>
+          </div>
+          <br>
+          <input type="text" id="customType" placeholder="或输入自定义类型" style="margin-top:10px;">
+          <button type="button" onclick="addCustomType()" style="margin-left:5px;">添加类型</button>
+        </label>
+        <br><br>
+        <label>贴子内容：<br>
+          <textarea rows="10" name="content" required></textarea>
+        </label>
+        <br><br>
+        <label>上传图片/视频（可选）：<br>
+          <input type="file" name="mediaFiles" multiple accept="image/*,video/*" style="margin-top:10px;">
+          <br><small style="color:#666;">支持多个文件，最大50MB</small>
+        </label>
+        <br><br>
+        <button type="submit">发布</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+// 页面加载时获取所有贴子类型
+$(document).ready(function() {
+  loadPostTypes();
+});
+
+function loadPostTypes() {
+  $.ajax({
+    url: 'GetPostTypes',
+    type: 'GET',
+    dataType: 'json',
+    success: function(data) {
+      if (data && data.length > 0) {
+        var typeOptions = $('#typeOptions');
+        // 清空现有选项（保留默认的三个）
+        data.forEach(function(type) {
+          // 检查是否已存在
+          var exists = false;
+          $('#typeOptions input[type="radio"]').each(function() {
+            if ($(this).val() === type.typeName) {
+              exists = true;
+            }
+          });
+          
+          if (!exists) {
+            var radioId = 'type_' + type.id;
+            var radioHtml = '<input type="radio" id="' + radioId + '" name="ntype" value="' + type.typeName + '">' +
+                          '<label for="' + radioId + '">' + type.typeName + '</label> ';
+            typeOptions.append(radioHtml);
+          }
+        });
+      }
+    },
+    error: function(xhr, status, error) {
+      console.log('加载类型失败：' + error);
+    }
+  });
+}
+
+function addCustomType() {
+  var typeName = $('#customType').val().trim();
+  if (!typeName) {
+    alert('请输入类型名称');
+    return;
+  }
+  
+  // 检查是否已存在
+  var exists = false;
+  $('#typeOptions input[type="radio"]').each(function() {
+    if ($(this).val() === typeName) {
+      exists = true;
+    }
+  });
+  
+  if (exists) {
+    alert('该类型已存在');
+    return;
+  }
+  
+  // 发送请求创建新类型
+  $.ajax({
+    url: 'PostTypeCreate',
+    type: 'POST',
+    data: {
+      typeName: typeName,
+      description: '用户自定义类型'
+    },
+    success: function(response) {
+      if (response.indexOf('成功') > -1) {
+        // 添加到选项中
+        var radioId = 'type_custom_' + Date.now();
+        var radioHtml = '<input type="radio" id="' + radioId + '" name="ntype" value="' + typeName + '" checked>' +
+                      '<label for="' + radioId + '">' + typeName + '</label> ';
+        $('#typeOptions').append(radioHtml);
+        $('#customType').val('');
+        alert('类型添加成功！');
+      }
+    },
+    error: function() {
+      alert('添加类型失败，请重试');
+    }
+  });
+}
+</script>
+
+<div class="footer">
+  <h2>Nothing Is Impossible</h2>
+</div>
+
+</body>
+
+</html>

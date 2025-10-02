@@ -1,31 +1,28 @@
 <%@ page import="com.bbs.service.UserService" %>
 <%@ page import="com.bbs.pojo.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
   <meta name="author" content="rogepi" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="css/universal.css" />
-  <link rel="stylesheet" href="css/about.css" />
+  <link rel="stylesheet" href="css/css/universal.css" />
+  <link rel="stylesheet" href="css/css/about.css" />
   <title>修改个人信息</title>
   <link rel="icon" href="images/userManage.png" type="image/x-icon" />
-  <link rel="stylesheet" href="css/updateInfo.css" />
+  <link rel="stylesheet" href="css/css/updateInfo.css" />
 </head>
 <body>
-<div class="header">
-  <h1>修改个人信息</h1>
-  <p>Everything happens for a reason</p>
-</div>
+  <div class="header">
+    <h1>修改个人信息</h1>
+    <p>Everything happens for a reason</p>
 
-<div class="topnav">
+  <div class="topnav">
   <ul>
     <li><a href="home.jsp">首页</a></li>
     <li><a href="mine.jsp">我的</a></li>
     <li><a href="publish.html">发帖</a></li>
     <li><a href="about.jsp">个人资料</a></li>
-    <li><a href="search.jsp">搜索</a></li>
     <li><a href="smile.html">退出登录</a></li>
   </ul>
 </div>

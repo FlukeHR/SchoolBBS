@@ -87,21 +87,21 @@ body {
 }
 
 .button-happy {
-    background-color: #6a4;
+    background-color: cornflowerblue;
     border: none;
 }
 
 .button-happy:hover {
-    background-color: #81c061;
+    background-color: #3a6fd8;
 }
 
 .button-unhappy {
-    background-color: #a43;
+    background-color: cornflowerblue;
     border: none;
 }
 
 .button-unhappy:hover {
-    background-color: #c85a48;
+    background-color: #3a6fd8;
 }
 
 .face-slider {
@@ -121,7 +121,7 @@ body {
     margin: 0;
     align-self: center;
     flex: 0 0 auto;
-    border: solid 2px #ecb23e;
+    border: solid 2px #182f53;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -137,7 +137,7 @@ body {
     height: 100%;
     top: 0;
     left: 0;
-    background-image: linear-gradient(to bottom, #5a8, rgba(85, 170, 136, 0));
+    background-image: linear-gradient(to bottom, rgba(24,47,83,0.25), rgba(24,47,83,0));
     opacity: calc(1 - var(--happiness));
 }
 

@@ -7,19 +7,34 @@
 <%@ page import="com.bbs.service.PostService" %>
 <%@ page import="com.bbs.service.CommentService" %>
 <!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>后台管理</title>
     <link rel="icon" href="images/admin.png" type="image/x-icon" />
-    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/css/admin.css">
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            text-align: center;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
     <h1>后台管理</h1>
     <button onclick="location.href='admin_index.html'" style="position: absolute;right: 390px">返回管理页</button>
     <!-- 显示所有帖子 -->
-    <h2>帖子管理</h2>
     <table id="postsTable">
         <thead>
             <tr>

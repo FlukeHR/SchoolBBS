@@ -44,6 +44,10 @@ public class loginCheck extends HttpServlet {
     }
     catch (Exception e) {
       e.printStackTrace();
+      // 异常时不要返回空白页面，统一转发到信息页
+      request.setAttribute("outputMessage", "登录失败，请稍后重试。");
+      response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+      request.getRequestDispatcher("/info.jsp").forward(request, response);
     }
   }
 }

@@ -9,8 +9,8 @@
   <meta charset="utf-8" />
   <meta name="author" content="rogepi" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="css/universal.css" />
-  <link rel="stylesheet" href="css/home_login.css" />
+  <link rel="stylesheet" href="css/css/universal.css" />
+  <link rel="stylesheet" href="css/css/home_login.css" />
   <title>校园贴吧</title>
   <link rel="icon" href="images/index.png" type="image/x-icon" />
 </head>

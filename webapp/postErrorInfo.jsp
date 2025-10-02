@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>Info</title>
-    <link rel="stylesheet" href="css/info.css" />
+    <link rel="stylesheet" href="css/css/info.css" />
     <link rel="icon" href="images/error.png" type="image/x-icon" />
 </head>
 <body>

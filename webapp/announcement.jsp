@@ -2,19 +2,12 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.bbs.service.announcementService" %>
-<%@ page import="com.bbs.pojo.Announcement" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>公告管理</title>
-    <link rel="stylesheet" href="css/admin.css">
-    <link rel="icon" href="images/admin.png" type="image/x-icon" />
-    <style>
-        /* 自定义公告列表样式 */
-        .announcement-list {
-            margin-top: 20px;
-        }
+    <link rel="stylesheet" href="css/css/admin.css">
         .announcement-item {
             padding: 15px;
             border-bottom: 1px solid #ddd;

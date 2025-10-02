@@ -2,19 +2,17 @@
 <%@ page import="com.bbs.service.CommentService" %>
 <%@ page import="com.bbs.pojo.Comment" %>
 <%@ page import="java.util.List" %>
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>评论管理</title>
-    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/css/admin.css">
     <link rel="icon" href="images/comment.png" type="image/x-icon" />
 </head>
 <body style="position: absolute">
 <h1>评论管理</h1>
 <button onclick="location.href='admin_index.html'" style="position: absolute;right: 390px">返回管理页</button>
-<!-- 显示所有评论 -->
 <h2>评论列表</h2>
 <table id="commentsTable">
     <thead>

@@ -8,7 +8,7 @@
 <head>
   <meta charset="UTF-8">
   <title>我的贴吧</title>
-  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/css/admin.css">
   <link rel="icon" href="images/index.png" type="image/x-icon" />
 </head>
 <body style="position: absolute">

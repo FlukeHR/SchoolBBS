@@ -15,12 +15,12 @@
   <meta charset="utf-8" />
   <meta name="author" content="rogepi" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="css/universal.css" />
-  <link rel="stylesheet" href="css/home.css" />
+  <link rel="stylesheet" href="css/css/universal.css" />
+  <link rel="stylesheet" href="css/css/home.css" />
   <title>校园贴吧</title>
   <link rel="icon" href="images/index.png" type="image/x-icon" />
   <link rel="shortcut icon" href="images/index.png" type="image/x-icon" />
-  <link rel="stylesheet" href="css/announcement.css" />
+  <link rel="stylesheet" href="css/css/announcement.css" />
   <script src="js/announcement.js"></script>
 </head>
 
