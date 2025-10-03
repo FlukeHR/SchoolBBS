@@ -31,7 +31,7 @@
 
 .delete-btn:hover {
   background-color: #ddd;
-  color: #235D3A;
+  color: cornflowerblue;
 }
 
 .edit-btn {
@@ -43,7 +43,7 @@
 
 .edit-btn:hover {
   background-color: #ddd;
-  color: #235D3A;
+  color: cornflowerblue;
 }
 .Mycard {
   height: 500px;
@@ -55,7 +55,7 @@
 }
 .Mycard h3 {
   padding: 10px;
-  background-color: #235D3A;
+  background-color: #182f53;
   text-align: center;
   color: white;
 }

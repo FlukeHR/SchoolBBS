@@ -1,18 +1,35 @@
 .login {
   height: 200px;
 }
+/* 撤销对齐相关覆盖：按初始布局由 select 自身左外边距控制位置 */
+/* 标题保持与全站一致的深蓝 */
+h3 {
+  background-color: #182f53;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
 select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  padding: 8px;
+  padding: 6px 10px;
   border: 1px solid #999;
-  border-radius: 5px;
+  border-radius: 20px;
   background-color: #f1f1f1;
   color: #333;
   font-size: 16px;
   width: 200px;
-  margin-left: 110px;
+  /* 让性别与其他输入一样右对齐 */
+  float: right;
+  margin-right: 20px;
+  height: 34px;
+  box-sizing: border-box;
+}
+select:focus {
+  outline: none;
+  border-color: #182f53;
+  box-shadow: 0 0 0 3px rgba(24,47,83,0.1);
 }
 
 /* 美化select的下拉箭头 */
@@ -29,3 +46,19 @@ option {
   background-color: #f9f9f9;
   color: #333;
 }
+
+/* 链接与按钮配色与全站统一 */
+a {
+  color: #182f53;
+}
+a:hover { text-decoration: underline; }
+
+button {
+  background-color: cornflowerblue;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+button:hover { background-color: #3a6fd8; }

@@ -35,7 +35,7 @@
   border-radius: 10px;
   width: 150px;
   height: 40px;
-  background-color: #235D3A;
+  background-color: cornflowerblue;
   border: none;
   cursor: pointer;
   text-align: center;
@@ -45,5 +45,5 @@
 
 .profile button:hover {
   background-color: #ddd;
-  color: #235D3A;
+  color: cornflowerblue;
 }

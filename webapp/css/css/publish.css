@@ -43,7 +43,7 @@
 }
 
 .edit input[type="radio"]:checked + label {
-  background-color: #235D3A;
+  background-color: #182f53;
   color: white;
   border-color: black;
 }

@@ -33,66 +33,78 @@
 <%
   String author = (String) session.getAttribute("username_session");
   UserService userService = new UserService();
+  User user = null;
   if (author != null) {
     try {
-      User user =userService.findUserByName(author);
+      user = userService.findUserByName(author);
       request.setAttribute("user", user);
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
-  int len = userService.findUserByName(author).getPassword().length();
-  StringBuffer  sb = new StringBuffer();
-  for(int i = 0; i < len; i++){
-    sb.append("*");
+  if (user == null) {
+%>
+  <div class="row">
+    <div class="card">
+      <h3 style="text-align:center;">请先登录</h3>
+      <div class="profile" style="text-align:center;">
+        <a href="index.html" style="color: cornflowerblue;">前往登录</a>
+      </div>
+    </div>
+  </div>
+<%
+  } else {
+    int len = user.getPassword() != null ? user.getPassword().length() : 0;
+    StringBuffer sb = new StringBuffer();
+    for (int i = 0; i < len; i++) { sb.append("*"); }
+%>
+  <!-- 个人页面信息展示 -->
+  <div class="row">
+    <div class="card">
+      <h3 style="text-align: center;">个人信息</h3>
+      <br>
+      <div class="profile">
+        <div>用 户 名：&emsp;<%= user.getUsername() %></div>
+        <div>密&nbsp;&emsp;码:&emsp;&nbsp;<%= sb.toString() %></div>
+        <div>性&nbsp;&emsp;别：&emsp;<%= userService.findSexById(user.getUid()) %></div>
+        <div>注册时间：&emsp;<%= user.getRtime() %></div>
+        <button type="button" onclick="window.location.href='updateInfo.jsp'">修改个人资料</button>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px;">
+      <h3 style="text-align:center;">个人关注</h3>
+      <div style="padding:8px 0;">
+        <%
+          com.bbs.service.FollowService followSvc = new com.bbs.service.FollowService();
+          java.util.List<com.bbs.pojo.PostType> followedTypes = null;
+          try {
+            followedTypes = followSvc.findFollowedTypes(author);
+          } catch (Exception e) { e.printStackTrace(); }
+          if (followedTypes != null && !followedTypes.isEmpty()) {
+            for (com.bbs.pojo.PostType t : followedTypes) {
+        %>
+          <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #eee;padding:6px 0;">
+            <div>
+              <strong><%= t.getTypeName() %></strong>
+              <small style="color:#888;margin-left:8px;">ID: <%= t.getId() %></small>
+            </div>
+            <form action="ToggleFollowType" method="post" style="margin:0;">
+              <input type="hidden" name="redirectPage" value="about.jsp">
+              <input type="hidden" name="typeId" value="<%= t.getId() %>">
+              <button type="submit">取消关注</button>
+            </form>
+          </div>
+        <%
+            }
+          } else {
+        %>
+          <div style="text-align:center;color:#666;">暂无关注的贴子类型</div>
+        <%
+          }
+        %>
+      </div>
+    </div>
+  </div>
+<%
   }
 %>
-<!-- 新增：个人页面信息展示 -->
-<div class="row">
-  <div class="card">
-    <h3 style="text-align: center;">个人信息</h3>
-    <br>
-    <div class="profile">
-          <div>用 户 名：&emsp;<%= userService.findUserByName(author).getUsername()%></div>
-          <div>密&nbsp;&emsp;码:&emsp;&nbsp;<%=sb.toString()%></div>
-          <div>性&nbsp;&emsp;别：&emsp;<%= userService.findSexById(userService.findUserByName(author).getUid())%></div>
-          <div>注册时间：&emsp;<%= userService.findUserByName(author).getRtime()%></div>
-      <button type="button" onclick="window.location.href='updateInfo.jsp'">修改个人资料</button>
-    </div>
-  </div>
-  <div class="card" style="margin-top:16px;">
-    <h3 style="text-align:center;">个人关注</h3>
-    <div style="padding:8px 0;">
-      <%
-        com.bbs.service.FollowService followSvc = new com.bbs.service.FollowService();
-        java.util.List<com.bbs.pojo.PostType> followedTypes = null;
-        try {
-          if (author != null) {
-            followedTypes = followSvc.findFollowedTypes(author);
-          }
-        } catch (Exception e) { e.printStackTrace(); }
-        if (followedTypes != null && !followedTypes.isEmpty()) {
-          for (com.bbs.pojo.PostType t : followedTypes) {
-      %>
-        <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #eee;padding:6px 0;">
-          <div>
-            <strong><%= t.getTypeName() %></strong>
-            <small style="color:#888;margin-left:8px;">ID: <%= t.getId() %></small>
-          </div>
-          <form action="ToggleFollowType" method="post" style="margin:0;">
-            <input type="hidden" name="redirectPage" value="about.jsp">
-            <input type="hidden" name="typeId" value="<%= t.getId() %>">
-            <button type="submit">取消关注</button>
-          </form>
-        </div>
-      <%
-          }
-        } else {
-      %>
-        <div style="text-align:center;color:#666;">暂无关注的贴子类型</div>
-      <%
-        }
-      %>
-    </div>
-  </div>
-</div>

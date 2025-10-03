@@ -18,15 +18,15 @@ body {
   padding-right: 20%;
 }
 
-/* ÍøÕ¾´ó±êÌâ?*/
+/* ç½‘ç«™å¤§æ ‡é¢˜?*/
 .header {
   padding: 18px;
-  color:darkseagreen
+  color: cornflowerblue;
   text-align: center;
   background-size: cover;
 }
 
-/*Ğ¡±êÌâ?*/
+/*å°æ ‡é¢˜?*/
 .header h1 {
   color: rgba(0, 0, 0, 0.2);
   font-size: 50px;
@@ -36,7 +36,7 @@ body {
   color: white;
 }
 
-/* Style the top navigation bar µÚÒ»¸öÀ¸Ä¿±³¾°*/
+/* Style the top navigation bar ç¬¬ä¸€ä¸ªæ ç›®èƒŒæ™¯*/
 .topnav {
     overflow: hidden;
     background-color: #182f53;
@@ -57,7 +57,7 @@ body {
   display: inline-block;
 }
 
-/* Style the topnav links µÚÒ»¸öÀ¸Ä¿µÄ×ÖÌåÑÕÉ«*/
+/* Style the topnav links ç¬¬ä¸€ä¸ªæ ç›®çš„å­—ä½“é¢œè‰²*/
 .topnav a {
   float: left;
   display: block;
@@ -69,7 +69,7 @@ body {
   text-decoration: none;
 }
 
-/* Change color on hover Êó±ê·ÅÔÚÉÏÃæ¸ÄÑÕÉ« */
+/* Change color on hover é¼ æ ‡æ”¾åœ¨ä¸Šé¢æ”¹é¢œè‰² */
 .topnav a:hover {
   background-color: dimgray;
   color: whitesmoke;
@@ -113,7 +113,7 @@ of each other instead of next to each other */
   animation: cardContainerLoad 2s;
 }
 
-/*µÚ¶şĞĞÀ¸Ä¿*/
+/*ç¬¬äºŒè¡Œæ ç›®*/
 .card h3 {
   padding: 10px;
   background-color: #182f53;
@@ -148,7 +148,7 @@ button:hover {
   color: cornflowerblue;
 }
 
-/* µÇÂ¼Ò³µÄÎÄ±¾/ÃÜÂëÊäÈë¿ò */
+/* ç™»å½•é¡µçš„æ–‡æœ¬/å¯†ç è¾“å…¥æ¡† */
 .card input[type="text"],
 .card input[type="password"],
 .login input[type="text"],
@@ -165,7 +165,7 @@ form.login-form input[type="password"] {
     outline: none; 
 }
 
-    /* ¾Û½¹ÌáÊ¾ */
+    /* èšç„¦æç¤º */
     .card input[type="text"]:focus,
     .card input[type="password"]:focus,
     .login input[type="text"]:focus,
