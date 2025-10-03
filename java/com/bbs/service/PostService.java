@@ -148,4 +148,30 @@ public class PostService implements PostMapper{
         sqlSession.commit();
         return postList;
     }
+
+    // 新增：按类型+关键词搜索（分页）默认排序（date_desc）
+    public List<Post> searchPostsByTypePaged(String type, String keyword, int offset, int limit) throws Exception {
+        return searchPostsByTypePaged(type, keyword, offset, limit, "date_desc");
+    }
+
+    // 新增：按类型+关键词搜索（分页+排序）
+    public List<Post> searchPostsByTypePaged(String type, String keyword, int offset, int limit, String sort) throws Exception {
+        InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        PostMapper postMapper = sqlSession.getMapper(PostMapper.class);
+        List<Post> posts = postMapper.searchPostsByTypePaged(type, keyword, offset, limit, sort);
+        sqlSession.commit();
+        return posts;
+    }
+
+    public int countPostsByTypeKeyword(String type, String keyword) throws Exception {
+        InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        PostMapper postMapper = sqlSession.getMapper(PostMapper.class);
+        int total = postMapper.countPostsByTypeKeyword(type, keyword);
+        sqlSession.commit();
+        return total;
+    }
 }

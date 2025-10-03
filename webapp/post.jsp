@@ -117,19 +117,29 @@
         for (String file : files) {
           file = file.trim();
           String lowerFile = file.toLowerCase();
+          // 规范URL：以'/'开头则直接拼接contextPath，否则补一个'/'
+          String url = file.startsWith("/") ? (request.getContextPath() + file) : (request.getContextPath() + "/" + file);
           if (lowerFile.endsWith(".jpg") || lowerFile.endsWith(".jpeg") || 
               lowerFile.endsWith(".png") || lowerFile.endsWith(".gif") || 
               lowerFile.endsWith(".webp")) {
       %>
-      <img src="<%= request.getContextPath() + "/" + file %>" alt="图片" style="max-width: 100%; margin: 10px 0; border-radius: 5px;">
+      <img src="<%= url %>" alt="图片" style="max-width: 100%; margin: 10px 0; border-radius: 5px;">
       <%
           } else if (lowerFile.endsWith(".mp4") || lowerFile.endsWith(".webm") || 
                      lowerFile.endsWith(".ogg") || lowerFile.endsWith(".mov")) {
       %>
       <video controls style="max-width: 100%; margin: 10px 0; border-radius: 5px;">
-        <source src="<%= request.getContextPath() + "/" + file %>" type="video/<%= file.substring(file.lastIndexOf(".") + 1) %>">
+        <source src="<%= url %>" type="video/<%= file.substring(file.lastIndexOf(".") + 1) %>">
         您的浏览器不支持视频播放。
       </video>
+      <%
+          } else {
+            // 其他类型：提供下载链接
+            String nameOnly = file.substring(file.lastIndexOf('/')+1);
+      %>
+      <div style="margin: 8px 0;">
+        <a href="<%= url %>" download style="color:#2a6;">下载附件：<%= nameOnly %></a>
+      </div>
       <%
           }
         }

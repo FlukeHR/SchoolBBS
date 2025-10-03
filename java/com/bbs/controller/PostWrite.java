@@ -21,7 +21,8 @@ import java.util.UUID;
 @WebServlet("/PostWrite")
 public class PostWrite extends HttpServlet {
   
-  private static final String UPLOAD_DIRECTORY = "uploads";
+  private static final String URL_PREFIX = "/uploads/post"; // 对外URL
+  private static final String DISK_DIR = System.getProperty("user.home") + File.separator + "bbs_uploads" + File.separator + "post"; // 磁盘目录
   private static final int MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
   
   @Override
@@ -45,8 +46,8 @@ public class PostWrite extends HttpServlet {
       upload.setFileSizeMax(MAX_FILE_SIZE);
       upload.setHeaderEncoding("UTF-8");
       
-      // 获取上传路径
-      String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
+      // 获取上传路径（应用外部，防止重部署丢失）
+      String uploadPath = DISK_DIR;
       File uploadDir = new File(uploadPath);
       if (!uploadDir.exists()) {
         uploadDir.mkdirs();
@@ -79,7 +80,7 @@ public class PostWrite extends HttpServlet {
               File storeFile = new File(filePath);
               item.write(storeFile);
               
-              uploadedFiles.add(UPLOAD_DIRECTORY + "/" + uniqueFileName);
+              uploadedFiles.add(URL_PREFIX + "/" + uniqueFileName);
             }
           }
         }

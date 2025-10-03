@@ -34,6 +34,11 @@ public class loginCheck extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("user", user);
         session.setAttribute("username_session", username);
+        String redirect = request.getParameter("redirect");
+        if (redirect != null && redirect.trim().length() > 0) {
+          response.sendRedirect(redirect);
+          return;
+        }
         request.getRequestDispatcher("home.jsp").forward(request, response);
       }
       else {
@@ -44,8 +49,9 @@ public class loginCheck extends HttpServlet {
     }
     catch (Exception e) {
       e.printStackTrace();
-      // 异常时不要返回空白页面，统一转发到信息页
-      request.setAttribute("outputMessage", "登录失败，请稍后重试。");
+      // 异常时不要返回空白页面，统一转发到信息页（开发期带上错误信息便于排查）
+      String err = e.getClass().getSimpleName() + ": " + (e.getMessage() == null ? "" : e.getMessage());
+      request.setAttribute("outputMessage", "登录失败，请稍后重试。" + "\\n" + err);
       response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
       request.getRequestDispatcher("/info.jsp").forward(request, response);
     }

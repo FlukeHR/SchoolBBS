@@ -41,12 +41,7 @@
         <br><br>
         <label>贴子类型：
           <div id="typeOptions">
-            <input type="radio" id="new" name="ntype" value="学习讨论">
-            <label for="new">学习讨论</label>
-            <input type="radio" id="money" name="ntype" value="校园生活">
-            <label for="money">校园生活</label>
-            <input type="radio" id="intnl" name="ntype" value="表白墙">
-            <label for="intnl">表白墙</label>
+            <!-- 动态加载类型（不再保留固定的三个） -->
           </div>
           <br>
           <input type="text" id="customType" placeholder="或输入自定义类型" style="margin-top:10px;">
@@ -57,9 +52,12 @@
           <textarea rows="10" name="content" required></textarea>
         </label>
         <br><br>
-        <label>上传图片/视频（可选）：<br>
-          <input type="file" name="mediaFiles" multiple accept="image/*,video/*" style="margin-top:10px;">
-          <br><small style="color:#666;">支持多个文件，最大50MB</small>
+        <label>上传文件（可选）：<br>
+          <input type="file" name="mediaFiles" id="mediaFiles" multiple
+                 accept="image/*,video/*,text/plain,application/zip,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,.txt,.zip,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
+                 style="margin-top:10px;">
+          <br><small style="color:#666;">支持多个文件（图片/视频/文档），最大50MB</small>
+          <ul id="fileList" style="margin-top:6px;color:#333;padding-left:18px;"></ul>
         </label>
         <br><br>
         <button type="submit">发布</button>
@@ -72,6 +70,8 @@
 // 页面加载时获取所有贴子类型
 $(document).ready(function() {
   loadPostTypes();
+  // 绑定上传文件选择事件，做前端校验与预览
+  $('#mediaFiles').on('change', handleFileChange);
 });
 
 function loadPostTypes() {
@@ -80,31 +80,63 @@ function loadPostTypes() {
     type: 'GET',
     dataType: 'json',
     success: function(data) {
-      if (data && data.length > 0) {
-        var typeOptions = $('#typeOptions');
-        // 清空现有选项（保留默认的三个）
-        data.forEach(function(type) {
-          // 检查是否已存在
-          var exists = false;
-          $('#typeOptions input[type="radio"]').each(function() {
-            if ($(this).val() === type.typeName) {
-              exists = true;
-            }
-          });
-          
-          if (!exists) {
-            var radioId = 'type_' + type.id;
-            var radioHtml = '<input type="radio" id="' + radioId + '" name="ntype" value="' + type.typeName + '">' +
+      var typeOptions = $('#typeOptions');
+      typeOptions.empty();
+      if (Array.isArray(data) && data.length > 0) {
+        data.forEach(function(type, idx) {
+          var radioId = 'type_' + type.id;
+          var checked = idx === 0 ? ' checked' : '';
+          var radioHtml = '<input type="radio" id="' + radioId + '" name="ntype" value="' + type.typeName + '"'+checked+' required>' +
                           '<label for="' + radioId + '">' + type.typeName + '</label> ';
-            typeOptions.append(radioHtml);
-          }
+          typeOptions.append(radioHtml);
         });
+      } else {
+        // 没有类型时不显示默认项，用户可通过“添加类型”创建
       }
     },
     error: function(xhr, status, error) {
       console.log('加载类型失败：' + error);
     }
   });
+}
+
+// 上传文件前端校验与预览
+function handleFileChange(e) {
+  const listEl = document.getElementById('fileList');
+  listEl.innerHTML = '';
+  const files = e.target.files;
+  if (!files || files.length === 0) return;
+
+  const maxSize = 50 * 1024 * 1024; // 50MB
+  const allowedExt = ['.txt','.zip','.pdf','.doc','.docx','.xls','.xlsx','.ppt','.pptx'];
+  const allowedMime = [
+    'image/', 'video/', 'text/plain', 'application/zip', 'application/pdf',
+    'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+  ];
+
+  const bad = [];
+  Array.from(files).forEach(f => {
+    const name = f.name || '';
+    const lower = name.toLowerCase();
+    const ext = lower.slice(lower.lastIndexOf('.'));
+    const type = f.type || '';
+    const okByMime = allowedMime.some(m => type.startsWith(m));
+    const okByExt = allowedExt.includes(ext);
+    const ok = okByMime || okByExt;
+    const sizeOk = f.size <= maxSize;
+
+    const li = document.createElement('li');
+    li.textContent = `${name} (${(f.size/1024).toFixed(1)} KB)`;
+    if (!ok) { li.style.color = '#b00020'; li.textContent += ' - 不支持的类型'; bad.push(name); }
+    if (!sizeOk) { li.style.color = '#b00020'; li.textContent += ' - 超过50MB'; bad.push(name); }
+    listEl.appendChild(li);
+  });
+
+  if (bad.length > 0) {
+    alert('部分文件不符合要求，已标红提示。如需继续，请移除不符合的文件。');
+  }
 }
 
 function addCustomType() {
@@ -139,7 +171,7 @@ function addCustomType() {
       if (response.indexOf('成功') > -1) {
         // 添加到选项中
         var radioId = 'type_custom_' + Date.now();
-        var radioHtml = '<input type="radio" id="' + radioId + '" name="ntype" value="' + typeName + '" checked>' +
+        var radioHtml = '<input type="radio" id="' + radioId + '" name="ntype" value="' + typeName + '" checked required>' +
                       '<label for="' + radioId + '">' + typeName + '</label> ';
         $('#typeOptions').append(radioHtml);
         $('#customType').val('');

@@ -49,6 +49,7 @@
       <li><a href="publish.html">发帖</a></li>
       <li><a href="about.jsp">个人资料</a></li>
       <li><a href="search.jsp">搜索</a></li>
+      <li><a href="trade.html">交易</a></li>
       <li><a href="smile.html">退出登录</a></li>
     </ul>
   </div>
@@ -82,7 +83,9 @@
       %>
       <div class="card">
         <h3 style="display:flex;align-items:center;gap:10px;">
-          <span><%= typeName %></span>
+          <a href="type.jsp?type=<%= java.net.URLEncoder.encode(typeName, "UTF-8") %>" style="text-decoration:underline;color:#ffffff;font-weight:700;">
+            <%= typeName %>
+          </a>
           <form action="ToggleFollowType" method="post" style="margin:0;">
             <input type="hidden" name="redirectPage" value="home.jsp">
             <input type="hidden" name="typeId" value="<%= typeId %>">
@@ -104,7 +107,11 @@
           <label>
             <input type="text" name="id" value="<%=post.getId()%>">
           </label>
-          <div class="posta"><a href="" onclick="document.getElementById('form<%=post.getId()%>').submit();return false;"><%=post.getTitle()%></a></div>
+          <div class="posta">
+            <a href="" onclick="document.getElementById('form<%=post.getId()%>').submit();return false;">
+              <%= post.getAuthor() != null ? post.getAuthor() : "匿名" %> · <%= post.getTitle() %> · <%= post.getDate() != null ? post.getDate() : "" %>
+            </a>
+          </div>
         </form>
         <%
             }

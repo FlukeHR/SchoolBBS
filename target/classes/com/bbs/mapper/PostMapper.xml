@@ -56,4 +56,31 @@
         SELECT * FROM post WHERE type = #{type}
     </select>
 
+    <!-- 按类型+关键词搜索（分页） -->
+    <select id="searchPostsByTypePaged" resultType="com.bbs.pojo.Post">
+        SELECT *
+        FROM post
+        WHERE type = #{type}
+          AND (
+            title LIKE CONCAT('%', #{keyword}, '%')
+            OR content LIKE CONCAT('%', #{keyword}, '%')
+          )
+        <choose>
+          <when test="sort == 'date_asc'">ORDER BY date ASC</when>
+          <otherwise>ORDER BY date DESC</otherwise>
+        </choose>
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <!-- 统计按类型+关键词的总数 -->
+    <select id="countPostsByTypeKeyword" resultType="int">
+        SELECT COUNT(*)
+        FROM post
+        WHERE type = #{type}
+          AND (
+            title LIKE CONCAT('%', #{keyword}, '%')
+            OR content LIKE CONCAT('%', #{keyword}, '%')
+          )
+    </select>
+
 </mapper>
