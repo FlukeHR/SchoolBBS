@@ -47,3 +47,12 @@
   color: white;
   border-color: black;
 }
+
+/* 手机竖屏优化 */
+@media (max-width: 600px) {
+  .edit { margin: 12px; }
+  .edit input[type="text"]{ width: 100%; height: 36px; }
+  .edit textarea { width: 100%; margin-left: 0; margin-right: 0; height: 14em; font-size: 16px; }
+  .edit button { width: 100%; margin-left: 0; margin-right: 0; height: 44px; font-size: 16px; }
+  #typeOptions label { padding: 8px 14px; }
+}

@@ -45,3 +45,10 @@
     padding: 0;
   }
 }
+
+/* 手机竖屏优化 */
+@media (max-width: 600px) {
+  .leftcolumn .card { min-height: auto; }
+  .rightcolumn .card { min-height: auto; }
+  .rightcolumn { padding-left: 0; }
+}
