@@ -243,7 +243,7 @@ form.login-form input[type="password"] {
   }
   .header {
     min-height: 120px;
-    border-radius: 6px;
+    border-radius: 0px;
     padding: 16px;
     /* 头图也切换为移动轻量图 */
     background-image: linear-gradient(rgba(24,47,83,0.55), rgba(24,47,83,0.55)), var(--hero-img-mobile-1x);
@@ -299,4 +299,5 @@ form.login-form input[type="password"] {
   .card h3 { background-color: #0f2242; }
   .footer h2 { color: #dbe5ff; }
 }
+
 
