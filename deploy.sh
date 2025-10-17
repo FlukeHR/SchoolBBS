@@ -17,12 +17,12 @@ fi
 
 # 3. 清理旧部署
 echo "🗑️  清理旧的部署..."
-rm -f /usr/local/tomcat9/webapps/untitled2.war
-rm -rf /usr/local/tomcat9/webapps/untitled2
+rm -f /usr/local/tomcat9/webapps/ROOT.war
+rm -rf /usr/local/tomcat9/webapps/ROOT
 
-# 4. 复制WAR为固定上下文名 untitled2.war
-echo "📂 复制WAR文件到Tomcat并命名为 untitled2.war..."
-cp target/untitled2-1.0-SNAPSHOT.war /usr/local/tomcat9/webapps/untitled2.war
+# 4. 复制WAR为固定上下文名 ROOT.war
+echo "📂 复制WAR文件到Tomcat并命名为 ROOT.war..."
+cp target/untitled2-1.0-SNAPSHOT.war /usr/local/tomcat9/webapps/ROOT.war
 
 # 5. 启动Tomcat
 echo "🌐 启动Tomcat服务..."
@@ -31,5 +31,5 @@ bash ./start.sh
 echo "✅ 部署完成！"
 echo ""
 echo "访问地址："
-echo "  - 登录页面: http://localhost:8080/untitled2/index.html"
-echo "  - 管理员登录: http://localhost:8080/untitled2/adminLogin.jsp"
+echo "  - 登录页面: http://localhost:8080/index.html"
+echo "  - 管理员登录: http://localhost:8080/adminLogin.jsp"
