@@ -78,8 +78,6 @@
 └── stop.sh
 ```
 
-
-
 ## 数据库配置
 
 ### 数据库连接信息
@@ -113,8 +111,8 @@
 
 2. **构建项目**
    ```bash
-mvn clean package
-```
+   mvn clean package
+   ```
 
 3. **部署到Tomcat**
    - 将生成的WAR包复制到Tomcat的webapps目录
@@ -130,17 +128,21 @@ mvn clean package
 ## 运行与访问
 
 ### 启动服务
-```bash```bash```bash
+```bash
 ./start.sh
-```### 访问地址
+```
+
+### 访问地址
 - **登录页面**: http://localhost:8080/index.html
 - **首页**: http://localhost:8080/home.jsp
 - **管理员登录**: http://localhost:8080/adminLogin.jsp
 
 ### 停止服务
-```bash```bash```bash
+```bash
 ./stop.sh
-```## 系统功能使用说明
+```
+
+## 系统功能使用说明
 
 ### 用户功能
 1. **注册与登录**
