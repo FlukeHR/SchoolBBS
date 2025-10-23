@@ -45,8 +45,10 @@
             display: block;
         }
     </style>
+  <script src="js/modern-interactions.js"></script>
 </head>
 <body>
+<div class="container">
 
 <div class="header">
     <h1>公告管理</h1>
@@ -113,5 +115,6 @@
     </div>
 </div>
 
+</div>
 </body>
 </html>

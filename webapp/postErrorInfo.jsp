@@ -5,8 +5,10 @@
     <title>Info</title>
     <link rel="stylesheet" href="css/css/info.css" />
     <link rel="icon" href="images/error.png" type="image/x-icon" />
+  <script src="js/modern-interactions.js"></script>
 </head>
 <body>
+<div class="container">
 <%--<h1><%=request.getAttribute("outputMessage")%></h1>--%>
 <%
     String outputMessage = (String) request.getAttribute("outputMessage");
@@ -22,5 +24,6 @@
     </div>
 </div>
 <h1></h1>
+</div>
 </body>
 </html>

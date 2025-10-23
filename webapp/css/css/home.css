@@ -1,54 +1,85 @@
+/* 现代化主页布局 */
 .row input {
   display: none;
 }
 
-/* Create two unequal columns that floats next to each other */
-/* Left column */
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* 左侧栏 */
 .leftcolumn {
-  float: left;
-  width: 34%;
+  width: 100%;
+  order: 2;
 }
 
 .leftcolumn .card {
-  min-height: 700px;
+  min-height: auto;
 }
 
-/* Right column */
+/* 右侧栏 */
 .rightcolumn {
-  float: left;
-  width: 66%;
-  padding-left: 20px;
+  width: 100%;
+  padding-left: 0;
+  order: 1;
 }
 
 .rightcolumn .card {
-  min-height: 340px;
+  min-height: auto;
 }
 
 @keyframes cardContainerLoad {
   from {
     opacity: 0;
-    transform: translate3d(0, 10%, 0);
+    transform: translate3d(0, 20px, 0);
   }
   to {
     opacity: 1;
-    transform: none;
+    transform: translate3d(0, 0, 0);
   }
 }
 
-/* Responsive layout - when the screen is less than
- 800px wide, make the two columns stack on top of 
- each other instead of next to each other */
-@media screen and (max-width: 800px) {
-  .leftcolumn,
+/* 现代化响应式布局 */
+@media screen and (min-width: 768px) {
+  .row {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  
+  .leftcolumn {
+    width: 30%;
+    order: 1;
+  }
+  
   .rightcolumn {
-    width: 100%;
-    padding: 0;
+    width: 70%;
+    padding-left: 20px;
+    order: 2;
   }
 }
 
-/* 手机竖屏优化 */
-@media (max-width: 600px) {
-  .leftcolumn .card { min-height: auto; }
-  .rightcolumn .card { min-height: auto; }
-  .rightcolumn { padding-left: 0; }
+/* 平板优化 */
+@media screen and (max-width: 1024px) {
+  .row {
+    padding: 0 16px;
+  }
 }
+
+/* 手机优化 */
+@media screen and (max-width: 600px) {
+  .row {
+    padding: 0 12px;
+    gap: 16px;
+  }
+  
+  .leftcolumn .card, 
+  .rightcolumn .card { 
+    min-height: auto; 
+  }
+}
+

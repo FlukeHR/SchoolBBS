@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bbs.mapper.PostLikeMapper">
+    <select id="hasLiked" resultType="int">
+        SELECT COUNT(*) FROM post_like WHERE post_id = #{postId} AND username = #{username}
+    </select>
+
+    <insert id="like">
+        INSERT IGNORE INTO post_like (post_id, username) VALUES (#{postId}, #{username})
+    </insert>
+
+    <delete id="unlike">
+        DELETE FROM post_like WHERE post_id = #{postId} AND username = #{username}
+    </delete>
+
+    <select id="countLikes" resultType="int">
+        SELECT COUNT(*) FROM post_like WHERE post_id = #{postId}
+    </select>
+</mapper>

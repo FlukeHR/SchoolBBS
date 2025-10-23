@@ -17,11 +17,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="css/css/universal.css" />
   <link rel="stylesheet" href="css/css/home.css" />
+  <link rel="stylesheet" href="css/css/modern-components.css" />
   <title>校园贴吧</title>
   <link rel="icon" href="images/index.png" type="image/x-icon" />
   <link rel="shortcut icon" href="images/index.png" type="image/x-icon" />
   <link rel="stylesheet" href="css/css/announcement.css" />
   <script src="js/announcement.js"></script>
+  <script src="js/modern-interactions.js"></script>
 </head>
 
 <body>
@@ -36,10 +38,12 @@
     </div>
   </div>
 </div>
-<div class="header">
-  <h1>校园贴吧</h1>
-  <p>Everything happens for a reason</p>
-</div>
+
+<div class="container">
+  <div class="header">
+    <h1>校园贴吧</h1>
+    <p>Everything happens for a reason</p>
+  </div>
 
   <div class="topnav">
     <ul>
@@ -55,7 +59,7 @@
   </div>
 
   <div class="row">
-    <div class="rightcolumn" style="width: 100%">
+    <div class="rightcolumn">
       <%
         // 动态加载所有贴子类型
         PostTypeService postTypeService = new PostTypeService();
@@ -134,4 +138,5 @@
       %>
     </div>
   </div>
+</div>
 </body>

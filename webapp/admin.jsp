@@ -30,8 +30,10 @@
             background-color: #f2f2f2;
         }
     </style>
+  <script src="js/modern-interactions.js"></script>
 </head>
 <body>
+<div class="container">
     <h1>后台管理</h1>
     <button onclick="location.href='admin_index.html'" style="position: absolute;right: 390px">返回管理页</button>
     <!-- 显示所有帖子 -->
@@ -145,5 +147,6 @@
             %>
         </tbody>
     </table>
+</div>
 </body>
 </html>

@@ -9,8 +9,10 @@
     <title>帖子管理</title>
     <link rel="stylesheet" href="css/css/admin.css">
     <link rel="icon" href="images/postManage.png" type="image/x-icon" />
+  <script src="js/modern-interactions.js"></script>
 </head>
 <body>
+<div class="container">
     <h1>帖子管理</h1>
     <button onclick="location.href='admin_index.html'" style="position: absolute;right: 390px">返回管理页</button>
     <h2>帖子列表</h2>
@@ -48,5 +50,6 @@
             %>
         </tbody>
     </table>
+</div>
 </body>
 </html>

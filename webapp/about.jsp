@@ -9,26 +9,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="css/css/universal.css" />
   <link rel="stylesheet" href="css/css/about.css" />
+  <link rel="stylesheet" href="css/css/modern-components.css" />
   <title>校园贴吧</title>
   <link rel="icon" href="images/info.png" type="image/x-icon" />
-
+  <script src="js/modern-interactions.js"></script>
 </head>
 <body>
-<div class="header">
-  <h1>个人信息</h1>
-  <p>Everything happens for a reason</p>
-</div>
+<div class="container">
+  <div class="header">
+    <h1>个人信息</h1>
+    <p>Everything happens for a reason</p>
+  </div>
 
-<div class="topnav">
-  <ul>
-    <li><a href="home.jsp">首页</a></li>
-    <li><a href="mine.jsp">我的</a></li>
-    <li><a href="publish.html">发帖</a></li>
-    <li><a href="about.jsp">个人资料</a></li>
-    <li><a href="search.jsp">搜索</a></li>
-    <li><a href="smile.html">退出登录</a></li>
-  </ul>
-</div>
+  <div class="topnav">
+    <ul>
+      <li><a href="home.jsp">首页</a></li>
+      <li><a href="mine.jsp">我的</a></li>
+      <li><a href="publish.html">发帖</a></li>
+      <li><a href="about.jsp">个人资料</a></li>
+      <li><a href="search.jsp">搜索</a></li>
+      <li><a href="smile.html">退出登录</a></li>
+    </ul>
+  </div>
 
 <%
   String author = (String) session.getAttribute("username_session");
@@ -108,3 +110,6 @@
 <%
   }
 %>
+</div>
+</body>
+</html>

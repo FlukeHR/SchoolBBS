@@ -7,12 +7,15 @@
   <meta name="author" content="rogepi" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="css/css/universal.css" />
+  <link rel="stylesheet" href="css/css/modern-components.css" />
   <link rel="stylesheet" href="css/css/about.css" />
   <title>修改个人信息</title>
   <link rel="icon" href="images/userManage.png" type="image/x-icon" />
   <link rel="stylesheet" href="css/css/updateInfo.css" />
+  <script src="js/modern-interactions.js"></script>
 </head>
 <body>
+<div class="container">
   <div class="header">
     <h1>修改个人信息</h1>
     <p>Everything happens for a reason</p>
@@ -75,5 +78,6 @@
   <h2>Nothing Is Impossible</h2>
 </div>
 
+</div>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <!DOCTYPE html>
-
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
   <meta name="author" content="rogepi" />
@@ -13,24 +13,28 @@
   <link rel="stylesheet" href="css/css/about.css" />
   <link rel="stylesheet" href="css/css/mine.css" />
   <link rel="stylesheet" href="css/css/admin.css" />
-
+  <link rel="stylesheet" href="css/css/modern-components.css" />
   <title>校园贴吧</title>
   <link rel="icon" href="images/mine.png" type="image/x-icon" />
+  <script src="js/modern-interactions.js"></script>
 </head>
-  <h1>校园贴吧</h1>
-  <p>Everything happens for a reason</p>
-</div>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>校园贴吧</h1>
+    <p>Everything happens for a reason</p>
+  </div>
 
-<div class="topnav">
-  <ul>
-    <li><a href="home.jsp">首页</a></li>
-    <li><a href="mine.jsp">我的</a></li>
-    <li><a href="publish.html">发帖</a></li>
-    <li><a href="about.jsp">个人资料</a></li>
-    <li><a href="search.jsp">搜索</a></li>
-    <li><a href="smile.html">退出登录</a></li>
-  </ul>
-</div>
+  <div class="topnav">
+    <ul>
+      <li><a href="home.jsp">首页</a></li>
+      <li><a href="mine.jsp">我的</a></li>
+      <li><a href="publish.html">发帖</a></li>
+      <li><a href="about.jsp">个人资料</a></li>
+      <li><a href="search.jsp">搜索</a></li>
+      <li><a href="smile.html">退出登录</a></li>
+    </ul>
+  </div>
 
 <div class="row">
   <div class="Mycard">
@@ -78,10 +82,10 @@
   </div>
 </div>
 
-<div class="footer">
-  <h2>Nothing Is Impossible</h2>
+  <div class="footer">
+    <h2>Nothing Is Impossible</h2>
+  </div>
 </div>
 
 </body>
-
 </html>

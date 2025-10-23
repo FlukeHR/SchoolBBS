@@ -12,8 +12,10 @@
     <link rel="stylesheet" href="css/css/search.css" />
     <title>校园贴吧</title>
     <link rel="icon" href="images/index.png" type="image/x-icon" />
+  <script src="js/modern-interactions.js"></script>
 </head>
 <body>
+<div class="container">
 <div class="header">
     <h1>校园生活</h1>
     <p>Everything happens for a reason</p>
@@ -71,5 +73,6 @@
     }
 %>
 
+</div>
 </body>
 </html>

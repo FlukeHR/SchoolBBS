@@ -10,12 +10,15 @@
   <meta name="author" content="rogepi" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="css/css/universal.css" />
+  <link rel="stylesheet" href="css/css/modern-components.css" />
   <link rel="stylesheet" href="css/css/home_login.css" />
   <title>校园贴吧</title>
   <link rel="icon" href="images/index.png" type="image/x-icon" />
+  <script src="js/modern-interactions.js"></script>
 </head>
 
 <body>
+<div class="container">
 <div class="header">
   <h1>校园贴吧</h1>
   <p>Everything happens for a reason</p>
@@ -44,5 +47,6 @@
   <h2>Nothing Is Impossible</h2>
 </div>
 
+</div>
 </body>
 </html>

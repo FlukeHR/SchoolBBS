@@ -10,6 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>帖子类型</title>
   <link rel="stylesheet" href="css/css/universal.css" />
+  <link rel="stylesheet" href="css/css/modern-components.css" />
   <link rel="stylesheet" href="css/css/home.css" />
   <link rel="icon" href="images/index.png" type="image/x-icon" />
   <style>
@@ -23,8 +24,10 @@
     .post-row a:hover{ color:#1f6feb; }
     .empty{ text-align:center; color:#777; padding:24px 0; }
   </style>
+  <script src="js/modern-interactions.js"></script>
 </head>
 <body>
+<div class="container">
   <div class="header">
     <h1>校园贴吧</h1>
     <p>Everything happens for a reason</p>
@@ -164,5 +167,6 @@
       </form>
     </div>
   </div>
+</div>
 </body>
 </html>

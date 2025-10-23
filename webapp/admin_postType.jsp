@@ -9,6 +9,7 @@
   <title>贴子类型管理</title>
   <link rel="stylesheet" href="css/css/admin.css">
   <link rel="icon" href="images/index.png" type="image/x-icon" />
+  <script src="js/modern-interactions.js"></script>
 </head>
 <body style="position: absolute">
 <h1>贴子类型管理</h1>
@@ -58,5 +59,6 @@
   %>
   </tbody>
 </table>
+</div>
 </body>
 </html>
