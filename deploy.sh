@@ -57,12 +57,6 @@ open http://localhost:8080/index.html
 
 echo "✅ 部署完成！"
 echo ""
-echo "🎨 现代化特性："
-echo "  - 渐变背景和玻璃拟态效果"
-echo "  - 响应式设计和流畅动画"
-echo "  - 现代化UI组件和交互效果"
-echo ""
 echo "🌐 访问地址："
 echo "  - 登录页面: http://localhost:8080/index.html"
 echo "  - 管理员登录: http://localhost:8080/adminLogin.jsp"
-echo "  - 所有页面都使用根路径，无untitled2前缀"
