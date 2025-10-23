@@ -9,21 +9,20 @@
     <meta name="author" content="rogepi" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/css/universal.css" />
-  <link rel="stylesheet" href="css/css/modern-components.css" />
-    <link rel="stylesheet" href="css/css/search.css" />
     <link rel="stylesheet" href="css/css/modern-components.css" />
+    <link rel="stylesheet" href="css/css/search.css" />
     <title>校园贴吧</title>
     <link rel="icon" href="images/search.png" type="image/x-icon" />
     <script src="js/modern-interactions.js"></script>
-  <script src="js/modern-interactions.js"></script>
 </head>
 <body>
-<div class="container">
 <div class="container">
     <div class="header">
         <h1>校园贴吧</h1>
         <p>Everything happens for a reason</p>
     </div>
+</body>
+</html>
 
     <div class="topnav">
         <ul>
@@ -32,16 +31,17 @@
             <li><a href="publish.html">发帖</a></li>
             <li><a href="about.jsp">个人资料</a></li>
             <li><a href="search.jsp">搜索</a></li>
-            <li><a href="smile.html">退出登录</a></li>
-        </ul>
+            <li><a href="home_login.jsp">退出登录</a></li>
+            </div>
+        </div>
     </div>
 
 <div class="row">
-    <div class="searchCard">
+    <div class="card">
         <h3>搜索帖子</h3>
         <form action="search.jsp" method="get" class="search-form">
-            <input type="text" name="keyword" placeholder="请输入关键字" required>
-            <button type="submit">搜索</button>
+            <input type="text" name="keyword" placeholder="请输入关键字" required class="form-input">
+            <button type="submit" class="btn btn-primary">搜索</button>
         </form>
     </div>
 </div>
@@ -65,16 +65,19 @@
 <div class="row">
     <div class="card search-results">
         <h3 style="color: white">搜索结果</h3>
-        <ul>
+        <div class="post-list">
+            <div class="post-items">
             <%
                 for (Post post : searchResults) {
             %>
-            <li>
-                <a href="post.jsp?id=<%= post.getId() %>"><%= post.getTitle() %></a>
-                <p>作者：<%= post.getAuthor() %></p>
-                <p>类型：<%= post.getPostType() %></p>
-                <p>时间：<%= post.getDate() %></p>
-            </li>
+            <div class="post-item">
+                <h4><a href="post.jsp?id=<%= post.getId() %>"><%= post.getTitle() %></a></h4>
+                <div class="post-meta">
+                    <span>作者：<%= post.getAuthor() %></span>
+                    <span>类型：<%= post.getPostType() %></span>
+                    <span>时间：<%= post.getDate() %></span>
+                </div>
+            </div>
             <%
                 }
             %>
@@ -85,8 +88,9 @@
 } else {
 %>
 <div class="row">
-    <div class="card no-results">
+    <div class="card empty-state">
         <h3>没有找到相关帖子</h3>
+        <p>试试其他关键词或浏览<a href="home.jsp">首页</a>推荐内容</p>
     </div>
 </div>
 <%

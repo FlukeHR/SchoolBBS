@@ -1,8 +1,6 @@
 package com.bbs.mapper;
 
 import com.bbs.pojo.Comment;
-import com.bbs.pojo.Post;
-import com.bbs.pojo.User;
 
 import java.util.List;
 

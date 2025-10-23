@@ -1,7 +1,5 @@
 package com.bbs.pojo;
 
-import lombok.ToString;
-
 import java.sql.Date;
 
 public class Comment {

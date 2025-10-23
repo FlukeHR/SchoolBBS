@@ -1,7 +1,6 @@
 package com.bbs.controller;
 
 import com.bbs.pojo.Trade;
-import com.bbs.service.TradeService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

@@ -1,13 +1,11 @@
 package com.bbs.controller;
 
-import com.bbs.mapper.UserMapper;
 import com.bbs.pojo.Comment;
 import com.bbs.pojo.Post;
 import com.bbs.pojo.User;
 import com.bbs.service.CommentService;
 import com.bbs.service.PostService;
 import com.bbs.service.UserService;
-import com.mysql.cj.Session;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

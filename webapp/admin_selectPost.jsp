@@ -2,28 +2,34 @@
 <%@ page import="com.bbs.service.PostService" %>
 <%@ page import="com.bbs.pojo.Post" %>
 <%@ page import="java.util.List" %>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>帖子管理</title>
-    <link rel="stylesheet" href="css/css/admin.css">
+    <link rel="stylesheet" href="css/css/universal.css">
+    <link rel="stylesheet" href="css/css/modern-components.css">
     <link rel="icon" href="images/postManage.png" type="image/x-icon" />
-  <script src="js/modern-interactions.js"></script>
+    <script src="js/modern-interactions.js"></script>
 </head>
 <body>
 <div class="container">
+<div class="header">
     <h1>帖子管理</h1>
-    <button onclick="location.href='admin_index.html'" style="position: absolute;right: 390px">返回管理页</button>
+    <button onclick="location.href='admin_index.html'" class="btn btn-secondary">返回管理页</button>
+</div>
+    <!-- 显示所有帖子 -->
     <h2>帖子列表</h2>
-    <table id="postsTable">
-        <thead>
+    <div class="card">
+    <table id="postsTable" class="data-table" style="width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--border-color);">
+        <thead style="background-color: var(--bg-secondary);">
             <tr>
-                <th>ID</th>
-                <th>标题</th>
-                <th>内容</th>
-                <th>作者</th>
-                <th>操作</th>
+                <th style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); width: 80px;">ID</th>
+                <th style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); width: 20%;">标题</th>
+                <th style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); width: 40%;">内容</th>
+                <th style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); width: 15%;">作者</th>
+                <th style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); width: 10%;">操作</th>
             </tr>
         </thead>
         <tbody>
@@ -32,16 +38,16 @@
                 List<Post> posts = postService.findAllPost();
                 for (Post post : posts) {
             %>
-            <tr>
-                <td><%= post.getId() %></td>
-                <td><%= post.getTitle() %></td>
-                <td><%= post.getContent() %></td>
-                <td><%= post.getAuthor() %></td>
-                <td>
-                    <form action="adminDeletePost" method="post">
+            <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 12px; border-right: 1px solid var(--border-color);"><%= post.getId() %></td>
+                <td style="padding: 12px; border-right: 1px solid var(--border-color);"><%= post.getTitle() %></td>
+                <td style="padding: 12px; border-right: 1px solid var(--border-color);" class="content-preview"><%= post.getContent() %></td>
+                <td style="padding: 12px; border-right: 1px solid var(--border-color);"><%= post.getAuthor() %></td>
+                <td style="padding: 12px;">
+                    <form action="adminDeletePost" method="post" class="inline-form">
                         <input type="hidden" name="redirectPage" value="admin_selectPost.jsp">
                         <input type="hidden" name="id" value="<%= post.getId() %>">
-                        <button type="submit">删除</button>
+                        <button type="submit" class="btn btn-danger">删除</button>
                     </form>
                 </td>
             </tr>
@@ -50,6 +56,7 @@
             %>
         </tbody>
     </table>
+    </div>
 </div>
 </body>
 </html>

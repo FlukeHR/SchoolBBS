@@ -6,8 +6,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>公告管理</title>
+    <link rel="stylesheet" href="css/css/universal.css">
     <link rel="stylesheet" href="css/css/admin.css">
+    <script src="js/announcement.js"></script>
+    <script src="js/modern-interactions.js"></script>
+    <style>
         .announcement-item {
             padding: 15px;
             border-bottom: 1px solid #ddd;

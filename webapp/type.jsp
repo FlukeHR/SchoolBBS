@@ -41,7 +41,7 @@
       <li><a href="about.jsp">个人资料</a></li>
       <li><a href="search.jsp">搜索</a></li>
       <li><a href="trade.html">交易</a></li>
-      <li><a href="smile.html">退出登录</a></li>
+      <li><a href="home_login.jsp">退出登录</a></li>
     </ul>
   </div>
 

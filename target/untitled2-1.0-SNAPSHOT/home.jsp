@@ -21,24 +21,11 @@
   <title>校园贴吧</title>
   <link rel="icon" href="images/index.png" type="image/x-icon" />
   <link rel="shortcut icon" href="images/index.png" type="image/x-icon" />
-  <link rel="stylesheet" href="css/css/announcement.css" />
-  <script src="js/announcement.js"></script>
+
   <script src="js/modern-interactions.js"></script>
 </head>
 
 <body>
-<button id="showPopup" onclick="showPopup()">公告</button>
-<div id="overlay">
-  <div class="popup">
-    <p class="popup_title">公告</p>
-    <p class="popup_content">严禁出现不符合社会主义核心价值观的内容！</p>
-    <div class="popup_btn">
-      <button class="cancelBtn" onclick="hidePopup()">取消</button>
-      <button class="confirmBtn" onclick="hidePopup()">确认</button>
-    </div>
-  </div>
-</div>
-
 <div class="container">
   <div class="header">
     <h1>校园贴吧</h1>
@@ -54,12 +41,12 @@
       <li><a href="about.jsp">个人资料</a></li>
       <li><a href="search.jsp">搜索</a></li>
       <li><a href="trade.html">交易</a></li>
-      <li><a href="smile.html">退出登录</a></li>
+      <li><a href="home_login.jsp">退出登录</a></li>
     </ul>
   </div>
 
-  <div class="row">
-    <div class="rightcolumn">
+  <div class="row" style="display: flex; justify-content: center;">
+    <div class="rightcolumn" style="width: 80%; max-width: 1200px;">
       <%
         // 动态加载所有贴子类型
         PostTypeService postTypeService = new PostTypeService();
@@ -85,7 +72,7 @@
             } catch (Exception e) { e.printStackTrace(); }
           }
       %>
-      <div class="card">
+      <div class="card" style="margin-bottom: 20px; min-height: 200px;">
         <h3 style="display:flex;align-items:center;gap:10px;">
           <a href="type.jsp?type=<%= java.net.URLEncoder.encode(typeName, "UTF-8") %>" style="text-decoration:underline;color:#ffffff;font-weight:700;">
             <%= typeName %>

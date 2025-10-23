@@ -2,7 +2,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Info</title>
+  <link rel="stylesheet" href="css/css/universal.css">
   <link rel="stylesheet" href="css/css/info.css" />
   <link rel="icon" href="images/error.png" type="image/x-icon" />
   <script src="js/modern-interactions.js"></script>

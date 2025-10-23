@@ -1,9 +1,7 @@
 package com.bbs.controller;
 
-import com.bbs.pojo.Admin;
 import com.bbs.pojo.User;
 import com.bbs.service.UserService;
-import com.bbs.service.adminService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

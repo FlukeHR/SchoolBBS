@@ -3,27 +3,32 @@
 <%@ page import="com.bbs.pojo.User" %>
 <%@ page import="java.util.List" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>用户管理</title>
-    <link rel="stylesheet" href="css/css/admin.css">
+    <link rel="stylesheet" href="css/css/universal.css">
+    <link rel="stylesheet" href="css/css/modern-components.css">
     <link rel="icon" href="images/userManage.png" type="image/x-icon" />
-  <script src="js/modern-interactions.js"></script>
+    <script src="js/modern-interactions.js"></script>
 </head>
-<body style="position: absolute">
+<body>
+<div class="container">
+<div class="header">
     <h1>用户管理</h1>
-    <button onclick="location.href='admin_index.html'" style="position: absolute;right: 390px">返回管理页</button>
+    <button onclick="location.href='admin_index.html'" class="btn btn-secondary">返回管理页</button>
+</div>
     <!-- 显示所有用户 -->
     <h2>用户列表</h2>
-    <table id="usersTable">
-        <thead>
+    <div class="card">
+    <table id="usersTable" class="data-table" style="width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--border-color);">
+        <thead style="background-color: var(--bg-secondary);">
             <tr>
-                <th>ID</th>
-                <th>用户名</th>
-                <th>性别</th>
-                <th>操作</th>
+                <th style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); width: 80px;">ID</th>
+                <th style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); width: 25%;">用户名</th>
+                <th style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); width: 15%;">性别</th>
+                <th style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); width: 50%;">操作</th>
             </tr>
         </thead>
         <tbody>
@@ -32,23 +37,23 @@
                 List<User> users = userService.selectAllUsers();
                 for (User user : users) {
             %>
-            <tr>
-                <td><%= user.getUid() %></td>
-                <td><%= user.getUsername() %></td>
-                <td><%= user.getSex() %></td>
-                <td>
-                    <form action="adminResetPassword" method="post">
+            <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 12px; border-right: 1px solid var(--border-color);"><%= user.getUid() %></td>
+                <td style="padding: 12px; border-right: 1px solid var(--border-color);"><%= user.getUsername() %></td>
+                <td style="padding: 12px; border-right: 1px solid var(--border-color);"><%= user.getSex() %></td>
+                <td style="padding: 12px;">
+                    <form action="adminResetPassword" method="post" class="inline-form">
                         <input type="hidden" name="redirectPage" value="admin_selectUser.jsp">
                         <input type="hidden" name="uid" value="<%= user.getUid() %>">
                         <input type="hidden" name="userName" value="<%= user.getUsername() %>">
                         <input type="hidden" name="sex" value="<%= user.getSex() %>">
-                        <input type="text" name="newPassword" placeholder="输入新密码">
-                        <button type="submit">重置密码</button>
+                        <input type="text" name="newPassword" placeholder="输入新密码" class="form-input form-input-small">
+                        <button type="submit" class="btn btn-secondary">重置密码</button>
                     </form>
-                    <form action="adminDeleteUser" method="post" style="margin-top:8px;" onsubmit="return confirm('确认删除该用户吗？此操作不可恢复');">
+                    <form action="adminDeleteUser" method="post" class="inline-form" onsubmit="return confirm('确认删除该用户吗？此操作不可恢复');">
                         <input type="hidden" name="redirectPage" value="admin_selectUser.jsp">
                         <input type="hidden" name="uid" value="<%= user.getUid() %>">
-                        <button type="submit" style="background:#d9534f;color:white;border:none;padding:4px 10px;border-radius:3px;cursor:pointer;">删除用户</button>
+                        <button type="submit" class="btn btn-danger">删除用户</button>
                     </form>
                 </td>
             </tr>
@@ -57,6 +62,7 @@
             %>
         </tbody>
     </table>
+    </div>
 </div>
 </body>
 </html>

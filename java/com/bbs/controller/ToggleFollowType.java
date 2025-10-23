@@ -1,8 +1,6 @@
 package com.bbs.controller;
 
 import com.bbs.service.FollowService;
-import com.bbs.service.PostTypeService;
-import com.bbs.pojo.PostType;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

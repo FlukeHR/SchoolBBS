@@ -2,7 +2,6 @@ package com.bbs.controller;
 
 import com.bbs.pojo.Post;
 import com.bbs.service.PostService;
-import org.apache.ibatis.session.SqlSession;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

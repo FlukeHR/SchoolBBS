@@ -7,14 +7,19 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>我的贴吧</title>
-  <link rel="stylesheet" href="css/css/admin.css">
+  <link rel="stylesheet" href="css/css/universal.css">
+  <link rel="stylesheet" href="css/css/modern-components.css">
   <link rel="icon" href="images/index.png" type="image/x-icon" />
   <script src="js/modern-interactions.js"></script>
 </head>
-<body style="position: absolute">
-<h1>我的贴吧</h1>
-<button onclick="location.href='home.jsp'" style="position: absolute;right: 390px">返回首页</button>
+<body>
+<div class="container">
+<div class="header">
+  <h1>我的贴吧</h1>
+  <button onclick="location.href='home.jsp'" class="btn btn-secondary">返回首页</button>
+</div>
 
 <%
   HttpSession sess = request.getSession(false);
@@ -32,12 +37,12 @@
 
 <h2>我创建的贴子类型</h2>
 
-<div class="card" style="padding:12px;margin-bottom:12px;">
-  <form action="PostTypeCreate" method="post" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+<div class="card">
+  <form action="PostTypeCreate" method="post" class="form-inline">
     <input type="hidden" name="redirectPage" value="my_postType.jsp">
-    <input type="text" name="typeName" placeholder="类型名称" required>
-    <input type="text" name="description" placeholder="描述">
-    <button type="submit">新建类型</button>
+    <input type="text" name="typeName" placeholder="类型名称" required class="form-input">
+    <input type="text" name="description" placeholder="描述" class="form-input">
+    <button type="submit" class="btn btn-primary">新建类型</button>
   </form>
   <small>提示：新建后可在下表重命名或删除。删除会清空该类型下的所有帖子和评论。</small>
   <div>
@@ -45,14 +50,15 @@
   </div>
   <hr>
 </div>
-<table id="typeTable">
-  <thead>
+<div class="card">
+<table id="typeTable" class="data-table" style="width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--border-color);">
+  <thead style="background-color: var(--bg-secondary);">
   <tr>
-    <th>ID</th>
-    <th>类型名称</th>
-    <th>创建时间</th>
-    <th>描述</th>
-    <th>操作</th>
+    <th style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); width: 80px;">ID</th>
+    <th style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); width: 20%;">类型名称</th>
+    <th style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); width: 20%;">创建时间</th>
+    <th style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); width: 30%;">描述</th>
+    <th style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); width: 20%;">操作</th>
   </tr>
   </thead>
   <tbody>
@@ -67,22 +73,22 @@
     if (types != null && !types.isEmpty()) {
       for (PostType t : types) {
   %>
-  <tr>
-    <td><%= t.getId() %></td>
-    <td><%= t.getTypeName() %></td>
-    <td><%= t.getCreateTime() %></td>
-    <td><%= t.getDescription() %></td>
-    <td>
-      <form action="userUpdatePostTypeName" method="post" style="display:inline-block;margin-right:8px;">
+  <tr style="border-bottom: 1px solid var(--border-color);">
+    <td style="padding: 12px; border-right: 1px solid var(--border-color);"><%= t.getId() %></td>
+    <td style="padding: 12px; border-right: 1px solid var(--border-color);"><%= t.getTypeName() %></td>
+    <td style="padding: 12px; border-right: 1px solid var(--border-color);"><%= t.getCreateTime() %></td>
+    <td style="padding: 12px; border-right: 1px solid var(--border-color);"><%= t.getDescription() %></td>
+    <td style="padding: 12px;">
+      <form action="userUpdatePostTypeName" method="post" class="inline-form">
         <input type="hidden" name="redirectPage" value="my_postType.jsp">
         <input type="hidden" name="id" value="<%= t.getId() %>">
-        <input type="text" name="newName" placeholder="新名称" required>
-        <button type="submit">重命名</button>
+        <input type="text" name="newName" placeholder="新名称" required class="form-input form-input-small">
+        <button type="submit" class="btn btn-secondary">重命名</button>
       </form>
-      <form action="userDeletePostType" method="post" style="display:inline-block;" onsubmit="return confirm('确认删除该类型吗？将清空此类型下所有帖子和评论，且不可恢复');">
+      <form action="userDeletePostType" method="post" class="inline-form" onsubmit="return confirm('确认删除该类型吗？将清空此类型下所有帖子和评论，且不可恢复');">
         <input type="hidden" name="redirectPage" value="my_postType.jsp">
         <input type="hidden" name="id" value="<%= t.getId() %>">
-        <button type="submit" style="background:#d9534f;color:white;border:none;padding:4px 10px;border-radius:3px;cursor:pointer;">删除</button>
+        <button type="submit" class="btn btn-danger">删除</button>
       </form>
     </td>
   </tr>
@@ -92,6 +98,7 @@
   %>
   </tbody>
 </table>
+</div>
 </div>
 </body>
 </html>

@@ -15,13 +15,6 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# 3. 清理旧部署
-echo "🗑️  清理旧的部署..."
-rm -f /usr/local/tomcat9/webapps/ROOT.war
-rm -rf /usr/local/tomcat9/webapps/ROOT
-# 确保清理所有untitled2相关文件
-rm -rf /usr/local/tomcat9/webapps/untitled2
-rm -f /usr/local/tomcat9/webapps/untitled2.war
 
 # 4. 复制WAR为固定上下文名 ROOT.war
 echo "📂 复制WAR文件到Tomcat并命名为 ROOT.war..."
@@ -44,12 +37,6 @@ else
     exit 1
 fi
 
-# 8. 检查是否还有untitled2目录
-if [ -d "/usr/local/tomcat9/webapps/untitled2" ]; then
-    echo "   ⚠️  发现untitled2目录，正在清理..."
-    rm -rf /usr/local/tomcat9/webapps/untitled2
-    rm -f /usr/local/tomcat9/webapps/untitled2.war
-fi
 
 # 9. 打开浏览器
 echo "🌍 打开浏览器..."

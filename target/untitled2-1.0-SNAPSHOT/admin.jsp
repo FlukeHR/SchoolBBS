@@ -12,6 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>后台管理</title>
     <link rel="icon" href="images/admin.png" type="image/x-icon" />
+    <link rel="stylesheet" href="css/css/universal.css">
     <link rel="stylesheet" href="css/css/admin.css">
     <style>
         body {

@@ -44,8 +44,10 @@
                     <div class="face-slider-eye face-slider-eye-right"></div>
                     <div class="face-slider-mouth"></div>
                 </figure>
-                <button class="button button-happy" >继续浏览</button>
-                <button class="button button-unhappy">退出登录</button>
+                <div style="display: flex; justify-content: center; gap: 20px; margin-top: 30px;">
+                    <button class="button button-happy">继续浏览</button>
+                    <button class="button button-unhappy" style="position: static !important;">退出登录</button>
+                </div>
             </div>
         </section>
     </div>
@@ -116,16 +118,12 @@
             if (subtitleText) subtitle.innerHTML = subtitleText
         }
 
-        if (hideButton) {
-            hideButton.style.visibility = 'hidden'
-        } else {
-            btnHappy.style.visibility = 'visible'
-            btnUnhappy.style.visibility = 'visible'
-            btnUnhappy.style.position = 'static'
-            btnUnhappy.style.left = ''
-            btnUnhappy.style.top = ''
-            btnHappy.style.transform = 'scale(1)'
-        }
+        // 确保两个按钮始终可见且保持在固定位置
+        btnHappy.style.visibility = 'visible'
+        btnUnhappy.style.visibility = 'visible'
+        btnUnhappy.style.position = 'static !important'
+        btnHappy.style.transform = 'scale(1)'
+        
         updateFaceCSS()
     }
 
@@ -216,13 +214,12 @@
 
             if (state.rejectCount >= config.maxUnhappyCount) {
                 stopAnimation()
-                transitionToState('unhappy', btnHappy)
+                transitionToState('unhappy')
             } else {
-                btnUnhappy.style.position = 'absolute'
-                btnUnhappy.style.left = `${Math.random() * 80}%`
-                btnUnhappy.style.top = `${Math.random() * 80}%`
+                // 不再移动按钮，而是改变其他视觉效果
                 state.target.happiness = Math.max(0.1, state.target.happiness - 0.1)
                 btnHappy.style.transform = `scale(${1 + state.rejectCount * 0.1})`
+                btnHappy.style.backgroundColor = '#4CAF50'
             }
         } else {
             state.rejectCount = 0

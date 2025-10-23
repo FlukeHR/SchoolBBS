@@ -1,7 +1,6 @@
 package com.bbs.service;
 
 import com.bbs.mapper.CommentMapper;
-import com.bbs.mapper.PostMapper;
 import com.bbs.pojo.Comment;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;

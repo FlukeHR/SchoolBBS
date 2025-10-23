@@ -26,7 +26,7 @@
     <li><a href="mine.jsp">我的</a></li>
     <li><a href="publish.html">发帖</a></li>
     <li><a href="about.jsp">个人资料</a></li>
-    <li><a href="smile.html">退出登录</a></li>
+    <li><a href="home_login.jsp">退出登录</a></li>
   </ul>
 </div>
 
