@@ -54,26 +54,30 @@
 - 查看个人发布的交易信息
 
 ## 项目结构
-├── java/                          # Java源代码目录
-│   └── com/bbs/                   # 主包
-│       ├── controller/            # Servlet控制器
-│       ├── mapper/                # MyBatis映射文件
-│       ├── pojo/                  # 实体类
-│       └── service/               # 业务逻辑层
-├── resources/                     # 资源文件目录
-│   ├── db.properties              # 数据库配置
-│   ├── log4j.properties           # 日志配置
-│   ├── mybatis-config.xml         # MyBatis配置
-│   └── schema.sql                 # 数据库初始化脚本
-├── webapp/                        # Web应用目录
-│   ├── WEB-INF/                   # Web应用配置
-│   ├── css/                       # CSS样式文件
-│   ├── images/                    # 图片资源
-│   ├── js/                        # JavaScript文件
-│   └── *.jsp                      # JSP页面
-├── pom.xml                        # Maven项目配置
-├── start.sh                       # 启动脚本
-└── stop.sh                        # 停止脚本
+
+```
+├── java/
+│   └── com/bbs/
+│       ├── controller/
+│       ├── mapper/
+│       ├── pojo/
+│       └── service/
+├── resources/
+│   ├── db.properties
+│   ├── log4j.properties
+│   ├── mybatis-config.xml
+│   └── schema.sql
+├── webapp/
+│   ├── WEB-INF/
+│   ├── css/
+│   ├── images/
+│   ├── js/
+│   └── *.jsp
+├── pom.xml
+├── start.sh
+└── stop.sh
+```
+
 
 
 ## 数据库配置
@@ -109,8 +113,8 @@
 
 2. **构建项目**
    ```bash
-   mvn clean package
-   ```
+mvn clean package
+```
 
 3. **部署到Tomcat**
    - 将生成的WAR包复制到Tomcat的webapps目录
@@ -126,21 +130,17 @@
 ## 运行与访问
 
 ### 启动服务
-```bash
+```bash```bash```bash
 ./start.sh
-```
-
-### 访问地址
+```### 访问地址
 - **登录页面**: http://localhost:8080/index.html
 - **首页**: http://localhost:8080/home.jsp
 - **管理员登录**: http://localhost:8080/adminLogin.jsp
 
 ### 停止服务
-```bash
+```bash```bash```bash
 ./stop.sh
-```
-
-## 系统功能使用说明
+```## 系统功能使用说明
 
 ### 用户功能
 1. **注册与登录**
