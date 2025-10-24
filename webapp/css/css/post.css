@@ -39,17 +39,28 @@
 }
 
 .comment .title .btn button {
-  height: 30px !important;
-  width: 30px !important;
-  font-size: 20px !important;
+  height: 36px !important;
+  width: 36px !important;
+  font-size: 24px !important;
+  line-height: 1 !important;
   padding: 0 !important;
   border-radius: 50% !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   background-color: #667eea !important;
-  box-shadow: none !important;
+  color: white !important;
+  border: none !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
   margin: 0 !important;
+  transition: all 0.3s ease !important;
+}
+
+.comment .title .btn button:hover {
+  background-color: #5a67d8 !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
 }
 
 .comment .title h3 {

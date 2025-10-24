@@ -1,0 +1,144 @@
+.row {
+  animation: cardContainerLoad 2s;
+}
+
+.row .card {
+  min-height: auto;
+  animation: none;
+}
+
+.row .comment {
+  margin-top: 0;
+}
+
+.row hr {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.comment .title {
+  position: relative;
+  float: left;
+  height: 45px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.comment .title .text {
+  float: left;
+  height: 30px;
+  width: 80%;
+  margin-right: 0;
+}
+
+.comment .title .btn {
+  float: right;
+  margin: 5px;
+  margin-right: 20px;
+  z-index: 10;
+}
+
+.comment .title .btn button {
+  height: 36px !important;
+  width: 36px !important;
+  font-size: 24px !important;
+  line-height: 1 !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-color: #667eea !important;
+  color: white !important;
+  border: none !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+  margin: 0 !important;
+  transition: all 0.3s ease !important;
+}
+
+.comment .title .btn button:hover {
+  background-color: #5a67d8 !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+}
+
+.comment .title h3 {
+  padding-left: 20px;
+  background-color: rgba(255, 255, 255, 0);
+  text-align: left;
+  color: #333;
+}
+
+.comment .cinput {
+  position: relative;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 5;
+  clear: both;
+}
+
+.comment .cinput form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.comment .cinput input[type="text"] {
+  flex: 1;
+  height: 40px !important;
+  width: auto !important;
+  float: none !important;
+}
+
+.comment .cinput .btn {
+  float: none;
+  height: auto;
+  width: auto;
+}
+
+.comment .cinput .btn button {
+  margin-left: 0 !important;
+  height: 40px !important;
+  width: auto !important;
+  padding: 0 15px !important;
+  float: none !important;
+}
+
+.comment .comments {
+  margin: 20px;
+  clear: both;
+  position: relative;
+  z-index: 1;
+}
+
+.ifmt {
+  padding-top: 3px;
+  text-align: center;
+}
+
+.ifmt .author {
+  float: left;
+  width: 33%;
+}
+
+.ifmt .type {
+  float: left;
+  width: 33%;
+}
+
+.ifmt .date {
+  float: left;
+  width: 33%;
+}
+
+.content {
+  padding: 20px;
+  padding-top: 50px;
+  font-size: 18px;
+}

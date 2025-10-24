@@ -35,7 +35,7 @@
   String currentUser = (String) sess.getAttribute("username_session");
 %>
 
-<h2>我创建的贴子类型</h2>
+<h2 style="text-align: center;">我创建的贴子类型</h2>
 
 <div class="card">
   <form action="PostTypeCreate" method="post" class="form-inline">
