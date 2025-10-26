@@ -27,10 +27,6 @@
     </select>
 
     <!-- 根据帖子ID查询评论 -->
-    <select id="findCommentByPostId" parameterType="int" resultType="com.bbs.pojo.Comment">
-        SELECT * FROM comment WHERE post_id = #{post_id}
-    </select>
-    <!-- 根据帖子ID查询单个评论 -->
     <select id="findCommentsByPostId" parameterType="int" resultType="com.bbs.pojo.Comment">
         SELECT * FROM comment WHERE post_id = #{post_id}
     </select>

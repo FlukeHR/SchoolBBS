@@ -9,7 +9,6 @@ public interface CommentMapper {
     void removeCommentById(int id) throws Exception ;
     Comment findCommentById(int id) throws Exception;
     List<Comment> findCommentByAuthor(String author) throws Exception;
-    List<Comment> findCommentByPostId (int id) throws Exception;
     List<Comment> findCommentAll() throws Exception;
     void updateComment(Comment comment) throws Exception;
     int findPostIdByCommentId(int id) throws Exception;
