@@ -19,4 +19,12 @@ public class Admin {
     public void setAdminPassword(String adminPassword) {
         this.adminPassword = adminPassword;
     }
+
+    @Override
+    public String toString() {
+        return "Admin{" +
+                "adminName='" + adminName + '\'' +
+                ", adminPassword='[MASKED]'" +
+                '}';
+    }
 }

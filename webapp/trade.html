@@ -67,14 +67,14 @@
     let currentUser = '匿名';
 
     function contextPath(){
-      const parts = location.pathname.split('/').filter(Boolean);
-      return parts.length ? ('/' + parts[0]) : '';
+      // 对于直接访问的页面，不需要上下文路径
+      return '';
     }
     function assetUrl(p){
       if (!p) return '';
       if (/^https?:\/\//i.test(p)) return p;
-      if (p.startsWith('/uploads/')) return contextPath() + p;
-      if (p.startsWith('uploads/')) return contextPath() + '/' + p;
+      if (p.startsWith('/uploads/')) return p; // 直接使用绝对路径
+      if (p.startsWith('uploads/')) return '/' + p; // 补齐前导斜杠
       return p; // 其他相对路径保持不变
     }
 
@@ -92,8 +92,12 @@
       try {
         const url = mineOnly ? 'TradeMine' : 'TradeList';
         const res = await fetch(url);
-        if (!res.ok) throw new Error('网络错误');
+        if (!res.ok) {
+          console.error('API响应错误:', res.status, res.statusText);
+          throw new Error(`网络错误: ${res.status}`);
+        }
         let list = await res.json();
+        console.log('获取到的数据:', list);
         const q = (keyword||'').trim();
         if (q) {
           list = list.filter(it => (it.title||'').includes(q) || (it.description||'').includes(q));
@@ -114,9 +118,11 @@
           return new Date(b.date||0) - new Date(a.date||0);
         });
         render(list);
-      } catch (_) {
-        // 降级：无后端时展示空态
-        render([]);
+      } catch (error) {
+        console.error('获取商品列表失败:', error);
+        // 显示错误信息而不是空状态
+        const wrap = document.getElementById('market');
+        wrap.innerHTML = `<div class="empty">加载失败: ${error.message}</div>`;
       }
     }
 

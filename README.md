@@ -10,7 +10,7 @@
 - **Web框架**: Servlet
 - **ORM框架**: MyBatis 3.5.6
 - **数据库**: MySQL 8.0
-- **日志框架**: Log4j 1.2.17
+- **日志框架**: Log4j 2.20.0
 
 ### 前端
 - **页面技术**: JSP、HTML5、CSS3
@@ -63,7 +63,7 @@
 │       ├── pojo/
 │       └── service/
 ├── resources/
-│   ├── db.properties
+│   ├── db.properties.sample
 │   ├── log4j.properties
 │   ├── mybatis-config.xml
 │   └── schema.sql
@@ -81,11 +81,16 @@
 ## 数据库配置
 
 ### 数据库连接信息
-- **数据库名**: forumsys
-- **用户名**: root
-- **密码**: 123456
-- **驱动**: com.mysql.cj.jdbc.Driver
-- **URL**: jdbc:mysql://localhost:3306/forumsys?serverTimezone=UTC
+⚠️ **重要安全提示**: 数据库凭据不应明文存储在代码库中
+
+配置方式：
+1. 复制 `resources/db.properties.sample` 为 `resources/db.properties`
+2. 修改其中的占位符为实际值：
+   - **数据库名**: forumsys
+   - **用户名**: 替换 ${DB_USERNAME:your_username}
+   - **密码**: 替换 ${DB_PASSWORD:your_password}
+   - **驱动**: com.mysql.cj.jdbc.Driver
+   - **URL**: jdbc:mysql://localhost:3306/forumsys?serverTimezone=UTC
 
 ### 主要数据表
 - **user**: 用户信息表
@@ -107,7 +112,11 @@
 1. **配置数据库**
    - 创建MySQL数据库：`CREATE DATABASE forumsys CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`
    - 导入数据库脚本：`resources/schema.sql`
-   - 修改数据库配置文件：`resources/db.properties`
+   - 创建数据库配置文件：
+     ```bash
+     cp resources/db.properties.sample resources/db.properties
+     # 编辑 db.properties 文件，替换占位符为实际数据库凭据
+     ```
 
 2. **构建项目**
    ```bash
@@ -168,6 +177,22 @@
 
 ## 开发注意事项
 
+### 安全配置
+1. **数据库凭据管理**
+   - 绝不将数据库密码提交到版本控制系统
+   - 使用 `db.properties.sample` 作为配置模板
+   - 在生产环境中通过环境变量或外部配置管理数据库凭据
+
+2. **敏感信息保护**
+   - User 和 Admin 实体类已配置密码字段掩码，避免在日志中泄露
+   - 确保应用日志不包含敏感用户信息
+
+### 依赖安全
+1. **日志框架升级**
+   - 已升级到 Log4j 2.20.0 以避免已知安全漏洞
+   - 测试依赖已正确配置 scope 为 test
+
+### 技术配置
 1. **数据库连接**
    - 确保MySQL服务正常运行
    - 验证数据库配置文件中的连接信息

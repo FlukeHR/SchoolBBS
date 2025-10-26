@@ -66,15 +66,15 @@
     function qs(name){ const u=new URL(location.href); return u.searchParams.get(name); }
     function esc(s){ if(!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\"/g,'&quot;').replace(/'/g,'&#39;'); }
     function contextPath(){
-      const parts = location.pathname.split('/').filter(Boolean);
-      return parts.length ? ('/' + parts[0]) : '';
+      // 对于直接访问的页面，不需要上下文路径
+      return '';
     }
     function assetUrl(p){
       if (!p) return '';
       if (/^https?:\/\//i.test(p)) return p;
-      if (p.startsWith('/uploads/')) return contextPath() + p;
-      if (p.startsWith('uploads/')) return contextPath() + '/' + p;
-      return p;
+      if (p.startsWith('/uploads/')) return p; // 直接使用绝对路径
+      if (p.startsWith('uploads/')) return '/' + p; // 补齐前导斜杠
+      return p; // 其他相对路径保持不变
     }
     const id = qs('id');
 

@@ -53,7 +53,7 @@ public class User {
         return "User{" +
                 "uid=" + uid +
                 ", username='" + name + '\'' +
-                ", passwd='" + passwd + '\'' +
+                ", passwd='[MASKED]'" +
                 ", sex='" + sex + '\'' +
                 ", rtime=" + rtime +
                 '}';

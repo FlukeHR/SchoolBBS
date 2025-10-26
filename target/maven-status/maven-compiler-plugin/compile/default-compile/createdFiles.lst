@@ -49,6 +49,7 @@ com/bbs/mapper/CommentLikeMapper.class
 com/bbs/controller/CurrentUser.class
 com/bbs/controller/TradeUpdate.class
 com/bbs/controller/userUpdatePostTypeName.class
+com/bbs/controller/adminDeleteTrade.class
 com/bbs/controller/TradeList.class
 com/bbs/controller/adminDeleteComment.class
 com/bbs/mapper/PostTypeMapper.class
