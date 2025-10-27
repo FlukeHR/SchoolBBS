@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.bbs.service.PostService" %>
-<%@ page import="com.bbs.pojo.Post" %>
-<%@ page import="com.bbs.service.PostTypeService" %>
-<%@ page import="com.bbs.pojo.PostType" %>
+<%@ page import="com.bbs.service.impl.PostService" %>
+<%@ page import="com.bbs.entity.Post" %>
+<%@ page import="com.bbs.service.impl.PostTypeService" %>
+<%@ page import="com.bbs.entity.PostType" %>
 <%@ page import="java.util.List" %>
 <html lang="zh-CN">
 <head>
@@ -11,9 +11,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>编辑帖子 - 校园贴吧</title>
     <link rel="icon" href="images/postManage.png" type="image/x-icon" />
-    <link rel="stylesheet" href="css/css/universal.css" />
-  <link rel="stylesheet" href="css/css/modern-components.css" />
-  <link rel="stylesheet" href="css/css/trade.css" />
+    <link rel="stylesheet" href="css/universal.css" />
+  <link rel="stylesheet" href="css/modern-components.css" />
+  <link rel="stylesheet" href="css/trade.css" />
   <style>
     .edit-wrap { display: flex; gap: 16px; flex-wrap: wrap; }
     .edit-main { flex: 1; min-width: 280px; }

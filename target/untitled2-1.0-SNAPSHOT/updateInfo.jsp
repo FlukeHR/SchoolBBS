@@ -1,17 +1,17 @@
-<%@ page import="com.bbs.service.UserService" %>
-<%@ page import="com.bbs.pojo.User" %>
+<%@ page import="com.bbs.service.impl.UserServiceImpl" %>
+<%@ page import="com.bbs.entity.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
   <meta name="author" content="rogepi" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="css/css/universal.css" />
-  <link rel="stylesheet" href="css/css/modern-components.css" />
-  <link rel="stylesheet" href="css/css/about.css" />
+  <link rel="stylesheet" href="css/universal.css" />
+  <link rel="stylesheet" href="css/modern-components.css" />
+  <link rel="stylesheet" href="css/about.css" />
   <title>修改个人信息</title>
   <link rel="icon" href="images/userManage.png" type="image/x-icon" />
-  <link rel="stylesheet" href="css/css/updateInfo.css" />
+  <link rel="stylesheet" href="css/updateInfo.css" />
   <script src="js/modern-interactions.js"></script>
 </head>
 <body>
@@ -32,7 +32,7 @@
 
 <%
   String author = (String) session.getAttribute("username_session");
-  UserService userService = new UserService();
+  UserServiceImpl userService = new UserServiceImpl();
   User user = null;
   if (author != null) {
     try {

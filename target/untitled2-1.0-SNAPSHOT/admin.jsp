@@ -1,19 +1,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.bbs.service.UserService" %>
-<%@ page import="com.bbs.pojo.Post" %>
-<%@ page import="com.bbs.pojo.Comment" %>
-<%@ page import="com.bbs.pojo.User" %>
+<%@ page import="com.bbs.service.impl.UserServiceImpl" %>
+<%@ page import="com.bbs.entity.Post" %>
+<%@ page import="com.bbs.entity.Comment" %>
+<%@ page import="com.bbs.entity.User" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.bbs.service.PostService" %>
-<%@ page import="com.bbs.service.CommentService" %>
+<%@ page import="com.bbs.service.impl.PostService" %>
+<%@ page import="com.bbs.service.impl.CommentService" %>
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>后台管理</title>
     <link rel="icon" href="images/admin.png" type="image/x-icon" />
-    <link rel="stylesheet" href="css/css/universal.css">
-    <link rel="stylesheet" href="css/css/admin.css">
+    <link rel="stylesheet" href="css/universal.css">
+    <link rel="stylesheet" href="css/admin.css">
     <style>
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -124,7 +124,7 @@
         </thead>
         <tbody>
             <%
-                UserService userService = new UserService();
+                UserServiceImpl userService = new UserServiceImpl();
                 List<User> users = userService.selectAllUsers();
                 for (User user : users) {
             %>

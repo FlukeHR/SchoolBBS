@@ -1,5 +1,5 @@
-<%@ page import="com.bbs.service.UserService" %>
-<%@ page import="com.bbs.pojo.User" %>
+<%@ page import="com.bbs.service.impl.UserServiceImpl" %>
+<%@ page import="com.bbs.entity.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -7,9 +7,9 @@
   <meta charset="utf-8" />
   <meta name="author" content="rogepi" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="css/css/universal.css" />
-  <link rel="stylesheet" href="css/css/about.css" />
-  <link rel="stylesheet" href="css/css/modern-components.css" />
+  <link rel="stylesheet" href="css/universal.css" />
+  <link rel="stylesheet" href="css/about.css" />
+  <link rel="stylesheet" href="css/modern-components.css" />
   <title>校园贴吧</title>
   <link rel="icon" href="images/info.png" type="image/x-icon" />
   <script src="js/modern-interactions.js"></script>
@@ -34,7 +34,7 @@
 
 <%
   String author = (String) session.getAttribute("username_session");
-  UserService userService = new UserService();
+  UserServiceImpl userService = new UserServiceImpl();
   User user = null;
   if (author != null) {
     try {
@@ -77,13 +77,13 @@
       <h3 style="text-align:center;">个人关注</h3>
       <div style="padding:8px 0;">
         <%
-          com.bbs.service.FollowService followSvc = new com.bbs.service.FollowService();
-          java.util.List<com.bbs.pojo.PostType> followedTypes = null;
+          com.bbs.service.impl.FollowService followSvc = new com.bbs.service.impl.FollowService();
+          java.util.List<com.bbs.entity.PostType> followedTypes = null;
           try {
             followedTypes = followSvc.findFollowedTypes(author);
           } catch (Exception e) { e.printStackTrace(); }
           if (followedTypes != null && !followedTypes.isEmpty()) {
-            for (com.bbs.pojo.PostType t : followedTypes) {
+            for (com.bbs.entity.PostType t : followedTypes) {
         %>
           <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #eee;padding:6px 0;">
             <div>

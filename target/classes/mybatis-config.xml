@@ -6,13 +6,13 @@
     <settings>
         <!--开启驼峰式命名映射-->
         <setting name="mapUnderscoreToCamelCase" value="true"/>
-        <!--log4j日志-->
-        <setting name="logImpl" value="log4j"/>
+    <!-- 使用 SLF4J 作为 MyBatis 的日志实现，避免依赖过时的 log4j 1.x -->
+    <setting name="logImpl" value="SLF4J"/>
         <setting name="lazyLoadingEnabled" value="true"/>
     </settings>
     <!--配置扫描别名-->
     <typeAliases>
-        <package name="com.bbs.pojo"/>
+        <package name="com.bbs.entity"/>
         <package name="com.bbs.service"/>
         <package name="com.bbs.controller"/>
     </typeAliases>

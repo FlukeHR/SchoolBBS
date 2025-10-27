@@ -6,9 +6,9 @@
   <meta name="author" content="rogepi" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>注册结果</title>
-  <link rel="stylesheet" href="css/css/universal.css" />
-  <link rel="stylesheet" href="css/css/info.css" />
-  <link rel="stylesheet" href="css/css/modern-components.css" />
+  <link rel="stylesheet" href="css/universal.css" />
+  <link rel="stylesheet" href="css/info.css" />
+  <link rel="stylesheet" href="css/modern-components.css" />
   <link rel="icon" href="images/register.png" type="image/x-icon" />
   <script src="js/modern-interactions.js"></script>
 </head>

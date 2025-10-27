@@ -6,7 +6,7 @@
 <mapper namespace="com.bbs.mapper.CommentMapper">
 
     <!-- 插入评论 -->
-    <insert id="createComment" parameterType="com.bbs.pojo.Comment">
+    <insert id="createComment" parameterType="com.bbs.entity.Comment">
         INSERT INTO comment (content, author, post_id,date)
         VALUES (#{content}, #{author}, #{post_id},NOW())
     </insert>
@@ -17,27 +17,27 @@
     </delete>
 
     <!-- 根据ID查询评论 -->
-    <select id="findCommentById" parameterType="int" resultType="com.bbs.pojo.Comment">
+    <select id="findCommentById" parameterType="int" resultType="com.bbs.entity.Comment">
         SELECT * FROM comment WHERE id = #{id}
     </select>
 
     <!-- 根据作者查询评论 -->
-    <select id="findCommentByAuthor" parameterType="string" resultType="com.bbs.pojo.Comment">
+    <select id="findCommentByAuthor" parameterType="string" resultType="com.bbs.entity.Comment">
         SELECT * FROM comment WHERE author = #{author}
     </select>
 
     <!-- 根据帖子ID查询评论 -->
-    <select id="findCommentsByPostId" parameterType="int" resultType="com.bbs.pojo.Comment">
+    <select id="findCommentsByPostId" parameterType="int" resultType="com.bbs.entity.Comment">
         SELECT * FROM comment WHERE post_id = #{post_id}
     </select>
 
     <!-- 查询所有评论 -->
-    <select id="findCommentAll" resultType="com.bbs.pojo.Comment">
+    <select id="findCommentAll" resultType="com.bbs.entity.Comment">
         SELECT * FROM comment
     </select>
 
     <!-- 更新评论 -->
-    <update id="updateComment" parameterType="com.bbs.pojo.Comment">
+    <update id="updateComment" parameterType="com.bbs.entity.Comment">
         UPDATE comment
         SET content = #{content}, author = #{author}, post_id = #{post_id}
         WHERE id = #{id}

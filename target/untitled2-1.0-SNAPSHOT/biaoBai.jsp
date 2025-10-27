@@ -1,16 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.bbs.service.PostService" %>
-<%@ page import="com.bbs.pojo.Post" %>
+<%@ page import="com.bbs.service.impl.PostService" %>
+<%@ page import="com.bbs.entity.Post" %>
 <%@ page import="java.util.List" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8" />
     <meta name="author" content="rogepi" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/css/universal.css" />
-  <link rel="stylesheet" href="css/css/modern-components.css" />
-    <link rel="stylesheet" href="css/css/search.css" />
+    <link rel="stylesheet" href="css/universal.css" />
+  <link rel="stylesheet" href="css/modern-components.css" />
+    <link rel="stylesheet" href="css/search.css" />
     <title>校园贴吧</title>
     <link rel="icon" href="images/index.png" type="image/x-icon" />
   <script src="js/modern-interactions.js"></script>

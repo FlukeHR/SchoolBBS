@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bbs.mapper.TradeMapper">
-  <resultMap id="TradeResult" type="com.bbs.pojo.Trade">
+  <resultMap id="TradeResult" type="com.bbs.entity.Trade">
     <id column="id" property="id"/>
     <result column="title" property="title"/>
     <result column="price" property="price"/>
@@ -40,7 +40,7 @@
     WHERE images LIKE 'uploads/trade%'
   </update>
 
-  <insert id="createTrade" parameterType="com.bbs.pojo.Trade" useGeneratedKeys="true" keyProperty="id">
+  <insert id="createTrade" parameterType="com.bbs.entity.Trade" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO trade(title, price, description, images, author, date)
     VALUES(#{title}, #{price}, #{description}, #{images}, #{author}, NOW())
   </insert>
@@ -79,7 +79,7 @@
     DELETE FROM trade WHERE id = #{id}
   </delete>
 
-  <update id="updateTrade" parameterType="com.bbs.pojo.Trade">
+  <update id="updateTrade" parameterType="com.bbs.entity.Trade">
     UPDATE trade
     SET title = #{title}, price = #{price}, description = #{description}, images = #{images}
     WHERE id = #{id}

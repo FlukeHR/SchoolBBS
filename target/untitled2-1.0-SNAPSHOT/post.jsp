@@ -1,10 +1,10 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.bbs.service.PostService" %>
-<%@ page import="com.bbs.service.LikePostService" %>
-<%@ page import="com.bbs.service.LikeCommentService" %>
-<%@ page import="com.bbs.pojo.Post" %>
-<%@ page import="com.bbs.service.CommentService" %>
-<%@ page import="com.bbs.pojo.Comment" %>
+<%@ page import="com.bbs.service.impl.PostService" %>
+<%@ page import="com.bbs.service.impl.LikePostService" %>
+<%@ page import="com.bbs.service.impl.LikeCommentService" %>
+<%@ page import="com.bbs.entity.Post" %>
+<%@ page import="com.bbs.service.impl.CommentService" %>
+<%@ page import="com.bbs.entity.Comment" %>
 <%--
   Created by IntelliJ IDEA.
   User: lc
@@ -21,11 +21,11 @@
   <meta charset="utf-8" />
   <meta name="author" content="rogepi" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="css/css/universal.css" />
-  <link rel="stylesheet" href="css/css/modern-components.css" />
-  <link rel="stylesheet" href="css/css/about.css" />
-  <link rel="stylesheet" href="css/css/post.css" />
-  <link rel="stylesheet" href="css/css/modern-components.css" />
+  <link rel="stylesheet" href="css/universal.css" />
+  <link rel="stylesheet" href="css/modern-components.css" />
+  <link rel="stylesheet" href="css/about.css" />
+  <link rel="stylesheet" href="css/post.css" />
+  <link rel="stylesheet" href="css/modern-components.css" />
   <script src="js/post.js"></script>
   <script src="js/modern-interactions.js"></script>
   <title>校园贴吧</title>
@@ -44,7 +44,7 @@
 <div class="topnav">
   <ul>
     <li><a href="home.jsp">首页</a></li>
-    <a href="javascript:history.back(-1)">返回</a>
+    <li><a href="javascript:history.back(-1)">返回</a></li>
     <li><a href="mine.jsp">我的</a></li>
     <li><a href="publish.html">发帖</a></li>
     <li><a href="about.jsp">个人资料</a></li>
@@ -187,7 +187,7 @@
           CommentService commentService = new CommentService();
           List<Comment> comments = null;
           try {
-            comments = commentService.findCommentByPostId(post1.getId());
+            comments = commentService.findCommentsByPostId(post1.getId());
           } catch (Exception e) {
             e.printStackTrace();
           }
@@ -234,8 +234,6 @@
   <div class="footer">
     <h2>Nothing Is Impossible</h2>
   </div>
-</div>
-
 </div>
 </body>
 </html>

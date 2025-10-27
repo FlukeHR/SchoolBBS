@@ -2,7 +2,7 @@ function formcheck() {
   var url = "formcheckservlet";
   var userid = document.getElementById("userid").value;
   var userpwd = document.getElementById("userpwd").value;
-  var params = "userid=" + userid + "&userpwd" + userpwd;
+  var params = "userid=" + userid + "&userpwd=" + userpwd;
   sendRequest(url, params, 'POST', showresult);
 }
 

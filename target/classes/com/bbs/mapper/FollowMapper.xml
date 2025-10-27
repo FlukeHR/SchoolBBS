@@ -17,7 +17,7 @@
         DELETE FROM post_type_follow WHERE username = #{username} AND type_id = #{typeId}
     </delete>
 
-    <select id="findFollowedTypes" resultType="com.bbs.pojo.PostType">
+    <select id="findFollowedTypes" resultType="com.bbs.entity.PostType">
         SELECT pt.* FROM post_type_follow f
         JOIN post_type pt ON pt.id = f.type_id
         WHERE f.username = #{username}

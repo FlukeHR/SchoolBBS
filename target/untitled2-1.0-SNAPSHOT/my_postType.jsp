@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.bbs.service.PostTypeService" %>
-<%@ page import="com.bbs.pojo.PostType" %>
+<%@ page import="com.bbs.service.impl.PostTypeService" %>
+<%@ page import="com.bbs.entity.PostType" %>
 <%@ page import="java.util.List" %>
 <%@ page import="javax.servlet.http.HttpSession" %>
 <!DOCTYPE html>
@@ -9,8 +9,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>我的贴吧</title>
-  <link rel="stylesheet" href="css/css/universal.css">
-  <link rel="stylesheet" href="css/css/modern-components.css">
+  <link rel="stylesheet" href="css/universal.css">
+  <link rel="stylesheet" href="css/modern-components.css">
   <link rel="icon" href="images/index.png" type="image/x-icon" />
   <script src="js/modern-interactions.js"></script>
 </head>

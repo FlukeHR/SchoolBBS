@@ -1,17 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.net.URLEncoder" %>
 <%@ page import="java.util.*" %>
-<%@ page import="com.bbs.service.PostService" %>
-<%@ page import="com.bbs.pojo.Post" %>
+<%@ page import="com.bbs.service.impl.PostService" %>
+<%@ page import="com.bbs.entity.Post" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>帖子类型</title>
-  <link rel="stylesheet" href="css/css/universal.css" />
-  <link rel="stylesheet" href="css/css/modern-components.css" />
-  <link rel="stylesheet" href="css/css/home.css" />
+  <link rel="stylesheet" href="css/universal.css" />
+  <link rel="stylesheet" href="css/modern-components.css" />
+  <link rel="stylesheet" href="css/home.css" />
   <link rel="icon" href="images/index.png" type="image/x-icon" />
   <style>
     .container{ max-width: 960px; margin: 0 auto; }

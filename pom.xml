@@ -97,41 +97,21 @@
         <artifactId>maven-war-plugin</artifactId>
         <version>3.4.0</version>
         <configuration>
-          <warSourceDirectory>webapp</warSourceDirectory>
+          <warSourceDirectory>src/main/webapp</warSourceDirectory>
           <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>build-helper-maven-plugin</artifactId>
-        <version>3.5.0</version>
-        <executions>
-          <execution>
-            <id>add-extra-source</id>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>add-source</goal>
-            </goals>
-            <configuration>
-              <sources>
-                <source>java</source>
-              </sources>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
     <resources>
       <resource>
-        <directory>resources</directory>
+        <directory>src/main/resources</directory>
         <includes>
-          <include>**/*.xml</include>
-          <include>**/*.properties</include>
+          <include>**/*</include>
         </includes>
         <filtering>false</filtering>
       </resource>
       <resource>
-        <directory>java</directory>
+        <directory>src/main/java</directory>
         <includes>
           <include>**/*.xml</include>
         </includes>
