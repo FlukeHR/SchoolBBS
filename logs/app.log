@@ -1994,3 +1994,109 @@
 2025-10-27 00:56:47 DEBUG findPostByType:137 - ==>  Preparing: SELECT * FROM post WHERE type = ? limit 7
 2025-10-27 00:56:47 DEBUG findPostByType:137 - ==> Parameters: 今日校园事(String)
 2025-10-27 00:56:47 DEBUG findPostByType:137 - <==      Total: 1
+2025-10-27 01:02:50 INFO  DatabaseConfig:22 - MyBatis SqlSessionFactory initialized successfully
+2025-10-27 01:02:51 DEBUG check:137 - ==>  Preparing: SELECT * FROM user WHERE name = ? AND passwd = ?
+2025-10-27 01:02:51 DEBUG check:137 - ==> Parameters: Howard(String), 123456(String)
+2025-10-27 01:02:51 DEBUG check:137 - <==      Total: 1
+2025-10-27 01:02:51 DEBUG findAllPostTypes:137 - ==>  Preparing: SELECT * FROM post_type ORDER BY create_time DESC
+2025-10-27 01:02:51 DEBUG findAllPostTypes:137 - ==> Parameters: 
+2025-10-27 01:02:51 DEBUG findAllPostTypes:137 - <==      Total: 6
+2025-10-27 01:02:51 DEBUG isFollowed:137 - ==>  Preparing: SELECT COUNT(*) FROM post_type_follow WHERE username = ? AND type_id = ?
+2025-10-27 01:02:51 DEBUG isFollowed:137 - ==> Parameters: Howard(String), 20(Integer)
+2025-10-27 01:02:51 DEBUG isFollowed:137 - <==      Total: 1
+2025-10-27 01:02:51 DEBUG findPostByType:137 - ==>  Preparing: SELECT * FROM post WHERE type = ? limit 7
+2025-10-27 01:02:51 DEBUG findPostByType:137 - ==> Parameters: 啊啊啊(String)
+2025-10-27 01:02:51 DEBUG findPostByType:137 - <==      Total: 0
+2025-10-27 01:02:51 DEBUG isFollowed:137 - ==>  Preparing: SELECT COUNT(*) FROM post_type_follow WHERE username = ? AND type_id = ?
+2025-10-27 01:02:51 DEBUG isFollowed:137 - ==> Parameters: Howard(String), 19(Integer)
+2025-10-27 01:02:51 DEBUG isFollowed:137 - <==      Total: 1
+2025-10-27 01:02:51 DEBUG findPostByType:137 - ==>  Preparing: SELECT * FROM post WHERE type = ? limit 7
+2025-10-27 01:02:51 DEBUG findPostByType:137 - ==> Parameters: 表白墙(String)
+2025-10-27 01:02:51 DEBUG findPostByType:137 - <==      Total: 3
+2025-10-27 01:02:51 DEBUG isFollowed:137 - ==>  Preparing: SELECT COUNT(*) FROM post_type_follow WHERE username = ? AND type_id = ?
+2025-10-27 01:02:51 DEBUG isFollowed:137 - ==> Parameters: Howard(String), 18(Integer)
+2025-10-27 01:02:51 DEBUG isFollowed:137 - <==      Total: 1
+2025-10-27 01:02:51 DEBUG findPostByType:137 - ==>  Preparing: SELECT * FROM post WHERE type = ? limit 7
+2025-10-27 01:02:51 DEBUG findPostByType:137 - ==> Parameters: 吐槽(String)
+2025-10-27 01:02:51 DEBUG findPostByType:137 - <==      Total: 1
+2025-10-27 01:02:51 DEBUG isFollowed:137 - ==>  Preparing: SELECT COUNT(*) FROM post_type_follow WHERE username = ? AND type_id = ?
+2025-10-27 01:02:51 DEBUG isFollowed:137 - ==> Parameters: Howard(String), 17(Integer)
+2025-10-27 01:02:51 DEBUG isFollowed:137 - <==      Total: 1
+2025-10-27 01:02:51 DEBUG findPostByType:137 - ==>  Preparing: SELECT * FROM post WHERE type = ? limit 7
+2025-10-27 01:02:51 DEBUG findPostByType:137 - ==> Parameters: 校园墙(String)
+2025-10-27 01:02:51 DEBUG findPostByType:137 - <==      Total: 1
+2025-10-27 01:02:51 DEBUG isFollowed:137 - ==>  Preparing: SELECT COUNT(*) FROM post_type_follow WHERE username = ? AND type_id = ?
+2025-10-27 01:02:51 DEBUG isFollowed:137 - ==> Parameters: Howard(String), 16(Integer)
+2025-10-27 01:02:51 DEBUG isFollowed:137 - <==      Total: 1
+2025-10-27 01:02:51 DEBUG findPostByType:137 - ==>  Preparing: SELECT * FROM post WHERE type = ? limit 7
+2025-10-27 01:02:51 DEBUG findPostByType:137 - ==> Parameters: 考研资料(String)
+2025-10-27 01:02:51 DEBUG findPostByType:137 - <==      Total: 2
+2025-10-27 01:02:51 DEBUG isFollowed:137 - ==>  Preparing: SELECT COUNT(*) FROM post_type_follow WHERE username = ? AND type_id = ?
+2025-10-27 01:02:51 DEBUG isFollowed:137 - ==> Parameters: Howard(String), 15(Integer)
+2025-10-27 01:02:51 DEBUG isFollowed:137 - <==      Total: 1
+2025-10-27 01:02:51 DEBUG findPostByType:137 - ==>  Preparing: SELECT * FROM post WHERE type = ? limit 7
+2025-10-27 01:02:51 DEBUG findPostByType:137 - ==> Parameters: 今日校园事(String)
+2025-10-27 01:02:51 DEBUG findPostByType:137 - <==      Total: 1
+2025-10-27 01:02:54 DEBUG findPostById:137 - ==>  Preparing: SELECT * FROM post WHERE id = ?
+2025-10-27 01:02:54 DEBUG findPostById:137 - ==> Parameters: 80(Integer)
+2025-10-27 01:02:54 DEBUG findPostById:137 - <==      Total: 1
+2025-10-27 01:02:54 DEBUG countLikes:137 - ==>  Preparing: SELECT COUNT(*) FROM post_like WHERE post_id = ?
+2025-10-27 01:02:54 DEBUG countLikes:137 - ==> Parameters: 80(Integer)
+2025-10-27 01:02:54 DEBUG countLikes:137 - <==      Total: 1
+2025-10-27 01:02:54 DEBUG hasLiked:137 - ==>  Preparing: SELECT COUNT(*) FROM post_like WHERE post_id = ? AND username = ?
+2025-10-27 01:02:54 DEBUG hasLiked:137 - ==> Parameters: 80(Integer), Howard(String)
+2025-10-27 01:02:54 DEBUG hasLiked:137 - <==      Total: 1
+2025-10-27 01:02:54 DEBUG findCommentsByPostId:137 - ==>  Preparing: SELECT * FROM comment WHERE post_id = ?
+2025-10-27 01:02:54 DEBUG findCommentsByPostId:137 - ==> Parameters: 80(Integer)
+2025-10-27 01:02:54 DEBUG findCommentsByPostId:137 - <==      Total: 0
+2025-10-27 01:02:59 DEBUG findPostById:137 - ==>  Preparing: SELECT * FROM post WHERE id = ?
+2025-10-27 01:02:59 DEBUG findPostById:137 - ==> Parameters: 78(Integer)
+2025-10-27 01:02:59 DEBUG findPostById:137 - <==      Total: 1
+2025-10-27 01:03:00 DEBUG countLikes:137 - ==>  Preparing: SELECT COUNT(*) FROM post_like WHERE post_id = ?
+2025-10-27 01:03:00 DEBUG countLikes:137 - ==> Parameters: 78(Integer)
+2025-10-27 01:03:00 DEBUG countLikes:137 - <==      Total: 1
+2025-10-27 01:03:00 DEBUG hasLiked:137 - ==>  Preparing: SELECT COUNT(*) FROM post_like WHERE post_id = ? AND username = ?
+2025-10-27 01:03:00 DEBUG hasLiked:137 - ==> Parameters: 78(Integer), Howard(String)
+2025-10-27 01:03:00 DEBUG hasLiked:137 - <==      Total: 1
+2025-10-27 01:03:00 DEBUG findCommentsByPostId:137 - ==>  Preparing: SELECT * FROM comment WHERE post_id = ?
+2025-10-27 01:03:00 DEBUG findCommentsByPostId:137 - ==> Parameters: 78(Integer)
+2025-10-27 01:03:00 DEBUG findCommentsByPostId:137 - <==      Total: 0
+2025-10-27 01:03:21 DEBUG findAllPostTypes:137 - ==>  Preparing: SELECT * FROM post_type ORDER BY create_time DESC
+2025-10-27 01:03:21 DEBUG findAllPostTypes:137 - ==> Parameters: 
+2025-10-27 01:03:21 DEBUG findAllPostTypes:137 - <==      Total: 6
+2025-10-27 01:03:21 DEBUG isFollowed:137 - ==>  Preparing: SELECT COUNT(*) FROM post_type_follow WHERE username = ? AND type_id = ?
+2025-10-27 01:03:21 DEBUG isFollowed:137 - ==> Parameters: Howard(String), 20(Integer)
+2025-10-27 01:03:21 DEBUG isFollowed:137 - <==      Total: 1
+2025-10-27 01:03:21 DEBUG findPostByType:137 - ==>  Preparing: SELECT * FROM post WHERE type = ? limit 7
+2025-10-27 01:03:21 DEBUG findPostByType:137 - ==> Parameters: 啊啊啊(String)
+2025-10-27 01:03:21 DEBUG findPostByType:137 - <==      Total: 0
+2025-10-27 01:03:21 DEBUG isFollowed:137 - ==>  Preparing: SELECT COUNT(*) FROM post_type_follow WHERE username = ? AND type_id = ?
+2025-10-27 01:03:21 DEBUG isFollowed:137 - ==> Parameters: Howard(String), 19(Integer)
+2025-10-27 01:03:21 DEBUG isFollowed:137 - <==      Total: 1
+2025-10-27 01:03:21 DEBUG findPostByType:137 - ==>  Preparing: SELECT * FROM post WHERE type = ? limit 7
+2025-10-27 01:03:21 DEBUG findPostByType:137 - ==> Parameters: 表白墙(String)
+2025-10-27 01:03:21 DEBUG findPostByType:137 - <==      Total: 3
+2025-10-27 01:03:21 DEBUG isFollowed:137 - ==>  Preparing: SELECT COUNT(*) FROM post_type_follow WHERE username = ? AND type_id = ?
+2025-10-27 01:03:21 DEBUG isFollowed:137 - ==> Parameters: Howard(String), 18(Integer)
+2025-10-27 01:03:21 DEBUG isFollowed:137 - <==      Total: 1
+2025-10-27 01:03:21 DEBUG findPostByType:137 - ==>  Preparing: SELECT * FROM post WHERE type = ? limit 7
+2025-10-27 01:03:21 DEBUG findPostByType:137 - ==> Parameters: 吐槽(String)
+2025-10-27 01:03:21 DEBUG findPostByType:137 - <==      Total: 1
+2025-10-27 01:03:21 DEBUG isFollowed:137 - ==>  Preparing: SELECT COUNT(*) FROM post_type_follow WHERE username = ? AND type_id = ?
+2025-10-27 01:03:21 DEBUG isFollowed:137 - ==> Parameters: Howard(String), 17(Integer)
+2025-10-27 01:03:22 DEBUG isFollowed:137 - <==      Total: 1
+2025-10-27 01:03:22 DEBUG findPostByType:137 - ==>  Preparing: SELECT * FROM post WHERE type = ? limit 7
+2025-10-27 01:03:22 DEBUG findPostByType:137 - ==> Parameters: 校园墙(String)
+2025-10-27 01:03:22 DEBUG findPostByType:137 - <==      Total: 1
+2025-10-27 01:03:22 DEBUG isFollowed:137 - ==>  Preparing: SELECT COUNT(*) FROM post_type_follow WHERE username = ? AND type_id = ?
+2025-10-27 01:03:22 DEBUG isFollowed:137 - ==> Parameters: Howard(String), 16(Integer)
+2025-10-27 01:03:22 DEBUG isFollowed:137 - <==      Total: 1
+2025-10-27 01:03:22 DEBUG findPostByType:137 - ==>  Preparing: SELECT * FROM post WHERE type = ? limit 7
+2025-10-27 01:03:22 DEBUG findPostByType:137 - ==> Parameters: 考研资料(String)
+2025-10-27 01:03:22 DEBUG findPostByType:137 - <==      Total: 2
+2025-10-27 01:03:22 DEBUG isFollowed:137 - ==>  Preparing: SELECT COUNT(*) FROM post_type_follow WHERE username = ? AND type_id = ?
+2025-10-27 01:03:22 DEBUG isFollowed:137 - ==> Parameters: Howard(String), 15(Integer)
+2025-10-27 01:03:22 DEBUG isFollowed:137 - <==      Total: 1
+2025-10-27 01:03:22 DEBUG findPostByType:137 - ==>  Preparing: SELECT * FROM post WHERE type = ? limit 7
+2025-10-27 01:03:22 DEBUG findPostByType:137 - ==> Parameters: 今日校园事(String)
+2025-10-27 01:03:22 DEBUG findPostByType:137 - <==      Total: 1
