@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bbs.mapper.RechargeMapper">
+  <resultMap id="RechargeResult" type="com.bbs.entity.Recharge">
+    <id column="id" property="id"/>
+    <result column="username" property="username"/>
+    <result column="amount" property="amount"/>
+    <result column="payment_method" property="paymentMethod"/>
+    <result column="status" property="status"/>
+    <result column="order_no" property="orderNo"/>
+    <result column="create_time" property="createTime"/>
+    <result column="update_time" property="updateTime"/>
+    <result column="remark" property="remark"/>
+  </resultMap>
+
+  <!-- 创建充值记录表 -->
+  <update id="initSchema">
+    CREATE TABLE IF NOT EXISTS recharge (
+      id INT PRIMARY KEY AUTO_INCREMENT,
+      username VARCHAR(64) NOT NULL,
+      amount DECIMAL(10,2) NOT NULL,
+      payment_method VARCHAR(20) NOT NULL,
+      status VARCHAR(20) DEFAULT 'PENDING',
+      order_no VARCHAR(64) UNIQUE NOT NULL,
+      create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+      remark TEXT,
+      INDEX idx_username (username),
+      INDEX idx_order_no (order_no),
+      INDEX idx_status (status)
+    )
+  </update>
+
+  <!-- 插入充值记录 -->
+  <insert id="insertRecharge" parameterType="com.bbs.entity.Recharge" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO recharge(username, amount, payment_method, status, order_no, create_time, remark)
+    VALUES(#{username}, #{amount}, #{paymentMethod}, #{status}, #{orderNo}, NOW(), #{remark})
+  </insert>
+
+  <!-- 更新充值状态 -->
+  <update id="updateRechargeStatus">
+    UPDATE recharge 
+    SET status = #{status}, update_time = NOW()
+    WHERE order_no = #{orderNo}
+  </update>
+
+  <!-- 根据订单号查询充值记录 -->
+  <select id="selectByOrderNo" parameterType="string" resultMap="RechargeResult">
+    SELECT id, username, amount, payment_method, status, order_no, create_time, update_time, remark
+    FROM recharge
+    WHERE order_no = #{orderNo}
+  </select>
+
+  <!-- 查询用户充值记录 -->
+  <select id="selectByUsername" parameterType="string" resultMap="RechargeResult">
+    SELECT id, username, amount, payment_method, status, order_no, create_time, update_time, remark
+    FROM recharge
+    WHERE username = #{username}
+    ORDER BY create_time DESC
+    LIMIT 50
+  </select>
+
+  <!-- 查询所有充值记录 -->
+  <select id="selectAllRecharges" resultMap="RechargeResult">
+    SELECT id, username, amount, payment_method, status, order_no, create_time, update_time, remark
+    FROM recharge
+    ORDER BY create_time DESC
+    LIMIT 200
+  </select>
+</mapper>

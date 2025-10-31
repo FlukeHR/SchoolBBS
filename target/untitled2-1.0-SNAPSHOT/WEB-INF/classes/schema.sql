@@ -1,0 +1,13 @@
+-- 初始化数据库结构
+CREATE TABLE IF NOT EXISTS trade (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  title VARCHAR(255) NOT NULL,
+  price DECIMAL(10,2) DEFAULT 0,
+  description TEXT,
+  images TEXT,
+  author VARCHAR(64),
+  date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  status VARCHAR(20) DEFAULT 'AVAILABLE',
+  buyer VARCHAR(64),
+  payment_time TIMESTAMP NULL
+);

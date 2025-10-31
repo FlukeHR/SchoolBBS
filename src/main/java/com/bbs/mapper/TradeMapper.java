@@ -15,4 +15,8 @@ public interface TradeMapper {
     void addImagesColumn() throws Exception;
     void migrateImages() throws Exception;
     void fixImagesPath() throws Exception;
+    void addPaymentColumns() throws Exception;
+    void initPaymentStatus() throws Exception;
+    int updatePaymentStatus(Trade trade) throws Exception;
+    List<Trade> listTradesByBuyer(String buyer) throws Exception;
 }

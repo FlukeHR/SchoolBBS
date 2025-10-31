@@ -42,7 +42,7 @@
     <button onclick="location.href='admin_index.html'" class="btn btn-secondary">返回管理页</button>
 </div>
     <!-- 显示所有商品 -->
-    <h2>商品列表</h2>
+    <h2 style="text-align: center;">商品列表</h2>
     <div class="card">
     <table id="tradesTable" class="data-table" style="width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--border-color);">
         <thead style="background-color: var(--bg-secondary);">

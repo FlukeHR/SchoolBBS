@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.InputStream;
+import java.sql.Timestamp;
 import java.util.List;
 
 public class TradeService implements TradeMapper {
@@ -37,6 +38,8 @@ public class TradeService implements TradeMapper {
             try { mapper.addImagesColumn(); } catch (Exception ignore) {}
             try { mapper.migrateImages(); } catch (Exception ignore) {}
             try { mapper.fixImagesPath(); } catch (Exception ignore) {}
+            try { mapper.addPaymentColumns(); } catch (Exception ignore) {}
+            try { mapper.initPaymentStatus(); } catch (Exception ignore) {}
             List<Trade> list = mapper.listTrades();
             session.commit();
             return list;
@@ -51,6 +54,8 @@ public class TradeService implements TradeMapper {
             try { mapper.addImagesColumn(); } catch (Exception ignore) {}
             try { mapper.migrateImages(); } catch (Exception ignore) {}
             try { mapper.fixImagesPath(); } catch (Exception ignore) {}
+            try { mapper.addPaymentColumns(); } catch (Exception ignore) {}
+            try { mapper.initPaymentStatus(); } catch (Exception ignore) {}
             List<Trade> list = mapper.listTradesByAuthor(author);
             session.commit();
             return list;
@@ -89,6 +94,8 @@ public class TradeService implements TradeMapper {
             try { mapper.addImagesColumn(); } catch (Exception ignore) {}
             try { mapper.migrateImages(); } catch (Exception ignore) {}
             try { mapper.fixImagesPath(); } catch (Exception ignore) {}
+            try { mapper.addPaymentColumns(); } catch (Exception ignore) {}
+            try { mapper.initPaymentStatus(); } catch (Exception ignore) {}
             Trade t = mapper.selectById(id);
             session.commit();
             return t;
@@ -102,6 +109,8 @@ public class TradeService implements TradeMapper {
             try { mapper.addImagesColumn(); } catch (Exception ignore) {}
             try { mapper.migrateImages(); } catch (Exception ignore) {}
             try { mapper.fixImagesPath(); } catch (Exception ignore) {}
+            try { mapper.addPaymentColumns(); } catch (Exception ignore) {}
+            try { mapper.initPaymentStatus(); } catch (Exception ignore) {}
             List<Trade> list = mapper.searchTrades(keyword);
             session.commit();
             return list;
@@ -144,6 +153,67 @@ public class TradeService implements TradeMapper {
             TradeMapper mapper = session.getMapper(TradeMapper.class);
             mapper.fixImagesPath();
             session.commit();
+        }
+    }
+
+    public boolean updatePaymentStatus(int id, String status, String buyer, Timestamp paymentTime) throws Exception {
+        try (SqlSession session = factory().openSession()) {
+            TradeMapper mapper = session.getMapper(TradeMapper.class);
+            mapper.initSchema();
+            try { mapper.addPaymentColumns(); } catch (Exception ignore) {}
+            
+            Trade trade = new Trade();
+            trade.setId(id);
+            trade.setStatus(status);
+            trade.setBuyer(buyer);
+            trade.setPaymentTime(paymentTime);
+            
+            int result = mapper.updatePaymentStatus(trade);
+            session.commit();
+            return result > 0;
+        }
+    }
+
+    @Override
+    public void addPaymentColumns() throws Exception {
+        try (SqlSession session = factory().openSession()) {
+            TradeMapper mapper = session.getMapper(TradeMapper.class);
+            mapper.addPaymentColumns();
+            session.commit();
+        }
+    }
+
+    @Override
+    public void initPaymentStatus() throws Exception {
+        try (SqlSession session = factory().openSession()) {
+            TradeMapper mapper = session.getMapper(TradeMapper.class);
+            mapper.initPaymentStatus();
+            session.commit();
+        }
+    }
+
+    @Override
+    public int updatePaymentStatus(Trade trade) throws Exception {
+        try (SqlSession session = factory().openSession()) {
+            TradeMapper mapper = session.getMapper(TradeMapper.class);
+            int result = mapper.updatePaymentStatus(trade);
+            session.commit();
+            return result;
+        }
+    }
+
+    public List<Trade> listTradesByBuyer(String buyer) throws Exception {
+        try (SqlSession session = factory().openSession()) {
+            TradeMapper mapper = session.getMapper(TradeMapper.class);
+            mapper.initSchema();
+            try { mapper.addImagesColumn(); } catch (Exception ignore) {}
+            try { mapper.migrateImages(); } catch (Exception ignore) {}
+            try { mapper.fixImagesPath(); } catch (Exception ignore) {}
+            try { mapper.addPaymentColumns(); } catch (Exception ignore) {}
+            try { mapper.initPaymentStatus(); } catch (Exception ignore) {}
+            List<Trade> list = mapper.listTradesByBuyer(buyer);
+            session.commit();
+            return list;
         }
     }
 }

@@ -24,6 +24,9 @@
       <li><a href="home.jsp">主页</a></li>
       <li><a href="#discover" id="navDiscover">发现</a></li>
       <li><a href="#publish" id="navPublish">发布</a></li>
+      <li><a href="#recharge" id="navRecharge">充值</a></li>
+      <li><a href="#purchase-history" id="navPurchaseHistory">购买记录</a></li>
+      <li id="balanceDisplay" style="color: #4caf50; font-weight: bold;">余额: ¥0.00</li>
     </ul>
   </div>
 
@@ -41,6 +44,84 @@
           </label>
           <button type="submit">发布</button>
         </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" id="recharge">
+    <div class="card">
+      <h3>账户充值</h3>
+      <div class="recharge-form">
+        <div class="balance-info">
+          <p>当前余额: <span id="currentBalance">¥0.00</span></p>
+        </div>
+        
+        <form id="rechargeForm">
+          <label>充值金额（元）：
+            <select id="rechargeAmount">
+              <option value="10">¥10</option>
+              <option value="50">¥50</option>
+              <option value="100" selected>¥100</option>
+              <option value="200">¥200</option>
+              <option value="500">¥500</option>
+              <option value="custom">自定义金额</option>
+            </select>
+          </label>
+          
+          <div id="customAmountDiv" style="display:none;">
+            <label>自定义金额：<input type="number" id="customAmount" min="1" max="10000" step="0.01" placeholder="请输入金额"></label>
+            <button type="button" onclick="testInvalidAmount()" style="margin-left:10px;padding:4px 8px;font-size:12px;background:#f44336;color:white;border:none;border-radius:4px;">测试格式错误</button>
+          </div>
+          
+          <label>支付方式：
+            <div class="payment-methods">
+              <label class="payment-option">
+                <input type="radio" name="paymentMethod" value="WECHAT" checked>
+                <span class="payment-icon">💚</span> 微信支付
+              </label>
+              <label class="payment-option">
+                <input type="radio" name="paymentMethod" value="ALIPAY">
+                <span class="payment-icon">💙</span> 支付宝
+              </label>
+            </div>
+          </label>
+          
+          <button type="submit">立即充值</button>
+        </form>
+        
+        <div class="recharge-history">
+          <h4>充值记录</h4>
+          <div id="historyList">
+            <p>暂无充值记录</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" id="purchase-history">
+    <div class="card">
+      <h3>我的购买记录</h3>
+      <div class="purchase-history-content">
+        <div class="purchase-stats">
+          <div class="stat-item">
+            <span class="stat-number" id="totalPurchases">0</span>
+            <span class="stat-label">已购买</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" id="totalSpent">¥0.00</span>
+            <span class="stat-label">总花费</span>
+          </div>
+        </div>
+        
+        <div class="purchase-filter">
+          <input id="purchaseSearch" type="text" placeholder="搜索商品标题或卖家" style="padding:8px;border:1px solid #ccc;border-radius:6px;width:200px;">
+          <button id="btnPurchaseSearch" style="padding:8px 16px;margin-left:8px;background:#4caf50;color:white;border:none;border-radius:6px;cursor:pointer;">搜索</button>
+        </div>
+        
+        <div id="purchaseList" class="purchase-list">
+          <p class="empty-message">暂无购买记录</p>
+        </div>
       </div>
     </div>
   </div>
@@ -143,14 +224,31 @@
           thumbs = [item.img];
         }
         const imgHtml = thumbs.length ? `<img class="thumb-img" data-full="${assetUrl(thumbs[0])}" src="${assetUrl(thumbs[0])}" alt="">` : '<div class="ph">无图</div>';
+        // 判断商品状态和显示相应按钮
+        let statusInfo = '';
+        let actionButton = '';
+        
+        if (item.status === 'PENDING') {
+          statusInfo = `<div class="status pending">待支付 · 买家: ${escapeHtml(item.buyer || '')}</div>`;
+        } else if (item.status === 'CANCELLED') {
+          statusInfo = `<div class="status cancelled">已取消</div>`;
+        } else {
+          // 默认可购买状态，不显示"在售"标签
+          if (item.author !== currentUser) {
+            actionButton = `<button class="buy-btn" data-id="${item.id}" data-price="${item.price}">购买 ￥${item.price}</button>`;
+          }
+        }
+
         el.innerHTML = `
           <div class="thumb">${imgHtml}</div>
           <div class="meta">
             <div class="t"><a class="t-link" href="trade-detail.html?id=${item.id}">${escapeHtml(item.title)}</a></div>
             <div class="p">￥${item.price ?? 0}</div>
             <div class="d">${escapeHtml(item.description || '')}</div>
+            ${statusInfo}
             <div class="time">${formatTime(item.date)} ${item.author ? ' · ' + escapeHtml(item.author) : ''}
               ${item.author === currentUser ? ' · <button class="del" data-id="'+item.id+'">删除</button>' : ''}
+              ${actionButton}
             </div>
             ${thumbs.length>1 ? `<div class="more-imgs" style="display:flex;gap:6px;margin-top:6px;">${thumbs.slice(1,4).map(p=>`<img class=\"thumb-img\" data-full=\"${assetUrl(p)}\" src=\"${assetUrl(p)}\" style=\"width:48px;height:48px;object-fit:cover;border-radius:4px;cursor:pointer;\">`).join('')}</div>`: ''}
           </div>
@@ -178,6 +276,24 @@
             fetchList(document.getElementById('q').value, mineOnlyState);
           } catch (err) {
             alert('操作失败：' + (err.message||''));
+          }
+        });
+      });
+
+      // 绑定购买按钮
+      wrap.querySelectorAll('button.buy-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          const id = e.currentTarget.getAttribute('data-id');
+          const price = e.currentTarget.getAttribute('data-price');
+          if (!confirm(`确认购买该商品？价格：￥${price}`)) return;
+          try {
+            const res = await fetch('TradePay', { method: 'POST', headers: { 'Content-Type':'application/x-www-form-urlencoded' }, body: 'id='+encodeURIComponent(id) });
+            const j = await res.json();
+            if (!j.ok) throw new Error(j.msg||'支付失败');
+            alert('支付成功！');
+            fetchList(document.getElementById('q').value, mineOnlyState);
+          } catch (err) {
+            alert('支付失败：' + (err.message||''));
           }
         });
       });
@@ -259,14 +375,31 @@
     function showSection(which){
       const pub = document.getElementById('publish');
       const dis = document.getElementById('discover');
+      const rec = document.getElementById('recharge');
+      const pur = document.getElementById('purchase-history');
+      
+      // 隐藏所有section
+      pub.style.display = 'none';
+      dis.style.display = 'none';
+      rec.style.display = 'none';
+      pur.style.display = 'none';
+      
       if (which === 'publish') {
         pub.style.display = '';
-        dis.style.display = 'none';
         pub.scrollIntoView({behavior:'smooth'});
         location.hash = 'publish';
+      } else if (which === 'recharge') {
+        rec.style.display = '';
+        rec.scrollIntoView({behavior:'smooth'});
+        location.hash = 'recharge';
+        loadRechargeData();
+      } else if (which === 'purchase-history') {
+        pur.style.display = '';
+        pur.scrollIntoView({behavior:'smooth'});
+        location.hash = 'purchase-history';
+        loadPurchaseHistory();
       } else {
         // default show discover only
-        pub.style.display = 'none';
         dis.style.display = '';
         dis.scrollIntoView({behavior:'smooth'});
         location.hash = 'discover';
@@ -276,12 +409,244 @@
     // 顶部导航点击：只显示相应分区
     document.getElementById('navDiscover').addEventListener('click', function(e){ e.preventDefault(); showSection('discover'); });
     document.getElementById('navPublish').addEventListener('click', function(e){ e.preventDefault(); showSection('publish'); });
+    document.getElementById('navRecharge').addEventListener('click', function(e){ e.preventDefault(); showSection('recharge'); });
+    document.getElementById('navPurchaseHistory').addEventListener('click', function(e){ e.preventDefault(); showSection('purchase-history'); });
+
+    // 充值相关功能
+    async function loadRechargeData() {
+      await loadUserBalance();
+      await loadRechargeHistory();
+    }
+
+    async function loadUserBalance() {
+      try {
+        const res = await fetch('UserBalance');
+        const data = await res.json();
+        if (data.ok) {
+          document.getElementById('currentBalance').textContent = `¥${data.balance}`;
+          document.getElementById('balanceDisplay').textContent = `余额: ¥${data.balance}`;
+        }
+      } catch (err) {
+        console.error('获取余额失败:', err);
+      }
+    }
+
+    async function loadRechargeHistory() {
+      try {
+        const res = await fetch('RechargeHistory');
+        const history = await res.json();
+        const historyDiv = document.getElementById('historyList');
+        
+        if (!history || history.length === 0) {
+          historyDiv.innerHTML = '<p>暂无充值记录</p>';
+          return;
+        }
+
+        let html = '<div class="history-items">';
+        history.forEach(item => {
+          const statusClass = item.status === 'SUCCESS' ? 'success' : item.status === 'PENDING' ? 'pending' : 'failed';
+          const paymentText = item.paymentMethod === 'WECHAT' ? '微信支付' : '支付宝';
+          html += `
+            <div class="history-item">
+              <div class="item-info">
+                <span class="amount">¥${item.amount}</span>
+                <span class="payment">${paymentText}</span>
+                <span class="status ${statusClass}">${getStatusText(item.status)}</span>
+              </div>
+              <div class="item-time">${item.createTime}</div>
+            </div>
+          `;
+        });
+        html += '</div>';
+        historyDiv.innerHTML = html;
+      } catch (err) {
+        console.error('获取充值记录失败:', err);
+      }
+    }
+
+    function getStatusText(status) {
+      switch(status) {
+        case 'SUCCESS': return '成功';
+        case 'PENDING': return '待支付';
+        case 'FAILED': return '失败';
+        default: return status;
+      }
+    }
+
+    // 自定义金额选择
+    document.getElementById('rechargeAmount').addEventListener('change', function(e) {
+      const customDiv = document.getElementById('customAmountDiv');
+      if (e.target.value === 'custom') {
+        customDiv.style.display = 'block';
+      } else {
+        customDiv.style.display = 'none';
+      }
+    });
+
+    // 测试无效金额格式功能
+    function testInvalidAmount() {
+      // 故意设置无效格式来触发错误
+      document.getElementById('customAmount').value = 'invalid$$$123.abc';
+      alert('已设置无效金额格式，点击充值按钮将触发格式错误');
+    }
+
+    // 充值表单提交
+    document.getElementById('rechargeForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      let amount = document.getElementById('rechargeAmount').value;
+      if (amount === 'custom') {
+        amount = document.getElementById('customAmount').value;
+        // 允许无效格式通过前端验证来测试后端错误处理
+        if (!amount) {
+          alert('请输入充值金额');
+          return;
+        }
+        // 如果包含无效字符，让后端处理并返回格式错误
+        if (!/^[0-9.]+$/.test(amount) && !amount.includes('invalid')) {
+          if (parseFloat(amount) <= 0) {
+            alert('请输入有效的充值金额');
+            return;
+          }
+        }
+      }
+
+      const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+      
+      try {
+        // 创建充值订单
+        const res = await fetch('RechargeCreate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: `amount=${encodeURIComponent(amount)}&paymentMethod=${encodeURIComponent(paymentMethod)}`
+        });
+        
+        const data = await res.json();
+        if (!data.ok) {
+          throw new Error(data.msg || '创建充值订单失败');
+        }
+
+        // 模拟支付过程
+        if (confirm(`确认使用${paymentMethod === 'WECHAT' ? '微信' : '支付宝'}支付 ¥${amount} 吗？`)) {
+          const payRes = await fetch('RechargePay', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `orderNo=${encodeURIComponent(data.orderNo)}`
+          });
+          
+          const payData = await payRes.json();
+          if (payData.ok) {
+            alert('充值成功！');
+            loadRechargeData(); // 刷新数据
+          } else {
+            throw new Error(payData.msg || '支付失败');
+          }
+        }
+        
+      } catch (err) {
+        alert('充值失败：' + err.message);
+      }
+    });
+
+    // 购买记录相关功能
+    let purchaseHistoryData = [];
+
+    async function loadPurchaseHistory() {
+      try {
+        const res = await fetch('TradePurchaseHistory');
+        purchaseHistoryData = await res.json();
+        renderPurchaseHistory(purchaseHistoryData);
+        updatePurchaseStats(purchaseHistoryData);
+      } catch (err) {
+        console.error('获取购买记录失败:', err);
+        document.getElementById('purchaseList').innerHTML = '<p class="empty-message">加载购买记录失败</p>';
+      }
+    }
+
+    function renderPurchaseHistory(data) {
+      const listDiv = document.getElementById('purchaseList');
+      
+      if (!data || data.length === 0) {
+        listDiv.innerHTML = '<p class="empty-message">暂无购买记录</p>';
+        return;
+      }
+
+      let html = '<div class="market-grid">';
+      data.forEach(item => {
+        let thumbs = [];
+        if (item.images) {
+          thumbs = String(item.images).split(',').filter(Boolean);
+        }
+        const imgHtml = thumbs.length ? `<img class="thumb-img" data-full="${assetUrl(thumbs[0])}" src="${assetUrl(thumbs[0])}" alt="">` : '<div class="ph">无图</div>';
+        
+        html += `
+          <div class="item">
+            <div class="thumb">${imgHtml}</div>
+            <div class="meta">
+              <div class="t">${escapeHtml(item.title)}</div>
+              <div class="p">￥${item.price || 0}</div>
+              <div class="d">${escapeHtml(item.description || '')}</div>
+              <div class="status paid">已购买</div>
+              <div class="time">购买于 ${formatTime(item.paymentTime)} · 卖家: ${escapeHtml(item.author)}</div>
+              ${thumbs.length>1 ? `<div class="more-imgs" style="display:flex;gap:6px;margin-top:6px;">${thumbs.slice(1,4).map(p=>`<img class=\"thumb-img\" data-full=\"${assetUrl(p)}\" src=\"${assetUrl(p)}\" style=\"width:48px;height:48px;object-fit:cover;border-radius:4px;cursor:pointer;\">`).join('')}</div>`: ''}
+            </div>
+          </div>
+        `;
+      });
+      html += '</div>';
+      listDiv.innerHTML = html;
+
+      // 绑定图片预览功能
+      listDiv.querySelectorAll('img.thumb-img').forEach(img => {
+        img.style.cursor = 'pointer';
+        img.addEventListener('click', ()=>{
+          openLightbox(img.getAttribute('data-full') || img.src);
+        });
+      });
+    }
+
+    function updatePurchaseStats(data) {
+      const totalPurchases = data.length;
+      const totalSpent = data.reduce((sum, item) => sum + (parseFloat(item.price) || 0), 0);
+      
+      document.getElementById('totalPurchases').textContent = totalPurchases;
+      document.getElementById('totalSpent').textContent = `¥${totalSpent.toFixed(2)}`;
+    }
+
+    // 购买记录搜索
+    document.getElementById('btnPurchaseSearch').addEventListener('click', function() {
+      const keyword = document.getElementById('purchaseSearch').value.trim().toLowerCase();
+      if (!keyword) {
+        renderPurchaseHistory(purchaseHistoryData);
+        return;
+      }
+      
+      const filtered = purchaseHistoryData.filter(item => 
+        (item.title && item.title.toLowerCase().includes(keyword)) ||
+        (item.author && item.author.toLowerCase().includes(keyword)) ||
+        (item.description && item.description.toLowerCase().includes(keyword))
+      );
+      
+      renderPurchaseHistory(filtered);
+    });
+
+    // 购买记录搜索框回车事件
+    document.getElementById('purchaseSearch').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        document.getElementById('btnPurchaseSearch').click();
+      }
+    });
 
     (async function init(){
       await fetchCurrent();
-      // 默认进入交易页只显示“最新发布”
+      await loadUserBalance(); // 加载用户余额
+      
+      // 默认进入交易页只显示"最新发布"
       const h = (location.hash || '').replace('#','');
-      if (h === 'publish') showSection('publish'); else showSection('discover');
+      if (h === 'publish') showSection('publish'); 
+      else if (h === 'recharge') showSection('recharge');
+      else if (h === 'purchase-history') showSection('purchase-history');
+      else showSection('discover');
       fetchList();
     })();
   </script>

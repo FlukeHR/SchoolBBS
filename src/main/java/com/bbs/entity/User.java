@@ -1,5 +1,6 @@
 package com.bbs.entity;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 public class User {
@@ -8,6 +9,7 @@ public class User {
     private String passwd;
     private String sex;
     private java.sql.Date rtime;
+    private BigDecimal balance; // 账户余额
 
     public int getUid() {
         return uid;
@@ -48,6 +50,15 @@ public class User {
     public void setRtime(Date rtime) {
         this.rtime = rtime;
     }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -56,6 +67,7 @@ public class User {
                 ", passwd='[MASKED]'" +
                 ", sex='" + sex + '\'' +
                 ", rtime=" + rtime +
+                ", balance=" + balance +
                 '}';
     }
 }
