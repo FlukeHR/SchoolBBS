@@ -10,7 +10,7 @@
 
 **一个功能完整的校园社区交流平台**
 
-[功能特性](#-功能特性) • [快速开始](#-快速开始) • [部署指南](#-部署指南) • [API文档](#-api文档) • [贡献指南](#-贡献指南)
+[功能特性](#-功能特性) • [快速开始](#-快速开始) • [部署指南](#-部署指南) • [项目结构](#-项目结构) • [使用说明](#-使用说明)
 
 </div>
 
@@ -19,11 +19,11 @@
 校园贴吧系统是一个专为大学生设计的现代化在线交流平台，集成了帖子发布、评论互动、用户管理、商品交易等核心功能。系统采用经典的 MVC 架构，提供响应式设计和现代化的用户界面，为校园社区创造便捷的信息交流和资源共享环境。
 
 ### 🎯 核心价值
-- **📝 内容创作**: 支持富文本帖子发布，包含多媒体文件上传
-- **💬 社区互动**: 完整的评论系统，支持点赞和关注功能
+- **📝 内容创作**: 支持帖子发布与编辑，分类管理
+- **💬 社区互动**: 完整的评论系统，支持点赞功能
 - **🛒 交易平台**: 集成的二手商品交易模块
 - **👥 用户管理**: 完善的用户权限和管理员后台系统
-- **🔍 智能搜索**: 支持全文搜索和分类浏览
+- **🔍 智能搜索**: 支持分类浏览和内容查找
 
 ## 🛠 技术栈
 
@@ -31,11 +31,13 @@
 | 技术 | 版本 | 说明 |
 |------|------|------|
 | **Java** | 8+ | 核心编程语言 |
-| **Servlet** | 4.0 | Web框架 |
+| **Servlet** | 4.0.1 | Web框架 |
 | **MyBatis** | 3.5.6 | ORM框架 |
-| **MySQL** | 8.0+ | 关系型数据库 |
+| **MySQL** | 8.0.27 | 关系型数据库 |
 | **Log4j2** | 2.20.0 | 日志框架 |
 | **Maven** | 3.6+ | 项目构建工具 |
+| **Lombok** | 1.18.20 | 代码简化工具 |
+| **Gson** | 2.8.9 | JSON处理库 |
 
 ### 前端技术
 | 技术 | 版本 | 说明 |
@@ -50,59 +52,164 @@
 - **Apache Tomcat** 9.0+
 - **Linux/macOS/Windows** 跨平台支持
 
-## 🏗 系统架构
+## 🚀 快速开始
 
-```mermaid
-graph TB
-    A[前端展示层 JSP/HTML/CSS/JS] --> B[控制层 Servlet Controllers]
-    B --> C[业务逻辑层 Service Layer]
-    C --> D[数据访问层 MyBatis Mappers]
-    D --> E[数据存储层 MySQL Database]
-    
-    subgraph "核心模块"
-        F[用户管理模块]
-        G[帖子管理模块]
-        H[评论系统模块]
-        I[交易平台模块]
-        J[搜索功能模块]
-        K[管理员后台模块]
-    end
+### 环境要求
+- Java 8 或更高版本
+- Maven 3.6 或更高版本
+- MySQL 8.0 或更高版本
+- Apache Tomcat 9.0 或更高版本
+
+### 数据库配置
+
+1. 创建数据库：
+   ```sql
+   CREATE DATABASE forumsys CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+   ```
+
+2. 导入数据库脚本：
+   ```bash
+   mysql -u root -p forumsys < src/main/resources/schema.sql
+   ```
+
+3. 配置数据库连接：
+   编辑 `src/main/resources/db.properties` 文件，设置数据库连接信息：
+   ```properties
+   jdbc.driver = com.mysql.cj.jdbc.Driver
+   jdbc.url = jdbc:mysql://localhost:3306/forumsys?serverTimezone=UTC
+   jdbc.username = root
+   jdbc.password = 123456
+   ```
+
+### 直接启动
+
+使用提供的启动脚本快速启动系统：
+
+```bash
+chmod +x start.sh
+./start.sh
 ```
 
-### 📁 项目结构
+该脚本会自动检查并启动 MySQL 和 Tomcat 服务，并打开浏览器访问系统。
+
+## 📦 部署指南
+
+### 手动部署
+
+1. 编译项目：
+   ```bash
+   mvn clean package
+   ```
+
+2. 部署 WAR 文件：
+   将生成的 `target/untitled2-1.0-SNAPSHOT.war` 文件复制到 Tomcat 的 `webapps` 目录下，并命名为 `ROOT.war`
+
+3. 启动 Tomcat：
+   ```bash
+   /usr/local/tomcat9/bin/catalina.sh start
+   ```
+
+### 一键部署
+
+使用提供的部署脚本：
+
+```bash
+chmod +x deploy.sh
+./deploy.sh
+```
+
+该脚本会自动执行编译、部署和启动操作。
+
+## 📁 项目结构
 
 ```
 校园贴吧系统/
-├── 📂 src/main/
-│   ├── 📂 java/com/bbs/
-│   │   ├── 📂 controller/          # 控制器层
-│   │   │   ├── 📂 admin/          # 管理员控制器
-│   │   │   ├── 📂 comment/        # 评论控制器
-│   │   │   ├── 📂 post/           # 帖子控制器
-│   │   │   ├── 📂 trade/          # 交易控制器
-│   │   │   └── 📂 user/           # 用户控制器
-│   │   ├── 📂 entity/             # 实体类 (POJO)
-│   │   ├── 📂 service/            # 业务逻辑层
-│   │   │   └── 📂 impl/           # 服务实现类
-│   │   ├── 📂 mapper/             # 数据访问层
-│   │   ├── 📂 util/               # 工具类
-│   │   └── 📂 exception/          # 异常处理
-│   ├── 📂 resources/              # 配置文件
-│   │   ├── 📄 mybatis-config.xml  # MyBatis配置
-│   │   ├── 📄 log4j2.xml          # 日志配置
-│   │   ├── 📄 db.properties.sample # 数据库配置模板
-│   │   └── 📄 schema.sql          # 数据库初始化脚本
-│   └── 📂 webapp/                 # Web资源
-│       ├── 📂 css/                # 样式文件
-│       ├── 📂 js/                 # JavaScript文件
-│       ├── 📂 images/             # 图片资源
-│       └── 📄 *.jsp               # JSP页面
-├── 📄 pom.xml                     # Maven配置
-├── 📄 deploy.sh                   # 部署脚本
-├── 📄 start.sh                    # 启动脚本
-├── 📄 stop.sh                     # 停止脚本
-└── 📄 README.md                   # 项目文档
+├── 📂 src/main/                      # 源代码目录
+│   ├── 📂 java/                      # Java 源代码
+│   │   └── 📂 com/bbs/               # 主包
+│   ├── 📂 resources/                 # 配置文件
+│   │   ├── 📄 db.properties          # 数据库配置
+│   │   ├── 📄 log4j.properties       # 日志配置
+│   │   ├── 📄 log4j2.xml             # 日志配置（Log4j2）
+│   │   ├── 📄 mybatis-config.xml     # MyBatis配置
+│   │   └── 📄 schema.sql             # 数据库初始化脚本
+│   └── 📂 webapp/                    # Web资源
+│       ├── 📂 css/                   # 样式文件
+│       ├── 📂 images/                # 图片资源
+│       ├── 📂 js/                    # JavaScript文件
+│       ├── 📂 WEB-INF/               # Web配置
+│       │   └── 📄 web.xml            # Web应用配置
+│       └── 📄 *.jsp/html             # 页面文件
+├── 📄 deploy.sh                      # 一键部署脚本
+├── 📄 pom.xml                        # Maven配置
+├── 📄 README.md                      # 项目说明文档
+├── 📄 start.sh                       # 启动脚本
+└── 📄 stop.sh                        # 停止脚本
 ```
+
+## 📖 使用说明
+
+### 访问系统
+
+- **用户入口**: http://localhost:8080/index.html
+- **管理员入口**: http://localhost:8080/adminLogin.jsp
+
+### 主要功能
+
+#### 用户功能
+- 🔐 用户注册与登录
+- 📝 发布、编辑和删除帖子
+- 💬 评论帖子和回复评论
+- 👍 为帖子和评论点赞
+- 📂 创建和管理自定义帖子类型
+- 👤 个人资料管理
+- 🛍 浏览和发布二手交易信息
+
+#### 管理员功能
+- 👥 管理用户账号
+- 📝 管理所有帖子和评论
+- 🗂 管理帖子类型
+- 📊 查看系统统计信息
+
+## 🛡 安全说明
+
+- 系统使用参数化查询防止SQL注入
+- 密码存储采用安全加密方式
+- 严格的权限控制确保数据安全
+- 日志记录系统操作便于审计
+
+## 📊 系统预览
+
+### 登录页面
+访问 http://localhost:8080/index.html 进入登录页面
+
+### 首页
+登录后进入系统首页，可以浏览最新帖子和热门内容
+
+### 发布帖子
+点击导航栏的"发帖"按钮可以发布新帖子
+
+### 个人中心
+在"我的"页面可以管理个人信息和发布的内容
+
+## 🤝 贡献指南
+
+欢迎提交 Issue 和 Pull Request 来改进项目。请确保您的代码符合项目的代码风格和质量标准。
+
+## 📄 许可证
+
+本项目采用 MIT 许可证 - 查看 LICENSE 文件获取详情
+
+## 📬 联系我们
+
+如有任何问题或建议，请通过以下方式联系我们：
+
+- 项目维护者：校园贴吧团队
+- 技术支持：support@example.com
+
+---
+
+⭐ 如果你觉得这个项目有用，请给我们一个星标！
 
 ## ✨ 功能特性
 
@@ -191,8 +298,8 @@ cp src/main/resources/db.properties.sample src/main/resources/db.properties
 # 数据库连接配置
 jdbc.driver=com.mysql.cj.jdbc.Driver
 jdbc.url=jdbc:mysql://localhost:3306/forumsys?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
-jdbc.username=your_username
-jdbc.password=your_password
+jdbc.username=root
+jdbc.password=123456
 ```
 
 #### 3. 编译和部署
@@ -465,22 +572,6 @@ tail -f logs/application.log
 
 本项目采用 MIT 许可证。详情请参阅 [LICENSE](LICENSE) 文件。
 
-```
-MIT License
-
-Copyright (c) 2025 校园贴吧系统
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-```
-
 ## 🙏 致谢
 
 感谢以下项目和技术为本项目提供支持：
@@ -495,9 +586,9 @@ copies or substantial portions of the Software.
 
 如果您在使用过程中遇到问题或有改进建议，欢迎通过以下方式联系：
 
-- 📧 **邮箱**: [your-email@example.com]
-- 🐛 **问题反馈**: [GitHub Issues](https://github.com/your-username/campus-forum/issues)
-- 💡 **功能建议**: [GitHub Discussions](https://github.com/your-username/campus-forum/discussions)
+- 📧 **邮箱**: [support@campusforum.edu]
+- 🐛 **问题反馈**: 通过系统内的反馈功能提交
+- 💡 **功能建议**: 联系系统管理员
 
 ---
 
