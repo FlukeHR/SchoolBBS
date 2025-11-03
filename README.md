@@ -1,202 +1,106 @@
-# 🏫 校园贴吧系统
+# 校园贴吧系统
 
-<div align="center">
+## 项目简介
+校园贴吧系统是一个功能完整的校园社区交流平台，支持帖子发布、评论互动、用户管理和商品交易等功能。
 
-![Java](https://img.shields.io/badge/Java-8+-orange.svg)
-![Maven](https://img.shields.io/badge/Maven-3.6+-blue.svg)
-![MySQL](https://img.shields.io/badge/MySQL-8.0+-blue.svg)
-![Tomcat](https://img.shields.io/badge/Tomcat-9.0+-yellow.svg)
-![License](https://img.shields.io/badge/License-MIT-green.svg)
+## 技术栈
+- **后端**: Java 8+, Servlet, MyBatis, MySQL 8.0+
+- **前端**: JSP, HTML5, CSS3, JavaScript, jQuery
+- **部署**: Maven 3.6+, Tomcat 9.0+
 
-**一个功能完整的校园社区交流平台**
+## 快速部署
 
-[功能特性](#-功能特性) • [快速开始](#-快速开始) • [部署指南](#-部署指南) • [项目结构](#-项目结构) • [使用说明](#-使用说明)
-
-</div>
-
-## 📋 项目简介
-
-校园贴吧系统是一个专为大学生设计的现代化在线交流平台，集成了帖子发布、评论互动、用户管理、商品交易等核心功能。系统采用经典的 MVC 架构，提供响应式设计和现代化的用户界面，为校园社区创造便捷的信息交流和资源共享环境。
-
-### 🎯 核心价值
-- **📝 内容创作**: 支持帖子发布与编辑，分类管理
-- **💬 社区互动**: 完整的评论系统，支持点赞功能
-- **🛒 交易平台**: 集成的二手商品交易模块
-- **👥 用户管理**: 完善的用户权限和管理员后台系统
-- **🔍 智能搜索**: 支持分类浏览和内容查找
-
-## 🛠 技术栈
-
-### 后端技术
-| 技术 | 版本 | 说明 |
-|------|------|------|
-| **Java** | 8+ | 核心编程语言 |
-| **Servlet** | 4.0.1 | Web框架 |
-| **MyBatis** | 3.5.6 | ORM框架 |
-| **MySQL** | 8.0.27 | 关系型数据库 |
-| **Log4j2** | 2.20.0 | 日志框架 |
-| **Maven** | 3.6+ | 项目构建工具 |
-| **Lombok** | 1.18.20 | 代码简化工具 |
-| **Gson** | 2.8.9 | JSON处理库 |
-
-### 前端技术
-| 技术 | 版本 | 说明 |
-|------|------|------|
-| **JSP** | 2.3 | 服务端渲染 |
-| **HTML5** | - | 页面结构 |
-| **CSS3** | - | 样式设计 |
-| **JavaScript** | ES6+ | 交互逻辑 |
-| **jQuery** | 3.5.1 | DOM操作库 |
-
-### 部署环境
-- **Apache Tomcat** 9.0+
-- **Linux/macOS/Windows** 跨平台支持
-
-## 🚀 快速开始
-
-### 环境要求
+### 1. 环境准备
+确保已安装以下软件：
 - Java 8 或更高版本
 - Maven 3.6 或更高版本
 - MySQL 8.0 或更高版本
-- Apache Tomcat 9.0 或更高版本
+- Tomcat 9.0 或更高版本
 
-### 数据库配置
+### 2. 数据库配置
 
-1. 创建数据库：
-   ```sql
-   CREATE DATABASE forumsys CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-   ```
+```bash
+# 1. 创建数据库
+mysql -u root -p -e "CREATE DATABASE forumsys CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 
-2. 导入数据库脚本：
-   ```bash
-   mysql -u root -p forumsys < src/main/resources/schema.sql
-   ```
+# 2. 导入数据库脚本
+mysql -u root -p forumsys < src/main/resources/schema.sql
 
-3. 配置数据库连接：
-   编辑 `src/main/resources/db.properties` 文件，设置数据库连接信息：
-   ```properties
-   jdbc.driver = com.mysql.cj.jdbc.Driver
-   jdbc.url = jdbc:mysql://localhost:3306/forumsys?serverTimezone=UTC
-   jdbc.username = root
-   jdbc.password = 123456
-   ```
+# 3. 配置数据库连接信息
+# 编辑 src/main/resources/db.properties 文件
+```
 
-### 直接启动
+### 3. 一键启动
 
-使用提供的启动脚本快速启动系统：
-
+**Linux/macOS:**
 ```bash
 chmod +x start.sh
 ./start.sh
 ```
 
-该脚本会自动检查并启动 MySQL 和 Tomcat 服务，并打开浏览器访问系统。
+**Windows:**
+```cmd
+start.bat
+```
 
-## 📦 部署指南
+### 4. 一键部署
 
-### 手动部署
-
-1. 编译项目：
-   ```bash
-   mvn clean package
-   ```
-
-2. 部署 WAR 文件：
-   将生成的 `target/untitled2-1.0-SNAPSHOT.war` 文件复制到 Tomcat 的 `webapps` 目录下，并命名为 `ROOT.war`
-
-3. 启动 Tomcat：
-   ```bash
-   /usr/local/tomcat9/bin/catalina.sh start
-   ```
-
-### 一键部署
-
-使用提供的部署脚本：
-
+**Linux/macOS:**
 ```bash
 chmod +x deploy.sh
 ./deploy.sh
 ```
 
-该脚本会自动执行编译、部署和启动操作。
-
-## 📁 项目结构
-
-```
-校园贴吧系统/
-├── 📂 src/main/                      # 源代码目录
-│   ├── 📂 java/                      # Java 源代码
-│   │   └── 📂 com/bbs/               # 主包
-│   ├── 📂 resources/                 # 配置文件
-│   │   ├── 📄 db.properties          # 数据库配置
-│   │   ├── 📄 log4j.properties       # 日志配置
-│   │   ├── 📄 log4j2.xml             # 日志配置（Log4j2）
-│   │   ├── 📄 mybatis-config.xml     # MyBatis配置
-│   │   └── 📄 schema.sql             # 数据库初始化脚本
-│   └── 📂 webapp/                    # Web资源
-│       ├── 📂 css/                   # 样式文件
-│       ├── 📂 images/                # 图片资源
-│       ├── 📂 js/                    # JavaScript文件
-│       ├── 📂 WEB-INF/               # Web配置
-│       │   └── 📄 web.xml            # Web应用配置
-│       └── 📄 *.jsp/html             # 页面文件
-├── 📄 deploy.sh                      # 一键部署脚本
-├── 📄 pom.xml                        # Maven配置
-├── 📄 README.md                      # 项目说明文档
-├── 📄 start.sh                       # 启动脚本
-└── 📄 stop.sh                        # 停止脚本
+**Windows:**
+```cmd
+deploy.bat
 ```
 
-## 📖 使用说明
+## 手动部署步骤
 
-### 访问系统
+```bash
+# 1. 编译项目
+mvn clean package
 
-- **用户入口**: http://localhost:8080/index.html
+# 2. 部署 WAR 文件到 Tomcat
+cp target/untitled2-1.0-SNAPSHOT.war /path/to/tomcat/webapps/ROOT.war
+
+# 3. 启动 Tomcat
+/path/to/tomcat/bin/catalina.sh start
+```
+
+## 系统访问
+- **用户入口**: http://localhost:8080
 - **管理员入口**: http://localhost:8080/adminLogin.jsp
 
-### 主要功能
+## 主要功能
 
-#### 用户功能
-- 🔐 用户注册与登录
-- 📝 发布、编辑和删除帖子
-- 💬 评论帖子和回复评论
-- 👍 为帖子和评论点赞
-- 📂 创建和管理自定义帖子类型
-- 👤 个人资料管理
-- 🛍 浏览和发布二手交易信息
+### 用户功能
+- 用户注册与登录
+- 发布、编辑和删除帖子
+- 评论和回复功能
+- 帖子和评论点赞
+- 个人资料管理
+- 二手商品交易
 
-#### 管理员功能
-- 👥 管理用户账号
-- 📝 管理所有帖子和评论
-- 🗂 管理帖子类型
-- 📊 查看系统统计信息
+### 管理员功能
+- 用户账号管理
+- 帖子和评论管理
+- 帖子类型管理
+- 系统统计信息查看
 
-## 🛡 安全说明
+## 停止服务
 
-- 系统使用参数化查询防止SQL注入
-- 密码存储采用安全加密方式
-- 严格的权限控制确保数据安全
-- 日志记录系统操作便于审计
+**Linux/macOS:**
+```bash
+chmod +x stop.sh
+./stop.sh
+```
 
-## 📊 系统预览
-
-### 登录页面
-访问 http://localhost:8080/index.html 进入登录页面
-
-### 首页
-登录后进入系统首页，可以浏览最新帖子和热门内容
-
-### 发布帖子
-点击导航栏的"发帖"按钮可以发布新帖子
-
-### 个人中心
-在"我的"页面可以管理个人信息和发布的内容
-
-## 🤝 贡献指南
-
-欢迎提交 Issue 和 Pull Request 来改进项目。请确保您的代码符合项目的代码风格和质量标准。
-
-## 📄 许可证
+**Windows:**
+```cmd
+stop.bat
+```
 
 本项目采用 MIT 许可证 - 查看 LICENSE 文件获取详情
 
