@@ -164,7 +164,7 @@ public class adminUpdateBalance extends HttpServlet {
             // 保存操作记录
             try (SqlSession session = factory().openSession()) {
                 RechargeMapper rechargeMapper = session.getMapper(RechargeMapper.class);
-                rechargeMapper.initSchema();
+    
                 rechargeMapper.insertRecharge(adminLog);
                 session.commit();
             }

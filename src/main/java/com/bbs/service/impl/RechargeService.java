@@ -36,7 +36,6 @@ public class RechargeService {
             UserMapper userMapper = session.getMapper(UserMapper.class);
             
             // 初始化表结构
-            mapper.initSchema();
             try { userMapper.addBalanceColumn(); } catch (Exception ignore) {}
             try { userMapper.initUserBalance(); } catch (Exception ignore) {}
             
@@ -83,7 +82,6 @@ public class RechargeService {
     public List<Recharge> getUserRechargeHistory(String username) throws Exception {
         try (SqlSession session = factory().openSession()) {
             RechargeMapper mapper = session.getMapper(RechargeMapper.class);
-            mapper.initSchema();
             return mapper.selectByUsername(username);
         }
     }
@@ -92,7 +90,6 @@ public class RechargeService {
     public Recharge getRechargeByOrderNo(String orderNo) throws Exception {
         try (SqlSession session = factory().openSession()) {
             RechargeMapper mapper = session.getMapper(RechargeMapper.class);
-            mapper.initSchema();
             return mapper.selectByOrderNo(orderNo);
         }
     }

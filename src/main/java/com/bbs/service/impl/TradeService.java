@@ -21,10 +21,15 @@ public class TradeService implements TradeMapper {
     public void createTrade(Trade trade) throws Exception {
         try (SqlSession session = factory().openSession()) {
             TradeMapper mapper = session.getMapper(TradeMapper.class);
-            mapper.initSchema();
-            try { mapper.addImagesColumn(); } catch (Exception ignore) {}
-            try { mapper.migrateImages(); } catch (Exception ignore) {}
-            try { mapper.fixImagesPath(); } catch (Exception ignore) {}
+
+            try {
+                mapper.addImagesColumn();
+                mapper.migrateImages();
+                mapper.fixImagesPath();
+            } catch (Exception e) {
+                // 忽略列已存在的错误
+                System.out.println("Table migration might have failed, ignoring: " + e.getMessage());
+            }
             mapper.createTrade(trade);
             session.commit();
         }
@@ -34,12 +39,17 @@ public class TradeService implements TradeMapper {
     public List<Trade> listTrades() throws Exception {
         try (SqlSession session = factory().openSession()) {
             TradeMapper mapper = session.getMapper(TradeMapper.class);
-            mapper.initSchema();
-            try { mapper.addImagesColumn(); } catch (Exception ignore) {}
-            try { mapper.migrateImages(); } catch (Exception ignore) {}
-            try { mapper.fixImagesPath(); } catch (Exception ignore) {}
-            try { mapper.addPaymentColumns(); } catch (Exception ignore) {}
-            try { mapper.initPaymentStatus(); } catch (Exception ignore) {}
+
+            try {
+                mapper.addImagesColumn();
+                mapper.migrateImages();
+                mapper.fixImagesPath();
+                mapper.addPaymentColumns();
+                mapper.initPaymentStatus();
+            } catch (Exception e) {
+                // 忽略列已存在的错误
+                System.out.println("Table migration might have failed, ignoring: " + e.getMessage());
+            }
             List<Trade> list = mapper.listTrades();
             session.commit();
             return list;
@@ -50,7 +60,7 @@ public class TradeService implements TradeMapper {
     public List<Trade> listTradesByAuthor(String author) throws Exception {
         try (SqlSession session = factory().openSession()) {
             TradeMapper mapper = session.getMapper(TradeMapper.class);
-            mapper.initSchema();
+
             try { mapper.addImagesColumn(); } catch (Exception ignore) {}
             try { mapper.migrateImages(); } catch (Exception ignore) {}
             try { mapper.fixImagesPath(); } catch (Exception ignore) {}
@@ -66,7 +76,7 @@ public class TradeService implements TradeMapper {
     public void deleteTrade(int id) throws Exception {
         try (SqlSession session = factory().openSession()) {
             TradeMapper mapper = session.getMapper(TradeMapper.class);
-            mapper.initSchema();
+
             try { mapper.addImagesColumn(); } catch (Exception ignore) {}
             try { mapper.migrateImages(); } catch (Exception ignore) {}
             try { mapper.fixImagesPath(); } catch (Exception ignore) {}
@@ -75,22 +85,12 @@ public class TradeService implements TradeMapper {
         }
     }
 
-    @Override
-    public void initSchema() throws Exception {
-        try (SqlSession session = factory().openSession()) {
-            TradeMapper mapper = session.getMapper(TradeMapper.class);
-            mapper.initSchema();
-            try { mapper.addImagesColumn(); } catch (Exception ignore) {}
-            try { mapper.migrateImages(); } catch (Exception ignore) {}
-            try { mapper.fixImagesPath(); } catch (Exception ignore) {}
-            session.commit();
-        }
-    }
+
 
     public Trade selectById(int id) throws Exception {
         try (SqlSession session = factory().openSession()) {
             TradeMapper mapper = session.getMapper(TradeMapper.class);
-            mapper.initSchema();
+
             try { mapper.addImagesColumn(); } catch (Exception ignore) {}
             try { mapper.migrateImages(); } catch (Exception ignore) {}
             try { mapper.fixImagesPath(); } catch (Exception ignore) {}
@@ -105,7 +105,7 @@ public class TradeService implements TradeMapper {
     public List<Trade> searchTrades(String keyword) throws Exception {
         try (SqlSession session = factory().openSession()) {
             TradeMapper mapper = session.getMapper(TradeMapper.class);
-            mapper.initSchema();
+
             try { mapper.addImagesColumn(); } catch (Exception ignore) {}
             try { mapper.migrateImages(); } catch (Exception ignore) {}
             try { mapper.fixImagesPath(); } catch (Exception ignore) {}
@@ -121,7 +121,7 @@ public class TradeService implements TradeMapper {
     public void updateTrade(Trade trade) throws Exception {
         try (SqlSession session = factory().openSession()) {
             TradeMapper mapper = session.getMapper(TradeMapper.class);
-            mapper.initSchema();
+
             try { mapper.addImagesColumn(); } catch (Exception ignore) {}
             try { mapper.migrateImages(); } catch (Exception ignore) {}
             try { mapper.fixImagesPath(); } catch (Exception ignore) {}
@@ -159,8 +159,13 @@ public class TradeService implements TradeMapper {
     public boolean updatePaymentStatus(int id, String status, String buyer, Timestamp paymentTime) throws Exception {
         try (SqlSession session = factory().openSession()) {
             TradeMapper mapper = session.getMapper(TradeMapper.class);
-            mapper.initSchema();
-            try { mapper.addPaymentColumns(); } catch (Exception ignore) {}
+
+            try {
+                mapper.addPaymentColumns();
+            } catch (Exception e) {
+                // 忽略列已存在的错误
+                System.out.println("Table migration might have failed, ignoring: " + e.getMessage());
+            }
             
             Trade trade = new Trade();
             trade.setId(id);
@@ -205,7 +210,7 @@ public class TradeService implements TradeMapper {
     public List<Trade> listTradesByBuyer(String buyer) throws Exception {
         try (SqlSession session = factory().openSession()) {
             TradeMapper mapper = session.getMapper(TradeMapper.class);
-            mapper.initSchema();
+
             try { mapper.addImagesColumn(); } catch (Exception ignore) {}
             try { mapper.migrateImages(); } catch (Exception ignore) {}
             try { mapper.fixImagesPath(); } catch (Exception ignore) {}

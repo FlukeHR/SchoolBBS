@@ -13,23 +13,7 @@
     <result column="remark" property="remark"/>
   </resultMap>
 
-  <!-- 创建充值记录表 -->
-  <update id="initSchema">
-    CREATE TABLE IF NOT EXISTS recharge (
-      id INT PRIMARY KEY AUTO_INCREMENT,
-      username VARCHAR(64) NOT NULL,
-      amount DECIMAL(10,2) NOT NULL,
-      payment_method VARCHAR(20) NOT NULL,
-      status VARCHAR(20) DEFAULT 'PENDING',
-      order_no VARCHAR(64) UNIQUE NOT NULL,
-      create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-      remark TEXT,
-      INDEX idx_username (username),
-      INDEX idx_order_no (order_no),
-      INDEX idx_status (status)
-    )
-  </update>
+
 
   <!-- 插入充值记录 -->
   <insert id="insertRecharge" parameterType="com.bbs.entity.Recharge" useGeneratedKeys="true" keyProperty="id">
