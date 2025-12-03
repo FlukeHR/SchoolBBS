@@ -1,9 +1,9 @@
 #!/bin/bash
 
-echo "🚀 启动校园贴吧系统..."
+echo " 启动校园贴吧系统..."
 
 # 检查并启动 MySQL
-echo "📦 检查 MySQL 服务..."
+echo " 检查 MySQL 服务..."
 if ! pgrep -x mysqld > /dev/null; then
     echo "   启动 MySQL..."
     brew services start mysql
@@ -13,7 +13,7 @@ else
 fi
 
 # 检查并启动 Tomcat
-echo "🌐 检查 Tomcat 服务..."
+echo " 检查 Tomcat 服务..."
 if ! pgrep -f "catalina" > /dev/null; then
     echo "   启动 Tomcat..."
     /usr/local/tomcat9/bin/catalina.sh start
@@ -24,10 +24,10 @@ else
 fi
 
 # 打开浏览器
-echo "🌍 打开浏览器..."
+echo " 打开浏览器..."
 open http://localhost:8080/index.html
 
-echo "✅ 启动完成！"
+echo " 启动完成！"
 echo ""
 echo "访问地址："
 echo "  - 登录页面: http://localhost:8080/index.html"

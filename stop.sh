@@ -1,9 +1,9 @@
 #!/bin/bash
 
-echo "🛑 停止校园贴吧系统..."
+echo " 停止校园贴吧系统..."
 
 # 停止 Tomcat
-echo "🌐 停止 Tomcat..."
+echo " 停止 Tomcat..."
 if pgrep -f "catalina" > /dev/null; then
     /usr/local/tomcat9/bin/catalina.sh stop
     sleep 2
@@ -16,6 +16,6 @@ fi
 # echo "📦 停止 MySQL..."
 # brew services stop mysql
 
-echo "✅ 停止完成！"
+echo " 停止完成！"
 echo ""
 echo "注意：MySQL 服务仍在运行（如需停止请运行: brew services stop mysql）"
