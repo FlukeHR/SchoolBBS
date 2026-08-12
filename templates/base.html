@@ -1,0 +1,41 @@
+{% load static %}
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}SchoolBBS{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'forum/style.css' %}">
+</head>
+<body>
+  <a class="skip-link" href="#content">跳到正文</a>
+  <header class="site-header">
+    <nav class="nav shell" aria-label="主导航">
+      <a class="brand" href="{% url 'home' %}">SchoolBBS</a>
+      {% if user.is_authenticated %}
+        <div class="nav-links">
+          <a href="{% url 'board_list' %}">版块</a>
+          <a href="{% url 'search' %}">搜索</a>
+          <a href="{% url 'post_create' %}">发帖</a>
+          <a href="{% url 'profile' %}">我的</a>
+          {% if user.is_staff %}<a href="{% url 'admin:index' %}">管理</a>{% endif %}
+          <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button class="link-button" type="submit">退出</button>
+          </form>
+        </div>
+      {% endif %}
+    </nav>
+  </header>
+  <main id="content" class="shell">
+    {% if messages %}
+      <div class="messages" aria-live="polite">
+        {% for message in messages %}<p class="message {{ message.tags }}">{{ message }}</p>{% endfor %}
+      </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="site-footer shell">校园交流，从一条认真回复开始。</footer>
+</body>
+</html>
+

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{{ board.name }} · SchoolBBS{% endblock %}
+{% block content %}
+<section class="page-heading">
+  <div>
+    <p class="eyebrow">版块</p>
+    <h1>{{ board.name }}</h1>
+    <p>{{ board.description|default:"这个版块还没有简介。" }}</p>
+  </div>
+  <form action="{% url 'board_follow' board.pk %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+    <button class="button secondary" type="submit">
+      {% if user in board.followers.all %}取消关注{% else %}关注版块{% endif %}
+    </button>
+  </form>
+</section>
+{% include "forum/_post_list.html" %}
+{% endblock %}
+

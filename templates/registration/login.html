@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}登录 · SchoolBBS{% endblock %}
+{% block content %}
+<section class="auth-card card narrow">
+  <p class="eyebrow">欢迎回来</p>
+  <h1>登录校园论坛</h1>
+  <form method="post" class="stack">
+    {% csrf_token %}
+    {{ form.as_div }}
+    {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+    <button class="button" type="submit">登录</button>
+  </form>
+  <p>还没有账号？<a href="{% url 'signup' %}">立即注册</a></p>
+</section>
+{% endblock %}
+

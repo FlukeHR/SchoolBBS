@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}我的 · SchoolBBS{% endblock %}
+{% block content %}
+<section class="profile-grid">
+  <div class="card">
+    <p class="eyebrow">个人资料</p><h1>{{ user.first_name|default:user.username }}</h1>
+    <p class="muted">用户名：{{ user.username }}（不可修改）</p>
+    <form method="post" class="stack">
+      {% csrf_token %}{{ form.as_div }}<button class="button" type="submit">更新昵称</button>
+    </form>
+  </div>
+  <div class="card">
+    <h2>关注版块</h2>
+    <div class="chip-row">
+      {% for board in boards %}<a class="chip" href="{% url 'board_detail' board.pk %}">{{ board.name }}</a>{% empty %}<span class="muted">暂无关注。</span>{% endfor %}
+    </div>
+  </div>
+</section>
+<section><div class="section-heading"><h2>我的帖子</h2></div>{% include "forum/_post_list.html" %}</section>
+{% endblock %}
+

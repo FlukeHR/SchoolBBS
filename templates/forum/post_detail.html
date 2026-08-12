@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}{{ post.title }} · SchoolBBS{% endblock %}
+{% block content %}
+<article class="card post-detail">
+  <div class="post-meta">
+    <a class="tag" href="{% url 'board_detail' post.board_id %}">{{ post.board.name }}</a>
+    <span>{{ post.author.first_name|default:post.author.username }}</span>
+    <time datetime="{{ post.created_at|date:'c' }}">{{ post.created_at|date:"Y-m-d H:i" }}</time>
+  </div>
+  <h1>{{ post.title }}</h1>
+  <div class="post-body">{{ post.body|linebreaks }}</div>
+
+  {% if post.attachments.all %}
+    <section class="attachments" aria-labelledby="attachments-title">
+      <h2 id="attachments-title">附件</h2>
+      {% for attachment in post.attachments.all %}
+        {% if attachment.is_image %}
+          <a class="image-attachment" href="{% url 'attachment_download' attachment.pk %}">
+            <img src="{% url 'attachment_download' attachment.pk %}" alt="{{ attachment.original_name }}" loading="lazy">
+          </a>
+        {% else %}
+          <a class="file-link" href="{% url 'attachment_download' attachment.pk %}">{{ attachment.original_name }} · {{ attachment.size|filesizeformat }}</a>
+        {% endif %}
+      {% endfor %}
+    </section>
+  {% endif %}
+
+  <div class="actions">
+    <form action="{% url 'post_like' post.pk %}" method="post">
+      {% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path }}">
+      <button class="button secondary" type="submit">{% if user in post.liked_by.all %}取消赞{% else %}点赞{% endif %} · {{ post.liked_by.count }}</button>
+    </form>
+    {% if user == post.author or user.is_staff %}
+      <a class="button secondary" href="{% url 'post_edit' post.pk %}">编辑</a>
+      <details class="danger-zone"><summary>删除</summary>
+        <form action="{% url 'post_delete' post.pk %}" method="post">
+          {% csrf_token %}<button class="button danger" type="submit">确认删除帖子</button>
+        </form>
+      </details>
+    {% endif %}
+  </div>
+</article>
+
+<section class="comments" aria-labelledby="comments-title">
+  <h2 id="comments-title">评论 · {{ post.comments.count }}</h2>
+  <form action="{% url 'comment_add' post.pk %}" method="post" class="card stack">
+    {% csrf_token %}{{ comment_form.as_div }}<button class="button" type="submit">发表评论</button>
+  </form>
+  {% for comment in post.comments.all %}
+    <article class="card comment" id="comment-{{ comment.pk }}">
+      <div class="post-meta"><strong>{{ comment.author.first_name|default:comment.author.username }}</strong><time>{{ comment.created_at|date:"Y-m-d H:i" }}</time></div>
+      <div>{{ comment.body|linebreaks }}</div>
+      <div class="actions compact">
+        <form action="{% url 'comment_like' comment.pk %}" method="post">
+          {% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path }}#comment-{{ comment.pk }}">
+          <button class="text-button" type="submit">{% if user in comment.liked_by.all %}取消赞{% else %}点赞{% endif %} · {{ comment.liked_by.count }}</button>
+        </form>
+        {% if user == comment.author or user.is_staff %}
+          <a href="{% url 'comment_edit' comment.pk %}">编辑</a>
+          <form action="{% url 'comment_delete' comment.pk %}" method="post">
+            {% csrf_token %}<button class="text-button danger-text" type="submit">删除</button>
+          </form>
+        {% endif %}
+      </div>
+    </article>
+  {% empty %}
+    <p class="empty card">还没有评论，来写第一条吧。</p>
+  {% endfor %}
+</section>
+{% endblock %}
+

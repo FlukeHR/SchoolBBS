@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}注册 · SchoolBBS{% endblock %}
+{% block content %}
+<section class="auth-card card narrow">
+  <p class="eyebrow">加入社区</p>
+  <h1>创建账号</h1>
+  <p class="muted">用户名注册后不能修改，昵称可以随时更新。</p>
+  <form method="post" class="stack">
+    {% csrf_token %}
+    {{ form.as_div }}
+    <button class="button" type="submit">注册并登录</button>
+  </form>
+  <p>已有账号？<a href="{% url 'login' %}">返回登录</a></p>
+</section>
+{% endblock %}
+

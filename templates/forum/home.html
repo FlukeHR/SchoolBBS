@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div>
+    <p class="eyebrow">校园正在发生</p>
+    <h1>你好，{{ user.first_name|default:user.username }}</h1>
+    <p>分享问题、经验和此刻值得记住的小事。</p>
+  </div>
+  <a class="button" href="{% url 'post_create' %}">发布新帖子</a>
+</section>
+
+<section aria-labelledby="followed-title">
+  <div class="section-heading">
+    <h2 id="followed-title">关注的版块</h2>
+    <a href="{% url 'board_list' %}">浏览全部</a>
+  </div>
+  <div class="chip-row">
+    {% for board in boards %}
+      <a class="chip" href="{% url 'board_detail' board.pk %}">{{ board.name }}</a>
+    {% empty %}
+      <span class="muted">还没有关注版块。</span>
+    {% endfor %}
+  </div>
+</section>
+
+<section aria-labelledby="latest-title">
+  <div class="section-heading"><h2 id="latest-title">最新帖子</h2></div>
+  {% include "forum/_post_list.html" %}
+</section>
+{% endblock %}
+

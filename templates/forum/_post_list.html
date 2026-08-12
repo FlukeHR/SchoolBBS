@@ -1,0 +1,30 @@
+{% for post in page_obj %}
+  <article class="card post-card">
+    <div class="post-meta">
+      <a class="tag" href="{% url 'board_detail' post.board_id %}">{{ post.board.name }}</a>
+      <span>{{ post.author.first_name|default:post.author.username }}</span>
+      <time datetime="{{ post.created_at|date:'c' }}">{{ post.created_at|date:"Y-m-d H:i" }}</time>
+    </div>
+    <h2><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h2>
+    <p>{{ post.body|truncatechars:150 }}</p>
+    <div class="post-stats">
+      <span>{{ post.comments.count }} 条评论</span>
+      <span>{{ post.liked_by.count }} 个赞</span>
+    </div>
+  </article>
+{% empty %}
+  <div class="empty card">这里还没有内容。</div>
+{% endfor %}
+
+{% if page_obj.paginator.num_pages > 1 %}
+  <nav class="pagination" aria-label="分页">
+    {% if page_obj.has_previous %}
+      <a href="?{% if query %}q={{ query|urlencode }}&amp;{% endif %}page={{ page_obj.previous_page_number }}">上一页</a>
+    {% endif %}
+    <span>第 {{ page_obj.number }} / {{ page_obj.paginator.num_pages }} 页</span>
+    {% if page_obj.has_next %}
+      <a href="?{% if query %}q={{ query|urlencode }}&amp;{% endif %}page={{ page_obj.next_page_number }}">下一页</a>
+    {% endif %}
+  </nav>
+{% endif %}
+

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} · SchoolBBS{% endblock %}
+{% block content %}
+<section class="page-heading"><div><p class="eyebrow">认真表达</p><h1>{{ title }}</h1></div></section>
+<form method="post" enctype="multipart/form-data" class="card stack form-card">
+  {% csrf_token %}
+  {{ form.as_div }}
+  <p class="helptext">每帖最多 5 个附件，单个不超过 10MB；支持图片、PDF、UTF-8 TXT、Office 和 ZIP。</p>
+  <button class="button" type="submit">保存帖子</button>
+</form>
+{% if post.attachments.exists %}
+  <section class="card attachment-editor">
+    <h2>现有附件</h2>
+    {% for attachment in post.attachments.all %}
+      <div class="attachment-row">
+        <a href="{% url 'attachment_download' attachment.pk %}">{{ attachment.original_name }}</a>
+        <form action="{% url 'attachment_delete' attachment.pk %}" method="post">
+          {% csrf_token %}<button class="text-button danger-text" type="submit">删除附件</button>
+        </form>
+      </div>
+    {% endfor %}
+  </section>
+{% endif %}
+{% endblock %}
+
