@@ -1,20 +1,36 @@
 {% extends "base.html" %}
 {% block title %}{{ board.name }} · SchoolBBS{% endblock %}
 {% block content %}
-<section class="page-heading">
-  <div>
-    <p class="eyebrow">版块</p>
-    <h1>{{ board.name }}</h1>
-    <p>{{ board.description|default:"这个版块还没有简介。" }}</p>
+<a class="back-link" href="{% url 'board_list' %}">{% include "forum/_icon.html" with name="back" %}全部版块</a>
+<section class="board-hero">
+  <div class="board-identity">
+    <span class="board-emblem large" aria-hidden="true">{{ board.name|slice:":1" }}</span>
+    <div>
+      <p class="eyebrow">CAMPUS BOARD</p>
+      <h1>{{ board.name }}</h1>
+      <p>{{ board.description|default:"这个版块还没有简介，等待第一场认真的讨论。" }}</p>
+      <span class="board-stats">{{ board.post_count }} 篇讨论 · {{ board.follower_count }} 人关注</span>
+    </div>
   </div>
-  <form action="{% url 'board_follow' board.pk %}" method="post">
-    {% csrf_token %}
-    <input type="hidden" name="next" value="{{ request.get_full_path }}">
-    <button class="button secondary" type="submit">
-      {% if user in board.followers.all %}取消关注{% else %}关注版块{% endif %}
-    </button>
-  </form>
+  <div class="board-actions">
+    <form action="{% url 'board_follow' board.pk %}" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.get_full_path }}">
+      <button class="button secondary" type="submit">
+        {% if board.is_following %}{% include "forum/_icon.html" with name="check" %}已关注{% else %}{% include "forum/_icon.html" with name="plus" %}关注版块{% endif %}
+      </button>
+    </form>
+    <a class="button" href="{% url 'post_create' %}?board={{ board.pk }}">{% include "forum/_icon.html" with name="edit" %}在这里发帖</a>
+  </div>
 </section>
-{% include "forum/_post_list.html" %}
+<section class="board-feed" aria-labelledby="board-feed-title">
+  <div class="feed-heading">
+    <div><p class="eyebrow">DISCUSSIONS</p><h2 id="board-feed-title">版块讨论</h2></div>
+    <div class="sort-links" aria-label="帖子排序">
+      <a href="{% querystring sort='latest' page=None %}"{% if current_sort == 'latest' %} class="active"{% endif %}>{% include "forum/_icon.html" with name="clock" %}最新</a>
+      <a href="{% querystring sort='popular' page=None %}"{% if current_sort == 'popular' %} class="active"{% endif %}>{% include "forum/_icon.html" with name="trending" %}热议</a>
+    </div>
+  </div>
+  {% include "forum/_post_list.html" with empty_title="还没有讨论" empty_text="这个版块的第一条帖子，可以由你来写。" %}
+</section>
 {% endblock %}
-

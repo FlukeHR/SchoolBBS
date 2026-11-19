@@ -1,25 +1,32 @@
 {% extends "base.html" %}
 {% block title %}{{ title }} · SchoolBBS{% endblock %}
 {% block content %}
-<section class="page-heading"><div><p class="eyebrow">认真表达</p><h1>{{ title }}</h1></div></section>
-<form method="post" enctype="multipart/form-data" class="card stack form-card">
-  {% csrf_token %}
-  {{ form.as_div }}
-  <p class="helptext">每帖最多 5 个附件，单个不超过 10MB；支持图片、PDF、UTF-8 TXT、Office 和 ZIP。</p>
-  <button class="button" type="submit">保存帖子</button>
-</form>
-{% if post.attachments.exists %}
-  <section class="card attachment-editor">
-    <h2>现有附件</h2>
-    {% for attachment in post.attachments.all %}
-      <div class="attachment-row">
-        <a href="{% url 'attachment_download' attachment.pk %}">{{ attachment.original_name }}</a>
-        <form action="{% url 'attachment_delete' attachment.pk %}" method="post">
-          {% csrf_token %}<button class="text-button danger-text" type="submit">删除附件</button>
-        </form>
-      </div>
-    {% endfor %}
+<div class="form-shell">
+  <a class="back-link" href="{% if post %}{% url 'post_detail' post.pk %}{% else %}{% url 'home' %}{% endif %}">{% include "forum/_icon.html" with name="back" %}返回</a>
+  <section class="page-heading form-heading">
+    <div><p class="eyebrow">SHARE WITH CAMPUS</p><h1>{{ title }}<span class="brand-dot">.</span></h1><p>说清背景，也给别人留下回应的空间。</p></div>
   </section>
-{% endif %}
+  <form method="post" enctype="multipart/form-data" class="form-card stack">
+    {% csrf_token %}
+    {{ form.as_div }}
+    <div class="upload-note">{% include "forum/_icon.html" with name="paperclip" %}<p>每帖最多 5 个附件，单个不超过 10MB。<br><span>支持图片、PDF、UTF-8 TXT、Office 和 ZIP。</span></p></div>
+    <div class="form-actions">
+      <a class="button ghost-button" href="{% if post %}{% url 'post_detail' post.pk %}{% else %}{% url 'home' %}{% endif %}">取消</a>
+      <button class="button" type="submit">{% if post %}保存修改{% else %}发布帖子{% endif %}{% include "forum/_icon.html" with name="arrow" %}</button>
+    </div>
+  </form>
+  {% if post.attachments.exists %}
+    <section class="attachment-editor">
+      <h2>已上传的附件</h2>
+      {% for attachment in post.attachments.all %}
+        <div class="attachment-row">
+          <a class="file-link" href="{% url 'attachment_download' attachment.pk %}">{% include "forum/_icon.html" with name="file" %}{{ attachment.original_name }}</a>
+          <form action="{% url 'attachment_delete' attachment.pk %}" method="post">
+            {% csrf_token %}<button class="text-button danger-text" type="submit">删除附件</button>
+          </form>
+        </div>
+      {% endfor %}
+    </section>
+  {% endif %}
+</div>
 {% endblock %}
-

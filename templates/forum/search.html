@@ -1,15 +1,25 @@
 {% extends "base.html" %}
 {% block title %}搜索 · SchoolBBS{% endblock %}
 {% block content %}
-<section class="page-heading"><div><p class="eyebrow">站内检索</p><h1>搜索帖子</h1></div></section>
-<form method="get" class="search-form" role="search">
-  <label class="sr-only" for="q">搜索标题和正文</label>
-  <input id="q" name="q" value="{{ query }}" maxlength="100" placeholder="输入关键词" required>
-  <button class="button" type="submit">搜索</button>
-</form>
-{% if query %}
-  <p class="muted">“{{ query }}”的搜索结果</p>
-  {% include "forum/_post_list.html" %}
-{% endif %}
+<div class="search-shell">
+  <section class="search-heading">
+    <p class="eyebrow">LOOK IT UP</p>
+    <h1>搜索校园里的答案<span class="brand-dot">.</span></h1>
+    <p>课程、生活经验，或任何你正在关心的问题。</p>
+  </section>
+  <form method="get" class="search-form" role="search">
+    {% include "forum/_icon.html" with name="search" %}
+    <label class="sr-only" for="q">搜索标题和正文</label>
+    <input id="q" name="q" value="{{ query }}" maxlength="100" placeholder="输入关键词，例如：选课" required>
+    <button class="button" type="submit">搜索</button>
+  </form>
+  {% if query %}
+    <section class="search-results" aria-labelledby="results-title">
+      <div class="feed-heading"><div><p class="eyebrow">SEARCH RESULTS</p><h2 id="results-title">“{{ query }}”</h2></div><span class="feed-note">{{ page_obj.paginator.count }} 条结果</span></div>
+      {% include "forum/_post_list.html" with empty_title="没有找到相关帖子" empty_text="试试更短的关键词，或者换一个说法。" %}
+    </section>
+  {% else %}
+    <div class="search-hint">{% include "forum/_icon.html" with name="spark" %}<span>搜索会同时匹配帖子的标题和正文。</span></div>
+  {% endif %}
+</div>
 {% endblock %}
-

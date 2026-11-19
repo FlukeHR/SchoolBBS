@@ -35,13 +35,18 @@ class ProfileForm(forms.ModelForm):
 
 
 class PostForm(forms.ModelForm):
-    attachments = MultipleFileField(label="附件", required=False)
+    attachments = MultipleFileField(label="添加图片或资料", required=False)
 
     class Meta:
         model = Post
         fields = ("board", "title", "body")
-        labels = {"board": "版块", "title": "标题", "body": "正文"}
-        widgets = {"body": forms.Textarea(attrs={"rows": 10})}
+        labels = {"board": "发布到版块", "title": "标题", "body": "正文"}
+        widgets = {
+            "title": forms.TextInput(attrs={"placeholder": "一句话说清你想聊什么"}),
+            "body": forms.Textarea(
+                attrs={"rows": 10, "placeholder": "补充背景、细节或你的想法……"}
+            ),
+        }
 
     def clean_attachments(self):
         uploads = self.cleaned_data.get("attachments", [])
@@ -55,6 +60,10 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ("body",)
-        labels = {"body": "评论"}
-        widgets = {"body": forms.Textarea(attrs={"rows": 4})}
+        labels = {"body": "回复"}
+        widgets = {
+            "body": forms.Textarea(
+                attrs={"rows": 3, "placeholder": "写下你的回复，友善地表达不同看法……"}
+            )
+        }
 

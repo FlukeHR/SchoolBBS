@@ -1,20 +1,40 @@
 {% extends "base.html" %}
 {% block title %}版块 · SchoolBBS{% endblock %}
 {% block content %}
-<div class="page-heading">
-  <div><p class="eyebrow">找到同好</p><h1>全部版块</h1></div>
-  {% if user.is_staff %}<a class="button secondary" href="{% url 'admin:forum_board_add' %}">管理版块</a>{% endif %}
-</div>
+<section class="page-heading board-directory-heading">
+  <div>
+    <p class="eyebrow">FIND YOUR PEOPLE</p>
+    <h1>找到你的校园圈子<span class="brand-dot">.</span></h1>
+    <p>课程、生活、兴趣，只加入你真正关心的版块。</p>
+  </div>
+  {% if user.is_staff %}<a class="button secondary" href="{% url 'admin:forum_board_add' %}">{% include "forum/_icon.html" with name="plus" %}新建版块</a>{% endif %}
+</section>
 <div class="board-grid">
   {% for board in boards %}
-    <article class="card board-card">
+    <article class="board-card">
+      <div class="board-card-top">
+        <span class="board-emblem" aria-hidden="true">{{ board.name|slice:":1" }}</span>
+        <a class="round-link" href="{% url 'board_detail' board.pk %}" aria-label="进入{{ board.name }}">{% include "forum/_icon.html" with name="arrow" %}</a>
+      </div>
       <h2><a href="{% url 'board_detail' board.pk %}">{{ board.name }}</a></h2>
-      <p>{{ board.description|default:"这个版块还没有简介。" }}</p>
-      <span class="muted">{{ board.posts.count }} 篇帖子 · {{ board.followers.count }} 人关注</span>
+      <p>{{ board.description|default:"这个版块还没有简介，等待第一场认真的讨论。" }}</p>
+      <div class="board-card-footer">
+        <span>{{ board.post_count }} 篇讨论 <i>·</i> {{ board.follower_count }} 人关注</span>
+        <form action="{% url 'board_follow' board.pk %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="next" value="{{ request.get_full_path }}">
+          <button class="follow-button{% if board.is_following %} following{% endif %}" type="submit">
+            {% if board.is_following %}{% include "forum/_icon.html" with name="check" %}已关注{% else %}{% include "forum/_icon.html" with name="plus" %}关注{% endif %}
+          </button>
+        </form>
+      </div>
     </article>
   {% empty %}
-    <div class="empty card">暂无版块，请联系管理员创建。</div>
+    <div class="empty-state board-empty">
+      {% include "forum/_icon.html" with name="grid" %}
+      <h2>版块还在准备中</h2>
+      <p>请联系管理员创建第一个校园版块。</p>
+    </div>
   {% endfor %}
 </div>
 {% endblock %}
-

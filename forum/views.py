@@ -3,7 +3,7 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_not_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.core.paginator import Paginator
-from django.db.models import Q
+from django.db.models import Count, Exists, OuterRef, Q
 from django.http import FileResponse, Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
@@ -28,6 +28,34 @@ class SchoolLogoutView(LogoutView):
 
 def paginated(request, queryset):
     return Paginator(queryset, PAGE_SIZE).get_page(request.GET.get("page"))
+
+
+def post_list_queryset():
+    return Post.objects.select_related("author", "board").annotate(
+        comment_count=Count("comments", distinct=True),
+        like_count=Count("liked_by", distinct=True),
+        activity_count=Count("comments", distinct=True) + Count("liked_by", distinct=True),
+    )
+
+
+def board_queryset(user):
+    follow_rows = Board.followers.through.objects.filter(
+        board_id=OuterRef("pk"), user_id=user.pk
+    )
+    return Board.objects.annotate(
+        post_count=Count("posts", distinct=True),
+        follower_count=Count("followers", distinct=True),
+        is_following=Exists(follow_rows),
+    )
+
+
+def sort_posts(request, posts):
+    current_sort = request.GET.get("sort", "latest")
+    if current_sort not in {"latest", "popular"}:
+        current_sort = "latest"
+    if current_sort == "popular":
+        return posts.order_by("-activity_count", "-created_at"), current_sort
+    return posts.order_by("-created_at"), current_sort
 
 
 def redirect_back(request, fallback, *args):
@@ -62,28 +90,42 @@ def signup(request):
 
 
 def home(request):
-    posts = Post.objects.select_related("author", "board").prefetch_related("liked_by")
+    current_feed = request.GET.get("feed", "all")
+    if current_feed not in {"all", "following"}:
+        current_feed = "all"
+    posts = post_list_queryset()
+    if current_feed == "following":
+        posts = posts.filter(board__followers=request.user)
+    posts, current_sort = sort_posts(request, posts)
     return render(
         request,
         "forum/home.html",
         {
-            "boards": request.user.followed_boards.all(),
+            "boards": board_queryset(request.user).filter(followers=request.user),
+            "current_feed": current_feed,
+            "current_sort": current_sort,
             "page_obj": paginated(request, posts),
         },
     )
 
 
 def board_list(request):
-    return render(request, "forum/board_list.html", {"boards": Board.objects.all()})
+    return render(request, "forum/board_list.html", {"boards": board_queryset(request.user)})
 
 
 def board_detail(request, pk):
-    board = get_object_or_404(Board, pk=pk)
-    posts = board.posts.select_related("author", "board").prefetch_related("liked_by")
+    board = get_object_or_404(board_queryset(request.user), pk=pk)
+    posts, current_sort = sort_posts(
+        request, post_list_queryset().filter(board=board)
+    )
     return render(
         request,
         "forum/board_detail.html",
-        {"board": board, "page_obj": paginated(request, posts)},
+        {
+            "board": board,
+            "current_sort": current_sort,
+            "page_obj": paginated(request, posts),
+        },
     )
 
 
@@ -98,7 +140,11 @@ def post_detail(request, pk):
 
 
 def post_create(request):
-    form = PostForm(request.POST or None, request.FILES or None)
+    form = PostForm(
+        request.POST or None,
+        request.FILES or None,
+        initial={"board": request.GET.get("board")},
+    )
     if request.method == "POST" and form.is_valid():
         post = form.save(commit=False)
         post.author = request.user
@@ -167,7 +213,11 @@ def comment_edit(request, pk):
         form.save()
         messages.success(request, "评论已更新。")
         return redirect(comment.post)
-    return render(request, "forum/simple_form.html", {"form": form, "title": "编辑评论"})
+    return render(
+        request,
+        "forum/simple_form.html",
+        {"form": form, "title": "编辑评论", "post": comment.post},
+    )
 
 
 @require_POST
@@ -215,9 +265,9 @@ def search(request):
     query = request.GET.get("q", "").strip()
     posts = Post.objects.none()
     if query:
-        posts = Post.objects.select_related("author", "board").filter(
+        posts = post_list_queryset().filter(
             Q(title__icontains=query) | Q(body__icontains=query)
-        )
+        ).order_by("-created_at")
     return render(
         request,
         "forum/search.html",
@@ -231,13 +281,13 @@ def profile(request):
         form.save()
         messages.success(request, "昵称已更新。")
         return redirect("profile")
-    posts = request.user.posts.select_related("board", "author")
+    posts = post_list_queryset().filter(author=request.user).order_by("-created_at")
     return render(
         request,
         "forum/profile.html",
         {
             "form": form,
-            "boards": request.user.followed_boards.all(),
+            "boards": board_queryset(request.user).filter(followers=request.user),
             "page_obj": paginated(request, posts),
         },
     )
@@ -256,4 +306,3 @@ def attachment_download(request, pk):
         raise Http404 from error
     response["X-Content-Type-Options"] = "nosniff"
     return response
-

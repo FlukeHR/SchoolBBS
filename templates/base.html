@@ -4,38 +4,63 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7f2">
   <title>{% block title %}SchoolBBS{% endblock %}</title>
+  <link rel="icon" href="{% static 'forum/favicon.svg' %}" type="image/svg+xml">
   <link rel="stylesheet" href="{% static 'forum/style.css' %}">
 </head>
 <body>
   <a class="skip-link" href="#content">跳到正文</a>
   <header class="site-header">
     <nav class="nav shell" aria-label="主导航">
-      <a class="brand" href="{% url 'home' %}">SchoolBBS</a>
+      <a class="brand" href="{% url 'home' %}" aria-label="SchoolBBS 首页">
+        <span class="brand-mark" aria-hidden="true">S</span>
+        <span>SchoolBBS<span class="brand-dot">.</span></span>
+      </a>
       {% if user.is_authenticated %}
-        <div class="nav-links">
-          <a href="{% url 'board_list' %}">版块</a>
-          <a href="{% url 'search' %}">搜索</a>
-          <a href="{% url 'post_create' %}">发帖</a>
-          <a href="{% url 'profile' %}">我的</a>
-          {% if user.is_staff %}<a href="{% url 'admin:index' %}">管理</a>{% endif %}
-          <form action="{% url 'logout' %}" method="post">
-            {% csrf_token %}
-            <button class="link-button" type="submit">退出</button>
-          </form>
+        <div class="desktop-nav">
+          <a class="nav-link{% if request.resolver_match.url_name == 'home' %} active{% endif %}" href="{% url 'home' %}" {% if request.resolver_match.url_name == 'home' %}aria-current="page"{% endif %}>
+            {% include "forum/_icon.html" with name="home" %}<span>首页</span>
+          </a>
+          <a class="nav-link{% if request.resolver_match.url_name == 'board_list' or request.resolver_match.url_name == 'board_detail' %} active{% endif %}" href="{% url 'board_list' %}" {% if request.resolver_match.url_name == 'board_list' or request.resolver_match.url_name == 'board_detail' %}aria-current="page"{% endif %}>
+            {% include "forum/_icon.html" with name="grid" %}<span>版块</span>
+          </a>
+          <a class="nav-link{% if request.resolver_match.url_name == 'search' %} active{% endif %}" href="{% url 'search' %}" {% if request.resolver_match.url_name == 'search' %}aria-current="page"{% endif %}>
+            {% include "forum/_icon.html" with name="search" %}<span>搜索</span>
+          </a>
         </div>
+        <div class="nav-actions">
+          <a class="icon-button mobile-search" href="{% url 'search' %}" aria-label="搜索">{% include "forum/_icon.html" with name="search" %}</a>
+          <a class="button button-small nav-create" href="{% url 'post_create' %}">{% include "forum/_icon.html" with name="plus" %}<span>发帖</span></a>
+          <a class="avatar nav-avatar" href="{% url 'profile' %}" aria-label="我的个人页面">{{ user.first_name|default:user.username|slice:":1" }}</a>
+        </div>
+      {% else %}
+        <span class="header-note">A little closer to campus.</span>
       {% endif %}
     </nav>
   </header>
+
   <main id="content" class="shell">
     {% if messages %}
       <div class="messages" aria-live="polite">
-        {% for message in messages %}<p class="message {{ message.tags }}">{{ message }}</p>{% endfor %}
+        {% for message in messages %}<p class="message {{ message.tags }}">{% include "forum/_icon.html" with name="check" %}{{ message }}</p>{% endfor %}
       </div>
     {% endif %}
     {% block content %}{% endblock %}
   </main>
-  <footer class="site-footer shell">校园交流，从一条认真回复开始。</footer>
+
+  <footer class="site-footer shell">
+    <span>SchoolBBS<span class="brand-dot">.</span> · Campus conversations</span>
+    <span>认真提问，真诚回应。</span>
+  </footer>
+
+  {% if user.is_authenticated %}
+    <nav class="mobile-nav" aria-label="移动端导航">
+      <a class="mobile-nav-link{% if request.resolver_match.url_name == 'home' %} active{% endif %}" href="{% url 'home' %}">{% include "forum/_icon.html" with name="home" %}<span>首页</span></a>
+      <a class="mobile-nav-link{% if request.resolver_match.url_name == 'board_list' or request.resolver_match.url_name == 'board_detail' %} active{% endif %}" href="{% url 'board_list' %}">{% include "forum/_icon.html" with name="grid" %}<span>版块</span></a>
+      <a class="mobile-nav-link mobile-create" href="{% url 'post_create' %}">{% include "forum/_icon.html" with name="plus" %}<span>发帖</span></a>
+      <a class="mobile-nav-link{% if request.resolver_match.url_name == 'profile' %} active{% endif %}" href="{% url 'profile' %}">{% include "forum/_icon.html" with name="user" %}<span>我的</span></a>
+    </nav>
+  {% endif %}
 </body>
 </html>
-

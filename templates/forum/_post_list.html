@@ -1,30 +1,42 @@
-{% for post in page_obj %}
-  <article class="card post-card">
-    <div class="post-meta">
-      <a class="tag" href="{% url 'board_detail' post.board_id %}">{{ post.board.name }}</a>
-      <span>{{ post.author.first_name|default:post.author.username }}</span>
-      <time datetime="{{ post.created_at|date:'c' }}">{{ post.created_at|date:"Y-m-d H:i" }}</time>
+<div class="post-list">
+  {% for post in page_obj %}
+    <article class="post-card">
+      <div class="post-byline">
+        <span class="avatar avatar-small" aria-hidden="true">{{ post.author.first_name|default:post.author.username|slice:":1" }}</span>
+        <div>
+          <strong>{{ post.author.first_name|default:post.author.username }}</strong>
+          <div class="post-meta">
+            <a href="{% url 'board_detail' post.board_id %}">{{ post.board.name }}</a>
+            <span>·</span>
+            <time datetime="{{ post.created_at|date:'c' }}">{{ post.created_at|date:"n月j日 H:i" }}</time>
+          </div>
+        </div>
+      </div>
+      <h2 class="post-title"><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h2>
+      <p class="post-excerpt">{{ post.body|truncatechars:180 }}</p>
+      <footer class="post-footer">
+        <a class="post-stat" href="{% url 'post_detail' post.pk %}#comments" aria-label="{{ post.comment_count }} 条评论">{% include "forum/_icon.html" with name="comment" %}{{ post.comment_count }}<span>评论</span></a>
+        <span class="post-stat">{% include "forum/_icon.html" with name="heart" %}{{ post.like_count }}<span>赞</span></span>
+        <a class="post-open" href="{% url 'post_detail' post.pk %}" aria-label="阅读全文：{{ post.title }}">{% include "forum/_icon.html" with name="arrow" %}</a>
+      </footer>
+    </article>
+  {% empty %}
+    <div class="empty-state">
+      {% include "forum/_icon.html" with name="comment" %}
+      <h3>{{ empty_title|default:"这里还没有内容" }}</h3>
+      <p>{{ empty_text|default:"等一个新的话题，从这里开始。" }}</p>
     </div>
-    <h2><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h2>
-    <p>{{ post.body|truncatechars:150 }}</p>
-    <div class="post-stats">
-      <span>{{ post.comments.count }} 条评论</span>
-      <span>{{ post.liked_by.count }} 个赞</span>
-    </div>
-  </article>
-{% empty %}
-  <div class="empty card">这里还没有内容。</div>
-{% endfor %}
+  {% endfor %}
+</div>
 
 {% if page_obj.paginator.num_pages > 1 %}
   <nav class="pagination" aria-label="分页">
     {% if page_obj.has_previous %}
-      <a href="?{% if query %}q={{ query|urlencode }}&amp;{% endif %}page={{ page_obj.previous_page_number }}">上一页</a>
+      <a class="pagination-link" href="{% querystring page=page_obj.previous_page_number %}">{% include "forum/_icon.html" with name="back" %}上一页</a>
     {% endif %}
-    <span>第 {{ page_obj.number }} / {{ page_obj.paginator.num_pages }} 页</span>
+    <span>{{ page_obj.number }} <i>/</i> {{ page_obj.paginator.num_pages }}</span>
     {% if page_obj.has_next %}
-      <a href="?{% if query %}q={{ query|urlencode }}&amp;{% endif %}page={{ page_obj.next_page_number }}">下一页</a>
+      <a class="pagination-link" href="{% querystring page=page_obj.next_page_number %}">下一页{% include "forum/_icon.html" with name="arrow" %}</a>
     {% endif %}
   </nav>
 {% endif %}
-

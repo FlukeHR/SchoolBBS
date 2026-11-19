@@ -1,31 +1,62 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="hero">
-  <div>
-    <p class="eyebrow">校园正在发生</p>
-    <h1>你好，{{ user.first_name|default:user.username }}</h1>
-    <p>分享问题、经验和此刻值得记住的小事。</p>
+<section class="home-hero">
+  <div class="hero-copy">
+    <p class="eyebrow"><span class="status-dot"></span> CAMPUS, IN YOUR WORDS</p>
+    <h1>你好，{{ user.first_name|default:user.username }}<span class="brand-dot">.</span></h1>
+    <p>从一个问题开始，认识同频伙伴。</p>
+    <a class="button hero-button" href="{% url 'post_create' %}">{% include "forum/_icon.html" with name="edit" %}写下此刻</a>
   </div>
-  <a class="button" href="{% url 'post_create' %}">发布新帖子</a>
+  <div class="hero-art">{% include "forum/_campus_sticker.html" %}</div>
 </section>
 
-<section aria-labelledby="followed-title">
-  <div class="section-heading">
-    <h2 id="followed-title">关注的版块</h2>
-    <a href="{% url 'board_list' %}">浏览全部</a>
-  </div>
-  <div class="chip-row">
-    {% for board in boards %}
-      <a class="chip" href="{% url 'board_detail' board.pk %}">{{ board.name }}</a>
-    {% empty %}
-      <span class="muted">还没有关注版块。</span>
-    {% endfor %}
-  </div>
-</section>
+<div class="home-layout">
+  <section class="feed-section" aria-labelledby="feed-title">
+    <div class="feed-heading">
+      <div><p class="eyebrow">YOUR FEED</p><h2 id="feed-title">校园动态</h2></div>
+      <span class="feed-note">只看你关心的</span>
+    </div>
+    <div class="feed-toolbar">
+      <div class="segmented-control" aria-label="动态范围">
+        <a href="{% querystring feed='all' page=None %}"{% if current_feed == 'all' %} class="active" aria-current="page"{% endif %}>全部</a>
+        <a href="{% querystring feed='following' page=None %}"{% if current_feed == 'following' %} class="active" aria-current="page"{% endif %}>我的关注</a>
+      </div>
+      <div class="sort-links" aria-label="帖子排序">
+        <a href="{% querystring sort='latest' page=None %}"{% if current_sort == 'latest' %} class="active"{% endif %}>{% include "forum/_icon.html" with name="clock" %}最新</a>
+        <a href="{% querystring sort='popular' page=None %}"{% if current_sort == 'popular' %} class="active"{% endif %}>{% include "forum/_icon.html" with name="trending" %}热议</a>
+      </div>
+    </div>
+    {% if current_feed == 'following' %}
+      {% include "forum/_post_list.html" with empty_title="关注动态还是空的" empty_text="关注的版块有新帖子时，会出现在这里。" %}
+    {% else %}
+      {% include "forum/_post_list.html" with empty_title="校园还很安静" empty_text="分享一个问题或一件小事，让对话从这里开始。" %}
+    {% endif %}
+  </section>
 
-<section aria-labelledby="latest-title">
-  <div class="section-heading"><h2 id="latest-title">最新帖子</h2></div>
-  {% include "forum/_post_list.html" %}
-</section>
+  <aside class="home-sidebar" aria-label="我的社区">
+    <section class="side-card">
+      <div class="side-heading"><h2>我的版块</h2><a href="{% url 'board_list' %}">发现更多</a></div>
+      <div class="sidebar-boards">
+        {% for board in boards %}
+          <a class="sidebar-board" href="{% url 'board_detail' board.pk %}">
+            <span class="mini-emblem" aria-hidden="true">{{ board.name|slice:":1" }}</span>
+            <span><strong>{{ board.name }}</strong><small>{{ board.post_count }} 篇讨论</small></span>
+            {% include "forum/_icon.html" with name="arrow" %}
+          </a>
+        {% empty %}
+          <div class="sidebar-empty">
+            {% include "forum/_icon.html" with name="bookmark" %}
+            <p>关注感兴趣的版块，就能在这里快速抵达。</p>
+            <a href="{% url 'board_list' %}">逛逛全部版块</a>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+    <section class="campus-note">
+      {% include "forum/_icon.html" with name="spark" %}
+      <p class="eyebrow">A SMALL REMINDER</p>
+      <p>不必每次都说得很完整。<br>一个真实的问题，也值得被看见。</p>
+    </section>
+  </aside>
+</div>
 {% endblock %}
-

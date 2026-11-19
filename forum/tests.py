@@ -113,6 +113,52 @@ class ForumTests(TestCase):
         self.assertEqual(response.context["page_obj"].number, 2)
         self.assertEqual(len(response.context["page_obj"]), 2)
 
+    def test_home_filters_followed_boards_and_sorts_by_activity(self):
+        other_board = Board.objects.create(name="学习交流")
+        other_post = Post.objects.create(
+            board=other_board, author=self.other, title="课程攻略", body="如何选课"
+        )
+        self.board.followers.add(self.author)
+        self.post.liked_by.add(self.other)
+
+        response = self.client.get(reverse("home"), {"feed": "following"})
+        self.assertContains(response, self.post.title)
+        self.assertNotContains(response, other_post.title)
+
+        response = self.client.get(reverse("home"), {"sort": "popular"})
+        self.assertEqual(response.context["current_sort"], "popular")
+        self.assertEqual(response.context["page_obj"][0], self.post)
+        self.assertEqual(response.context["page_obj"][0].activity_count, 1)
+
+        response = self.client.get(reverse("home"), {"feed": "unknown", "sort": "unknown"})
+        self.assertEqual(response.context["current_feed"], "all")
+        self.assertEqual(response.context["current_sort"], "latest")
+
+    def test_board_quick_follow_and_preselected_post_form(self):
+        response = self.client.get(reverse("board_list"))
+        board = response.context["boards"].get(pk=self.board.pk)
+        self.assertEqual(board.post_count, 1)
+        self.assertFalse(board.is_following)
+
+        response = self.client.post(
+            reverse("board_follow", args=[self.board.pk]), {"next": reverse("board_list")}
+        )
+        self.assertRedirects(response, reverse("board_list"))
+        response = self.client.get(reverse("board_list"))
+        self.assertTrue(response.context["boards"].get(pk=self.board.pk).is_following)
+
+        response = self.client.get(reverse("post_create"), {"board": self.board.pk})
+        self.assertContains(response, f'<option value="{self.board.pk}" selected>')
+
+    def test_pagination_preserves_feed_and_sort(self):
+        Post.objects.bulk_create(
+            [Post(board=self.board, author=self.author, title=f"帖子 {number}", body="正文") for number in range(21)]
+        )
+        response = self.client.get(
+            reverse("home"), {"feed": "all", "sort": "popular", "page": 2}
+        )
+        self.assertContains(response, "?feed=all&amp;sort=popular&amp;page=1")
+
     def test_mutations_require_csrf(self):
         client = Client(enforce_csrf_checks=True)
         client.force_login(self.author)
